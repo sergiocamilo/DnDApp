@@ -1,0 +1,17 @@
+﻿#logo {
+    font-family: 'DUNGRG__';
+    font-size: 70px;
+}
+
+@font-face {
+    font-family: 'DUNGRG__';
+    src: url('DUNGRG__.TTF') format('truetype');
+}
+
+.dndfont {
+    font-family: 'DUNGRG__';
+}
+
+.header-panel {
+    margin-left: 15px;
+}

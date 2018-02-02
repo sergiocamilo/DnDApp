@@ -1,0 +1,78 @@
+﻿@{
+    var U = Dnd_App.Util.Session.CurrentSession();
+}
+
+<main>
+    <nav class="z-depth-0 grey darken-4">
+        <div class="nav-wrapper">
+            <div class="col s6">
+                <a href="#!" class="light breadcrumb white-text">DASHBOARD</a>
+                <a href="#!" class="right light white-text"><i class="fa fa-user-o fa-fw"></i> @U.UserName</a>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="row">
+        <h1 class="header-panel dndfont"> My characters</h1>
+
+        <div class="col s12 m4">
+            <!-- Basic Card -->
+            <div class="card blue-grey darken-1 green-to-green">
+                <div class="card-content white-text">
+                    <span class="card-title">My PCs</span>
+                    <h2 class="center">6</h2>
+                </div>
+                <div class="card-action center">
+                    <a class="white-text" href="#">Create new</a>
+                    <a class="white-text" href="#">View all</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col s12 m4">
+            <!-- Basic Card -->
+            <div class="card blue-grey darken-1 orange-to-orangeblack">
+                <div class="card-content white-text">
+                    <span class="card-title">My NPCs</span>
+                    <h2 class="center">6</h2>
+                </div>
+                <div class="card-action center">
+                    <a class="white-text" href="#">Create new</a>
+                    <a class="white-text" href="#">View all</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col s12 m4">
+            <!-- Basic Card -->
+            <div class="card blue-grey darken-1 black-to-grey">
+                <div class="card-content white-text">
+                    <span class="card-title">Templates</span>
+                    <h2 class="center">6</h2>
+                </div>
+                <div class="card-action center">
+                    <a class="white-text" href="#">Explore</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <h1 class="header-panel dndfont"> My activities</h1>
+        <div class="col s12 m6">
+            <!-- Basic Card -->
+            <div class="card white z-depth-3 red-to-red">
+                <div class="card-content white-text">
+                    <span class="card-title">My Combats</span>
+                    <h2 class="center">6</h2>
+                </div>
+                <div class="card-action red-text center">
+                    <a href="#">View all</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>

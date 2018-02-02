@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "Panel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var U = Dnd_App.Util.Session.CurrentSession();
+}
+
+@section styles{
+    <link href="~/Content/Panel.css" rel="stylesheet" />
+}
+
+@Html.Partial("_sidenav")
+
+@*<a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>*@
+
+
+@*@{Html.RenderAction("_Dashboard", "User");}*@
+
+<div id="_CurrentView"></div>
+
+
+@section scripts{
+    <script>
+        $(document).ready(
+            function loadDashboard() {
+                var view = '@TempData["CurrentAction"]';
+                var controller = '@TempData["CurrentController"]';
+
+                LoadView(view, controller);
+
+
+            }
+        );
+    </script>
+
+    <script>
+        function LoadView(view, controller) {
+
+
+
+            var urlAction = '@Url.Action("__view","__controller")';
+            urlAction = urlAction.replace("__view", view);
+            urlAction = urlAction.replace("__controller", controller);
+
+            $.ajax({
+                type: "GET",
+                cache: false,
+                url: urlAction,
+                dataType: "html",
+                @* data: JSON.stringify({ 'id': @ViewBag.id }),*@
+                contentType: "application/json; charset=utf-8",
+                success: function (data)
+                {
+                    var _CurrentView = $("#_CurrentView");
+                    _CurrentView.html(data);
+                },
+                failure: function (errMsg) {
+                    console.log("error ?")
+                    alert(errMsg);
+                }
+            });
+        }
+    </script>
+}
+
+

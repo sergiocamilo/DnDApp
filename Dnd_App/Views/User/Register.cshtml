@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col s4 offset-s4 card-panel white darken-4">
+        @using (Html.BeginForm("Register", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <h5 id="logo" class="black-text">Register</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    @Html.TextBox("Username", null, new { @id = "username", @type = "text" })
+                    <label for="username" class="center-align">Username</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    @Html.TextBox("Email", null, new { @id = "Email", @type = "email" })
+                    <label for="username" class="center-align">Email</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    @Html.TextBox("Password", null, new { @id = "Password", @type = "password" })
+                    <label for="Password">Password</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    @Html.TextBox("RPassword", null, new { @id = "RPassword", @type = "password" })
+                    <label for="RPassword">Repeat Password</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <button type="submit" class="btn waves-effect waves-light col s12 yellow darken-2">Register</button>
+                </div>
+            </div>
+        }
+        <hr />
+        <div class="row">
+            <div class="input-field col s12">
+                <a href="index.html" class="btn waves-effect waves-light col s12 blue darken-2">Login</a>
+            </div>
+        </div>
+    </div>
+</div>
+

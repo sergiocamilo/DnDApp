@@ -1,0 +1,56 @@
+﻿body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+
+header, main, footer {
+    padding-left: 250px;
+}
+
+@media only screen and (max-width : 992px) {
+    header, main, footer {
+        padding-left: 0;
+    }
+}
+
+.side-nav.fixed {
+    width: 250px;
+}
+
+.nav-wrapper {
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+    .nav-wrapper a {
+        font-size: 20px;
+    }
+
+.breadcrumb {
+    font-size: 20px;
+}
+
+@font-face {
+    font-family: 'DUNGRG__';
+    src: url('DUNGRG__.TTF') format('truetype');
+}
+
+#li-logo {
+    margin-bottom: 35px;
+    margin-top:25px;
+    
+}
+
+#li-a-logo {
+    height: 80px;
+}
+
+#sn-li-a {
+    font-weight: 300;
+}
