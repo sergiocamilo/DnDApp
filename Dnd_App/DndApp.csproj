@@ -172,8 +172,8 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Gradients.css" />
     <Content Include="Content\img_parallax.png" />
-    <Content Include="Content\materialize\css\materialize.css" />
-    <Content Include="Content\materialize\css\materialize.min.css" />
+    <Content Include="Content\materialize.css" />
+    <Content Include="Content\materialize.min.css" />
     <Content Include="Content\Panel.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />

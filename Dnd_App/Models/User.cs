@@ -14,6 +14,7 @@ namespace Dnd_App.Models
         public string Password { get; set; }
         public Role Role { get; set; }
         public Boolean IsActive { get; set; }
+        public string Token { get; set; }
 
         //Colections
         //public Dictionary<int, NPC> Npcs { get; set; }

@@ -20,7 +20,7 @@ namespace Dnd_App.Util
                 Session.UserName = Encoding.UTF8.GetString(MachineKey
                     .Unprotect(Convert.FromBase64String(HttpContext
                     .Current.Request.Cookies["session"].Value)));
-                if (!Session.Read(Session.UserName)) Session = null;//aun no
+                if (!Session.Read(Session.UserName)) Session = null;
             }
             else
             {

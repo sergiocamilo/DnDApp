@@ -25,7 +25,7 @@ namespace Dnd_App.Controllers
         }
 
         [HttpGet]
-        public PartialViewResult _Dashboard()
+        public ActionResult _Dashboard()
         {
             TempData["CurrentAction"] = "_Dashboard";
             TempData["CurrentController"] = "User";
