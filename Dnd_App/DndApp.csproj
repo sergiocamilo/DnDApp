@@ -160,7 +160,36 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Characters\AbilityScore.cs" />
+    <Compile Include="Models\Characters\Action.cs" />
+    <Compile Include="Models\Characters\Armor.cs" />
+    <Compile Include="Models\Characters\Challenge.cs" />
+    <Compile Include="Models\Characters\Condition.cs" />
+    <Compile Include="Models\Characters\Damage.cs" />
+    <Compile Include="Models\Characters\HitPoint.cs" />
+    <Compile Include="Models\Characters\Language.cs" />
+    <Compile Include="Models\Characters\NPC.cs" />
+    <Compile Include="Models\Characters\SavingThrow.cs" />
+    <Compile Include="Models\Characters\Sense.cs" />
+    <Compile Include="Models\Characters\Size.cs" />
+    <Compile Include="Models\Characters\Skill.cs" />
+    <Compile Include="Models\Characters\SpecialTrait.cs" />
+    <Compile Include="Models\Characters\Speed.cs" />
+    <Compile Include="Models\Characters\TypeHitDie.cs" />
+    <Compile Include="Models\Enum\ArmorName.cs" />
+    <Compile Include="Models\Enum\LanguageName.cs" />
     <Compile Include="Models\Enum\Role.cs" />
+    <Compile Include="Models\Enum\SkillName.cs" />
+    <Compile Include="Models\Enum\TypeAction.cs" />
+    <Compile Include="Models\Enum\TypeAlignAttitude.cs" />
+    <Compile Include="Models\Enum\TypeAlignMorality.cs" />
+    <Compile Include="Models\Enum\TypeCondition.cs" />
+    <Compile Include="Models\Enum\TypeCreature.cs" />
+    <Compile Include="Models\Enum\TypeDamage.cs" />
+    <Compile Include="Models\Enum\TypeDie.cs" />
+    <Compile Include="Models\Enum\TypeSense.cs" />
+    <Compile Include="Models\Enum\TypeSize.cs" />
+    <Compile Include="Models\Enum\TypeSpeed.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\AuxDB.cs" />
@@ -238,7 +267,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\NPC\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

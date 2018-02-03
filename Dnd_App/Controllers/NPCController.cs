@@ -20,5 +20,11 @@ namespace Dnd_App.Controllers
             return PartialView();
         }
 
+        public ActionResult _View(int Id)
+        {
+            //var NPC;
+            return PartialView();
+        }
+
     }
 }
