@@ -11,7 +11,7 @@ namespace Dnd_App.Controllers
         [HttpGet]
         public ActionResult Panel()
         {
-            if (!Util.Session.IsLogged())
+            if (!Utils.Session.IsLogged())
             {
                 return RedirectToAction("Login");
             }
@@ -37,7 +37,7 @@ namespace Dnd_App.Controllers
         [HttpGet]
         public ActionResult Register()
         {
-            if (Util.Session.IsLogged())
+            if (Utils.Session.IsLogged())
             {
                 return RedirectToAction("Panel");
             }
@@ -69,7 +69,7 @@ namespace Dnd_App.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-            if (Util.Session.IsLogged())
+            if (Utils.Session.IsLogged())
             {
                 return RedirectToAction("Panel");
             }
@@ -86,7 +86,7 @@ namespace Dnd_App.Controllers
 
             if (user.LogIn())
             {
-                Util.Session.LogIn(user);
+                Utils.Session.LogIn(user);
                 return RedirectToAction("Panel");
             }
             else
@@ -98,7 +98,7 @@ namespace Dnd_App.Controllers
         [HttpGet]
         public ActionResult LogOut()
         {
-            Util.Session.LogOut();
+            Utils.Session.LogOut();
             return RedirectToAction("Login");
         }
         #endregion

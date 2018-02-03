@@ -6,7 +6,7 @@ using Dnd_App.Models;
 using System.Web.Security;
 using System.Text;
 
-namespace Dnd_App.Util
+namespace Dnd_App.Utils
 {
     public class Session
     {

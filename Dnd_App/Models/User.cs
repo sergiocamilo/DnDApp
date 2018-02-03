@@ -22,8 +22,8 @@ namespace Dnd_App.Models
 
         public Boolean LogIn()
         {
-            if (Util.AuxDB.Instance.User.UserName == this.UserName &&
-                Util.AuxDB.Instance.User.Password == this.Password)
+            if (Utils.AuxDB.Instance.User.UserName == this.UserName &&
+                Utils.AuxDB.Instance.User.Password == this.Password)
             {
                 return true;
             }
