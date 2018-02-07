@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Panel";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var U = Dnd_App.Util.Session.CurrentSession();
+    var U = Dnd_App.Utils.Session.CurrentSession();
 }
 
 @section styles{
@@ -25,10 +25,7 @@
             function loadDashboard() {
                 var view = '@TempData["CurrentAction"]';
                 var controller = '@TempData["CurrentController"]';
-
                 LoadView(view, controller);
-
-
             }
         );
     </script>

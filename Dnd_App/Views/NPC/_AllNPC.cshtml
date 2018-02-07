@@ -1,6 +1,10 @@
 ﻿@{
-    var U = Dnd_App.Util.Session.CurrentSession();
+    var U = Dnd_App.Utils.Session.CurrentSession();
 }
+
+
+    <link type="text/css" rel="stylesheet" href="~/Content/tingle.css" media="screen,projection" />
+
 <main>
     <nav class="z-depth-0 grey darken-4">
         <div class="nav-wrapper">
@@ -67,7 +71,7 @@
                     </div>
                     <div class="card-action center">
                         <a class="white-text" href="#">Edit</a>
-                        <a class="white-text" href="#">View</a>
+                        <a class="white-text" href="javascript:LoadView(1);">View</a>
                         <a class="white-text" href="#">Delete</a>
                     </div>
                 </div>
@@ -79,3 +83,62 @@
 
     </div>
 </main>
+
+
+    
+    <script src="~/Scripts/tingle.js"></script>
+
+    <script>
+        
+            
+    </script>
+
+    <script>
+
+        var modal = new tingle.modal({
+            footer: false,
+            stickyFooter: false,
+            closeMethods: ['overlay', 'button', 'escape'],
+            closeLabel: "Close",
+            cssClass: ['custom-class-1', 'custom-class-2'],
+            onOpen: function () {
+                console.log('modal open');
+            },
+            onClose: function () {
+                console.log('modal closed');
+            },
+            beforeClose: function () {
+                // here's goes some logic
+                // e.g. save content before closing the modal
+                return true; // close the modal
+                return false; // nothing happens
+            }
+        });
+    </script>
+
+    <script>
+        function LoadView(id) {
+
+            $.ajax({
+                type: "GET",
+                cache: false,
+                data: { 'TempID': id },
+                url: '@Url.Action("_View", "NPC")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                success: function (data)
+                {
+                    modal.setContent(''+data);
+                    modal.open();
+                    //var _CurrentView = $("#_CurrentView");
+                    //_CurrentView.html(data);
+                },
+                failure: function (errMsg) {
+                    console.log("error ?")
+                    alert(errMsg);
+                }
+            });
+        }
+</script>
+    
+    

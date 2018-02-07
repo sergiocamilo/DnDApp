@@ -7,13 +7,16 @@ using Dnd_App.Models.Enum;
 
 namespace Dnd_App.Utils
 {
-    public class AuxDB
+    public class TemporalDB
     {
-        private static AuxDB instance;
+        private static TemporalDB instance;
         public Models.User User;
-        public NPC Deva;
 
-        private AuxDB()
+        public Dictionary<int, NPC> NPCInstances { get; set; }
+
+        public NPC Deva{ get; }
+
+        private TemporalDB()
         {
             User = new Models.User();
             User.Id = 1;
@@ -23,20 +26,22 @@ namespace Dnd_App.Utils
 
             Deva = new NPC();
             Deva = GenerateDEVA();
+
+            NPCInstances = new Dictionary<int, NPC>();
+            NPCInstances.Add(1, Deva);
         }
 
-        public static AuxDB Instance
+        public static TemporalDB Instance
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new AuxDB();
+                    instance = new TemporalDB();
                 }
                 return instance;
             }
         }
-
 
         private NPC GenerateDEVA()
         {

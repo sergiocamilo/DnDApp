@@ -12,6 +12,7 @@ namespace Dnd_App.Models.Characters
     {
         [Key]
         public int Id { set; get; }
+        public int TempID { set; get; }
 
         public String Name { set; get; }
         public Size Size { set; get; }

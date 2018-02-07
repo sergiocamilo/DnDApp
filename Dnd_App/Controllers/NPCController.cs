@@ -19,10 +19,22 @@ namespace Dnd_App.Controllers
             TempData["CurrentController"] = "NPC";
             return PartialView();
         }
-
-        public ActionResult _View(int Id)
+        
+        public ActionResult _View(int TempID)
         {
-            //var NPC;
+            var Npc = new Models.Characters.NPC();
+
+            try
+            {
+                Npc = Utils.TemporalDB.Instance.NPCInstances[TempID];
+                return PartialView(Npc);
+            }
+            catch (Exception)
+            {
+
+                //throw;
+            }
+
             return PartialView();
         }
 
