@@ -1,0 +1,110 @@
+﻿@model Dnd_App.Models.Characters.NPC
+
+@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var U = Dnd_App.Utils.Session.CurrentSession();
+}
+
+<main>
+    <nav class="z-depth-0 grey darken-4">
+        <div class="nav-wrapper">
+            <div class="col s6">
+                <a href="#!" class="light breadcrumb white-text">MY NPCs</a>
+                <a class="light breadcrumb white-text">New</a>
+                <a href="#!" class="right light white-text"><i class="fa fa-user-o fa-fw"></i> @U.UserName</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="row row-new-character">
+
+        <div class="col s6 col-new-character">
+            <div id="_npcCreate"> Hola </div>
+
+        </div>
+        <div class="col s6 col-new-character">
+            <div id="_npcInfo"></div>
+        </div>
+    </div>
+</main>
+
+
+@section scripts{
+
+    <script>
+        function UpdateToast(data) {
+            var json = JSON.parse(data);
+            if (json["lastValue"] == "") {
+                json["lastValue"] = "void";
+            }
+            Materialize.toast('<i class="fa fa-check-circle fa-fw"></i>   '+json["nameValue"] + ': "' + json["lastValue"] + '" was changed to "' + json["newValue"] + '"', 2500);
+        }
+    </script>
+
+    <script>
+        $(document).ready(
+            function loadNPCView() {
+
+                reloadNpcView();
+            }
+        );
+    </script>
+
+
+    <script>
+        function reloadNpcView() {
+
+            $.ajax({
+                type: "GET",
+                cache: false,
+                url: "@Url.Action("_View","NPC")",
+                data: { 'TempID': @Model.TempID },
+                contentType: "application/json; charset=utf-8",
+                    success: function (data)
+                    {
+
+                        var _npcSpeeds = $("#_npcInfo");
+                        _npcSpeeds.html(data);
+                    },
+                    failure: function (errMsg) {
+                        console.log("error ?")
+                        alert(errMsg);
+                    }
+                });
+
+            }
+    </script>
+
+    <script>
+        $(document).ready(
+            function loadCreate() {
+
+                $.ajax({
+
+                    type: "GET",
+                    cache: false,
+                    url: "@Url.Action("_Create","NPC")",
+                        dataType: "html",
+                        data: { 'TempID': @Model.TempID },
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data)
+                        {
+                            var _npcSenses = $("#_npcCreate");
+                            _npcSenses.html(data);
+                            $('.collapsible').collapsible();
+                            $('select').material_select();
+                        },
+                        failure: function (errMsg) {
+                            console.log("error ?");
+                            alert(errMsg);
+                        }
+                    });
+            }
+        );
+    </script>
+
+
+
+
+}

@@ -193,6 +193,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\Helpers.cs" />
+    <Compile Include="Utils\Presets.cs" />
     <Compile Include="Utils\TemporalDB.cs" />
     <Compile Include="Utils\Security.cs" />
     <Compile Include="Utils\Session.cs" />
@@ -269,6 +270,8 @@
     <Content Include="Views\NPC\_AllNPC.cshtml" />
     <Content Include="Views\User\_Dashboard.cshtml" />
     <Content Include="Views\NPC\_View.cshtml" />
+    <Content Include="Views\NPC\New.cshtml" />
+    <Content Include="Views\NPC\_Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

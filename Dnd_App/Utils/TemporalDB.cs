@@ -7,12 +7,14 @@ using Dnd_App.Models.Enum;
 
 namespace Dnd_App.Utils
 {
+    
     public class TemporalDB
     {
         private static TemporalDB instance;
         public Models.User User;
 
-        public Dictionary<int, NPC> NPCInstances { get; set; }
+        public Dictionary<long, NPC> NPCInstances { get; set; }
+        public long NPCInstancesIndex;
 
         public NPC Deva{ get; }
 
@@ -27,8 +29,12 @@ namespace Dnd_App.Utils
             Deva = new NPC();
             Deva = GenerateDEVA();
 
-            NPCInstances = new Dictionary<int, NPC>();
-            NPCInstances.Add(1, Deva);
+            NPCInstances = new Dictionary<long, NPC>();
+            NPCInstances.Add(0, Deva);
+
+            NPCInstancesIndex = 1;
+
+
         }
 
         public static TemporalDB Instance
@@ -173,5 +179,23 @@ namespace Dnd_App.Utils
 
 
         }
+
+
+        public void InsertNPC(NPC NewNPC)
+        {
+            lock (new { })
+            {
+                NewNPC.TempID = NPCInstancesIndex;
+                NPCInstances.Add(NPCInstancesIndex, NewNPC);
+                NPCInstancesIndex++;
+            }
+        }
+
+        public NPC SelectNPC(long TempID)
+        {
+            return NPCInstances[TempID];
+        }
+
+
     }
 }

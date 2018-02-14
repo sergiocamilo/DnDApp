@@ -1,0 +1,623 @@
+﻿@model Dnd_App.Models.Characters.NPC
+
+
+<ul class="collapsible z-depth-3" data-collapsible="accordion">
+    <!--Basic Info -->
+    <li>
+        <div class="collapsible-header orange-to-orangeblack white-text active">Basic info</div>
+        <div class="collapsible-body grey lighten-5">
+            <div class="row">
+                <div class="input-field col s6">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @type = "text" } })
+                    <label for="name">Name</label>
+                </div>
+                <div class="input-field col s6">
+
+                    @Html.EnumDropDownListFor(m => m.Size.TypeSize, new { @id = "size_size" })
+                    <label for="size_size">Size</label>
+                </div>
+                <div class="input-field col s6">
+                    @Html.EditorFor(model => model.Tag, new { htmlAttributes = new { @type = "text" } })
+                    <label for="tag">Tag</label>
+                </div>
+                <div class="input-field col s6">
+                    @Html.EnumDropDownListFor(m => m.TypeCreature, new { @class = "form-control" })
+                    <label for="type">Type</label>
+                </div>
+                <div class="input-field col s6">
+                    @Html.EnumDropDownListFor(m => m.AlignmentAttitude, new { @class = "form-control" })
+                    <label for="alignmentAttitude">Alignment attitude</label>
+
+                </div>
+                <div class="input-field col s6">
+                    @Html.EnumDropDownListFor(m => m.AlignmentMorality, new { @class = "form-control" })
+                    <label for="alignmentMorality">Alignment morality</label>
+                </div>
+            </div>
+        </div>
+    </li>
+
+    @*
+        <!--Armor Class -->
+        <li>
+            <div class="collapsible-header teal darken-3 white-text">
+                <!-- Body Armor icon by Icons8 -->
+                <img class="icon icons8-Body-Armor" width="18" height="18" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAABLFJREFUaAXtmMuLHUUUxicTRZP4zCZxfE1EJQZCNBFBFBn8EyLoSkVBXGkMQhZuBAlkEQiBRATBpaKgC3UjLiQKCuIDRAkuRBljfOIDjUajif5+N3ViUfTtx0z3Xd0PvltVp875zqnqun2778zMFNMdmO7AcndgHQIvwjs7COlrzPoOMYO43oPqj/BfeAy2WYQ++hpjrBoTwwYyPZqyraT9E1pIzpcYXwtLaHMu97WvhlpCbXP0jltQfBWegiadg+JNWBbk+G+4EQbsa6vyPZSc1HTeHOYy57JxLgrPwDLxA0nZy1/OxXh/8rGxH/ayvTv5qVnOmdsaloQLiXoLlqKOP4az8Cz4Kazy+Qn76kT7VT6HsauhlppVPtZgLZ2wBu93YJVg2B5OirfSjjse9zMnIyZvT2C/GQq18rmyby3W1BrP41mKlOPj+NyUFL2zWFDp8x42Wdr/wrYdCjXUKn3KsTW1wl14lcHjxt/huympeiWOtIhdxCd23lg1xumXdmtrxMt4lIF14+/xjytxMf2n4MkKDW0HYZxnY4yt0y7nrK0RK/Dw7vI1LAXGjf9IMTQjbOHTW2H4m3jzaOb0h/rGxHxTay3GWFtrrMPzE9gkHvP+qhqT40YG23IDfX30jbim1hpKXUz1iKRX4PYDbEriOd6aJDfS7oWXpbGNfW3OCX3bnH1zW4OImk6Paj4vZ847Stwl7qVft4D3mZ+Hwu/AYai/Gs8lxh3KOX3EPDS2TtvcwlrUsLZG3IGHor/DOehzylFYJlJwDzwHCgt7F5Z+5VifWISxasQCc19zmtsarMU5a2vEE3iE0M7k/Wxm886xG+a7cQ3jLt8XfY0JqKVmflcyp7CGqMfaGvECHhHgERA3wNug5zGeHOmOdv8x2mMwYtq2xhgbV5DuSNsc5jKnsIbQtLZG5MfgozHe12N/HH4JQ3yprRpqqVkFawhta2vEIh4R8GvmvY++l/63bD78+mrVNoe5AtYQ+tbWiDzAwFUposu9OxIutTWXMHeukW/oyMFH2RKrC8Maxp7TtYV9yKG5LoJlfWVto+fwspD7MLwG/0kTs7SKTRrmNLewFmuytta4Ds+34XnQX9L8Uk6ib05zW4O1VGJFpfV/49l0Xb1HyIevJn9ceoEb5HHxvcFj5AtTJeISVU5ijDct/zn4fJzTAHZzmdOFjC3evE0L0CfgpZwUWufqsoBXJlU9eQbJ5fcgf1YZ6otsjvzxonbfulwBv1AHatX6mTSHuQbBBah+C4fafbXNMSi2ox53iD4XoqbaE4E/LK/Dvhag1tgfqz5X9CBiV2WCC/R9Xj8Ouy7GGGMXYEBtc7RGl1/WS1H9DJ6C+6Ev6b9AcT68HW6FPgLkZDjzVcEPGb8BfXwW/le0C+6AvjBdDY/CXvEkavkuW7zP7fHmtJRkxqrxM8y1zdUK5eNqXdBcMemu7Uw8QnsI+i/DN9C7ibQvLoHrU2t/G1yA+Xs1wzMoc52ZWE5nluCHoJc9360++2qbw1yDwd15Gp6AfRWvlppzcGLw775HYNOfU3WLNFaNzn8dEjNCl7tQxFS1GzB6rq8sOM/YBSxW8ANsX8Appjsw3YFl7MB/Kw/15/zhntsAAAAASUVORK5CYII=">
+                @DnDApp.Models.ResourceEN.ARMORCLASS
+            </div>
+            <div class="collapsible-body grey lighten-5">
+                <div class="row">
+                    <div class="input-field col s6">
+                        @Html.EnumDropDownListFor(m => m.armorClass.name, new { @type = "text" })
+                        <label for="armorClass_name">
+                            Armor Class
+                        </label>
+                    </div>
+                    <div class="input-field col s6">
+                        @if (@Model.armorClass.shield)
+                        {
+                            <p>
+                                <input checked="checked" class="checkbox" data-val=@Model.armorClass.shield
+                                       id="armorClass_shield" name="armorClass_shield" type="checkbox" value=@Model.armorClass.shield>
+                                <label for="armorClass_shield">Shield ?</label>
+                            </p>
+                        }
+                        else
+                        {
+                            <p>
+                                <input class="checkbox" data-val=@Model.armorClass.shield
+                                       id="armorClass_shield" name="armorClass_shield" type="checkbox" value=@Model.armorClass.shield>
+                                <label for="armorClass_shield">Shield ?</label>
+                            </p>
+
+                        }
+                    </div>
+
+
+                </div>
+            </div>
+        </li>
+
+
+        <!--Hit points -->
+        <li>
+            <div class="collapsible-header teal darken-3 white-text">@DnDApp.Models.ResourceEN.HITPOINTS</div>
+            <div class="collapsible-body grey lighten-5">
+                <div class="row">
+                    <div class="input-field col s6">
+                        @Html.EditorFor(m => m.hitPoint.die, new { htmlAttributes = new { @type = "text" } })
+                        <label for="hitPoint_die">@DnDApp.Models.ResourceEN.HITDICE</label>
+
+                    </div>
+                    <div class="input-field col s6">
+                        @Html.EnumDropDownListFor(m => m.hitPoint.typeDie, new { @class = "form-control" })
+                        <label for="name">@DnDApp.Models.ResourceEN.DICE</label>
+
+                    </div>
+                </div>
+            </div>
+        </li>
+
+
+        <!--Speeds -->
+        <li>
+            <div class="collapsible-header teal darken-3 white-text">@DnDApp.Models.ResourceEN.SPEED</div>
+            <div class="collapsible-body grey lighten-5">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <select multiple="multiple" id="speedsMultiple">
+                            @foreach (DnDApp.Models.TypeSpeed speed in Enum.GetValues(typeof(DnDApp.Models.TypeSpeed)))
+                            {
+                                <option value="@((int)speed)">@speed.ToString() </option>
+
+                            }
+                        </select>
+                        <label>Select multiple speeds</label>
+                    </div>
+                    <div id="_npcSpeeds"></div>
+                </div>
+            </div>
+        </li>
+
+
+        <!--Ability Scores -->
+        <li>
+            <div class="collapsible-header teal darken-3 white-text">@DnDApp.Models.ResourceEN.ABILITYSCORES</div>
+            <div class="collapsible-body grey lighten-5">
+                <div class="row">
+
+                    @for (int i = 0; i < Model.abilitiesScores.Count; i++)
+                    {
+                        <div class="input-field col s4">
+                            @Html.HiddenFor(m => m.abilitiesScores[i].name)
+                            @Html.HiddenFor(m => m.abilitiesScores[i].shortName)
+                            @Html.TextBoxFor(m => m.abilitiesScores[i].value, new { @type = "text", @id = @Model.abilitiesScores[i].shortName })
+                            @Html.HiddenFor(m => m.abilitiesScores[i].modValue)
+                            <label>@Model.abilitiesScores[i].name</label>
+                        </div>
+                    }
+
+                </div>
+
+
+
+            </div>
+        </li>
+
+
+        <!--Saving Throws -->
+        <li>
+            <div class="collapsible-header teal darken-3 white-text">@DnDApp.Models.ResourceEN.SAVINGTHROWS</div>
+            <div class="collapsible-body grey lighten-5">
+                <div class="row">
+                    @for (int i = 0; i < Model.abilitiesScores.Count; i++)
+                    {
+                        <div class="input-field col s6">
+                            @if (Model.abilitiesScores[i].savingThrow)
+                            {
+                                <p>
+                                    <input checked="checked" class="checkbox" data-val="true"
+                                           id="ST@(Model.abilitiesScores[i].shortName)" name="ST@(Model.abilitiesScores[i].shortName)"
+                                           type="checkbox" value="true">
+                                    <label for="ST@(Model.abilitiesScores[i].shortName)">@Model.abilitiesScores[i].name</label>
+                                </p>
+                            }
+                            else
+                            {
+                                <p>
+                                    <input class="checkbox" data-val="true"
+                                           id="ST@(Model.abilitiesScores[i].shortName)" name="ST@(Model.abilitiesScores[i].shortName)"
+                                           type="checkbox" value="true">
+                                    <label for="ST@(Model.abilitiesScores[i].shortName)">@Model.abilitiesScores[i].name</label>
+                                </p>
+
+                            }
+                        </div>
+
+                    }
+                </div>
+            </div>
+        </li>
+
+
+        <!--Skills -->
+        <li>
+            <div class="collapsible-header teal darken-3 white-text">Skills</div>
+            <div class="collapsible-body grey lighten-5">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <select multiple="multiple" id="skillsMultiple">
+                            <option value="0">Str: Athletics </option>
+                            <option value="1">Dex: Acrobatics </option>
+                            <option value="2">Dex: Sleight of Hand </option>
+                            <option value="3">Dex: Stealth </option>
+                            <option value="4">Int: Arcana </option>
+                            <option value="5">Int: History </option>
+                            <option value="6">Int: Investigation </option>
+                            <option value="7">Int: Nature </option>
+                            <option value="8">Int: Religion </option>
+                            <option value="9">Wis: Animal Handling </option>
+                            <option value="10">Wis: Insight </option>
+                            <option value="11">Wis: Medicine </option>
+                            <option value="12">Wis: Perception </option>
+                            <option value="13">Wis: Survival </option>
+                            <option value="14">Cha: Deception </option>
+                            <option value="15">Cha: Intimidation </option>
+                            <option value="16">Cha: Performance </option>
+                            <option value="17">Cha: Persuasion </option>
+                        </select>
+                        <label>Select multiple skills</label>
+                    </div>
+                    <div id="_npcSkills"></div>
+                </div>
+            </div>
+        </li>
+
+        <!--Conditions  (Vulnerabilities, resistances, immunities) -->
+        <li>
+            <div class="collapsible-header teal darken-3 white-text">Conditions</div>
+            <div class="collapsible-body grey lighten-5">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <select multiple="multiple" id="vulnerabilitiesMultiple">
+                            @foreach (DnDApp.Models.TypeDamage vul in Enum.GetValues(typeof(DnDApp.Models.TypeDamage)))
+                            {
+                                <option value="@((int)vul)">@vul.ToString() </option>
+                            }
+                        </select>
+                        <label>Select multiple damage vulnerabilities</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <select multiple="multiple" id="resistancesMultiple">
+                            @foreach (DnDApp.Models.TypeDamage res in Enum.GetValues(typeof(DnDApp.Models.TypeDamage)))
+                            {
+                                <option value="@((int)res)">@res.ToString() </option>
+                            }
+                        </select>
+                        <label>Select multiple damage resistances</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <select multiple="multiple" id="immunitiesDmgMultiple">
+                            @foreach (DnDApp.Models.TypeDamage imm in Enum.GetValues(typeof(DnDApp.Models.TypeDamage)))
+                            {
+                                <option value="@((int)imm)">@imm.ToString() </option>
+                            }
+                        </select>
+                        <label>Select multiple damage immunities</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <select multiple="multiple" id="immunitiesCndMultiple">
+                            @foreach (DnDApp.Models.TypeCondition imm in Enum.GetValues(typeof(DnDApp.Models.TypeCondition)))
+                            {
+                                <option value="@((int)imm)">@imm.ToString() </option>
+                            }
+                        </select>
+                        <label>Select multiple condition immunities</label>
+                    </div>
+                </div>
+            </div>
+        </li>
+
+
+        <!--Senses -->
+        <li>
+            <div class="collapsible-header teal darken-3 white-text">Senses</div>
+            <div class="collapsible-body grey lighten-5">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <select multiple="multiple" id="sensesMultiple">
+                            @foreach (DnDApp.Models.TypeSense sense in Enum.GetValues(typeof(DnDApp.Models.TypeSense)))
+                            {
+                                <option value="@((int)sense)">@sense.ToString() </option>
+                            }
+                        </select>
+                        <label>Select multiple senses</label>
+                    </div>
+                    <div id="_npcSenses"></div>
+                </div>
+            </div>
+        </li>
+
+
+        <!--Languages -->
+        <li>
+            <div class="collapsible-header teal darken-3 white-text">Languages</div>
+            <div class="collapsible-body grey lighten-5">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <select multiple="multiple" id="languagesSpeakMultiple">
+                            <option value="0">Common</option>
+                            <option value="1">Dwarvish </option>
+                            <option value="2">Elvish </option>
+                            <option value="3">Giant </option>
+                            <option value="4">Gnomish </option>
+                            <option value="5">Goblin </option>
+                            <option value="6">Halfing </option>
+                            <option value="7">Orc </option>
+                            <option value="8">Abyssal </option>
+                            <option value="9">Celestial </option>
+                            <option value="10">Draconic </option>
+                            <option value="11">Deep Speech </option>
+                            <option value="12">Infernal </option>
+                            <option value="13">Primordial </option>
+                            <option value="14">Sylvan </option>
+                            <option value="15">Undercommon </option>
+                        </select>
+                        <label>Select multiple language speak</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <select multiple="multiple" id="languagesUnderstandMultiple">
+                            <option value="0">Common </option>
+                            <option value="1">Dwarvish </option>
+                            <option value="2">Elvish </option>
+                            <option value="3">Giant </option>
+                            <option value="4">Gnomish </option>
+                            <option value="5">Goblin </option>
+                            <option value="6">Halfing </option>
+                            <option value="7">Orc </option>
+                            <option value="8">Abyssal </option>
+                            <option value="9">Celestial </option>
+                            <option value="10">Draconic </option>
+                            <option value="11">Deep Speech </option>
+                            <option value="12">Infernal </option>
+                            <option value="13">Primordial </option>
+                            <option value="14">Sylvan </option>
+                            <option value="15">Undercommon </option>
+                        </select>
+                        <label>Select multiple language understand</label>
+                    </div>
+
+                    <div class="input-field col s6">
+                        @Html.EditorFor(model => model.telepathy, new { htmlAttributes = new { @type = "text", @id = "telepathy" } })
+                        <label for="telepathy">Telepathy</label>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </li>
+
+
+        <!--Challenge -->
+        <li>
+            <div class="collapsible-header teal darken-3 white-text">Challenge Rating</div>
+            <div class="collapsible-body grey lighten-5">
+                <div class="row">
+                    <div class="input-field col s12  ">
+                        <select id="chrating">
+                            @foreach (var challenge in Model.challenge.ChallengeList())
+                            {
+                                <option value="@(challenge.xp)"> Challenge  @challenge.value - Experience @challenge.xp XP - Proficiency +@challenge.proficiencyBonus </option>
+
+                            }
+                        </select>
+                        <label for="chrating">Challenge</label>
+                    </div>
+                </div>
+            </div>
+        </li>
+
+
+        <!--Special Traits -->
+        <li>
+            <div class="collapsible-header teal darken-3 white-text">Special Traits</div>
+            <div class="collapsible-body grey lighten-5">
+                <div class="row">
+                    <div id="_npcSpecialTraits"></div>
+                    <center>
+                        <a onclick="addSpecialTraits();" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+                    </center>
+                </div>
+            </div>
+        </li>
+
+
+        <!--Actions -->
+        <li>
+            <div class="collapsible-header teal darken-3 white-text">Actions</div>
+            <div class="collapsible-body grey lighten-5">
+                <div class="row">
+                    <div id="_npcActions"></div>
+                    <center>
+                        <a onclick="addAction(1);" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+                    </center>
+                </div>
+            </div>
+        </li>
+
+        <!--Reactions -->
+
+        <li>
+            <div class="collapsible-header teal darken-3 white-text">Reactions</div>
+            <div class="collapsible-body grey lighten-5">
+                <div class="row">
+                    <div id="_npcReactions"></div>
+                    <center>
+                        <a onclick="addAction(2);" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+                    </center>
+                </div>
+            </div>
+        </li>
+        <!--Legendary Action -->
+
+        <li>
+            <div class="collapsible-header teal darken-3 white-text">Legendary Actions</div>
+            <div class="collapsible-body grey lighten-5">
+                <div class="row">
+                    <div id="_npcLActions"></div>
+                    <center>
+                        <a onclick="addAction(3);" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+                    </center>
+                </div>
+            </div>
+        </li>
+    *@
+</ul>
+
+
+
+
+
+
+
+
+<!--Basic Info  ------------------------------------------------------------------------------------->
+<!--updateName-->
+<script>
+           $(document).ready(
+                function updateName() {
+                    $("#Name").focusout(function (event) {
+
+                        var name = $("#Name").val();
+
+                        if (name == "") {
+                            Materialize.toast('<i class="fa fa-exclamation-triangle"></i> Alert: Name can not be empty!', 3000);
+                            name = "Name";
+                            $("#Name").val("Name");
+                        }
+
+                        $.ajax({
+                           type: "POST",
+                           cache: false,
+                            url: "@Url.Action("_updateName", "NPC")",
+                            dataType: "html",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify({ 'newName': name, 'tempID': @Model.TempID }),
+                            success: function (data)
+                            {
+                                UpdateToast(data);
+                                reloadNpcView();
+                            },
+                            failure: function (errMsg) {
+                                
+                                alert(errMsg);
+                            }
+                        });
+
+                    });
+                }
+            );
+</script>
+
+<!--updateTag-->
+<script>
+           $(document).ready(
+                function updateTag() {
+                    $("#Tag").focusout(function (event) {
+
+                        var val = $("#Tag").val();
+                        
+                       $.ajax({
+                           type: "POST",
+                           cache: false,
+                            url: "@Url.Action("_updateTag", "NPC")",
+                            dataType: "html",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify({ 'val': val, 'tempID': @Model.TempID }),
+                            success: function (data)
+                            {
+                                UpdateToast(data);
+                                reloadNpcView();
+                            },
+                            failure: function (errMsg) {
+                                console.log("error size")
+                                alert(errMsg);
+                            }
+                        });
+
+
+                    });
+                }
+            );
+
+
+</script>
+
+<!--updateAlignmentMorality-->
+<script>
+           $(document).ready(
+               function updateAlignmentMorality() {
+                   $("#AlignmentMorality").change(function (event) {
+                       var val = $('#AlignmentMorality').val();
+                       console.log(val);
+
+                       $.ajax({
+                           type: "POST",
+                           cache: false,
+                           url: "@Url.Action("_updateAlignmentMorality")",
+                            dataType: "html",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify({ 'val': val, 'tempID': @Model.TempID }),
+                            success: function (data)
+                            {
+                                UpdateToast(data);
+                                reloadNpcView();
+                            },
+                            failure: function (errMsg) {
+                                console.log("error size")
+                                alert(errMsg);
+                            }
+                        });
+
+
+                   });
+
+               }
+           );
+</script>
+
+<!--updateAlignmentAttitude-->
+<script>
+           $(document).ready(
+               function updateAlignmentMorality() {
+                   $("#AlignmentAttitude").change(function (event) {
+                       var val = $('#AlignmentAttitude').val();
+                       console.log(val);
+
+                       $.ajax({
+                           type: "POST",
+                           cache: false,
+                            url: "@Url.Action("_updateAlignmentAttitude")",
+                            dataType: "html",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify({ 'val': val, 'tempID': @Model.TempID }),
+                            success: function (data)
+                            {
+                                UpdateToast(data);
+                                reloadNpcView();
+                            },
+                            failure: function (errMsg) {
+                                console.log("error size")
+                                alert(errMsg);
+                            }
+                        });
+
+
+                   });
+
+               }
+           );
+</script>
+
+<!--updateSize-->
+<script>
+           $(document).ready(
+               function updateSize() {
+                   $("#size_size").change(function (event) {
+                       var val = $('#size_size').val();
+                       console.log(val);
+
+
+                       $.ajax({
+                           type: "POST",
+                           cache: false,
+                            url: "@Url.Action("_updateSize")",
+                            dataType: "html",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify({ 'type': val, 'tempID': @Model.TempID }),
+                            success: function (data)
+                            {
+                                UpdateToast(data);
+                                reloadNpcView();
+                            },
+                            failure: function (errMsg) {
+                                console.log("error size")
+                                alert(errMsg);
+                            }
+                        });
+                   });
+               }
+           );
+</script>
+
+<!--updateType-->
+<script>
+               $(document).ready(
+                   function updateType() {
+                       $("#TypeCreature").change(function (event) {
+                           var val = $('#TypeCreature').val();
+                           console.log(val);
+
+
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_updateType")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ 'type': val, 'tempID': @Model.TempID }),
+                                success: function (data)
+                                {
+                                    UpdateToast(data);
+                                    reloadNpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error size")
+                                    alert(errMsg);
+                                }
+                            });
+                       });
+                   }
+               );
+</script>
