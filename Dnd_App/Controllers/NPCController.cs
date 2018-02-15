@@ -117,6 +117,32 @@ namespace Dnd_App.Controllers
 
         #endregion
 
+        #region Callbacks --> Armor Class
+
+        [HttpPost]
+        public ActionResult _RecalculateAC(Boolean _isShield, Models.Enum.ArmorName _nameAC, int TempID)
+        {
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+
+            var LastValue = Npc.ArmorClass.Name + "" + (Npc.ArmorClass.Shield ? " + shield" : "");
+
+            Npc.ArmorClass.Name = _nameAC;
+            Npc.ArmorClass.Shield = _isShield;
+
+            //Npc.RecalculateAC();
+
+            return Json(new
+            {
+                nameValue = "Armor Class",
+                lastValue = LastValue.ToString(),
+                newValue = Npc.ArmorClass.Name + "" + (Npc.ArmorClass.Shield ? " + shield" : "")
+            });
+
+        }
+
+
+        #endregion
+
 
 
 
