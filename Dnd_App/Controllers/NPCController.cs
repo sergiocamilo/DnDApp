@@ -143,8 +143,28 @@ namespace Dnd_App.Controllers
 
         #endregion
 
+        #region Callbacks --> Armor Class
 
+        [HttpPost]
+        public ActionResult _RecalculateHP(int hd, Models.Enum.TypeDie d, int TempID)
+        {
 
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
 
+            Npc.HitPoint.Die = hd;
+            Npc.HitPoint.TypeDie = d;
+
+            var LastValue = Npc.HitPoint.HitPointsAVG;
+            //npc.RecalculateHP();
+
+            return Json(new
+            {
+                nameValue = "Hit Points average",
+                lastValue = LastValue.ToString(),
+                newValue = Npc.HitPoint.HitPointsAVG.ToString()
+            });
+        }
+
+        #endregion
     }
 }

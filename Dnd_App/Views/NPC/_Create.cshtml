@@ -76,27 +76,27 @@
             </div>
         </li>
 
-@*
+
     <!--Hit points -->
     <li>
-        <div class="collapsible-header teal darken-3 white-text">@DnDApp.Models.ResourceEN.HITPOINTS</div>
+        <div class="collapsible-header teal darken-3 white-text">Hit Ponits</div>
         <div class="collapsible-body grey lighten-5">
             <div class="row">
                 <div class="input-field col s6">
-                    @Html.EditorFor(m => m.hitPoint.die, new { htmlAttributes = new { @type = "text" } })
-                    <label for="hitPoint_die">@DnDApp.Models.ResourceEN.HITDICE</label>
+                    @Html.EditorFor(m => m.HitPoint.Die, new { htmlAttributes = new { @type = "text" } })
+                    <label for="hitPoint_die">Hit dice</label>
 
                 </div>
                 <div class="input-field col s6">
-                    @Html.EnumDropDownListFor(m => m.hitPoint.typeDie, new { @class = "form-control" })
-                    <label for="name">@DnDApp.Models.ResourceEN.DICE</label>
+                    @Html.EnumDropDownListFor(m => m.HitPoint.TypeDie, new { @class = "form-control" })
+                    <label for="HitPoint_TypeDie">Type die</label>
 
                 </div>
             </div>
         </div>
     </li>
 
-
+@*
     <!--Speeds -->
     <li>
         <div class="collapsible-header teal darken-3 white-text">@DnDApp.Models.ResourceEN.SPEED</div>
@@ -651,6 +651,69 @@
                 dataType: "html",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({ '_isShield': isShield, '_nameAC': nameAC, 'tempID': @Model.TempID }),
+                success: function (data)
+                {
+                    console.log(data);
+                    UpdateToast(data);
+                    reloadNpcView();
+                },
+                failure: function (errMsg) {
+                    alert(errMsg);
+                }
+            });
+           }
+
+</script>
+
+
+<!--Hitpoints     ------------------------------------------------------------------------------------->
+
+<script>
+           $(document).ready(
+               function changeHP() {
+                   $("#HitPoint_Die").change(function (event) {
+                       var hd = $('#HitPoint_Die').val();
+                       var d = $('#HitPoint_TypeDie').val();
+
+                       if (isNaN(hd)) {
+                           Alertoast('Hit Point value must be a number', 'Hit Point value was changed to 1');
+                           hd = "1";
+                           $("#HitPoint_Die").val("1");
+                       }
+
+                       if (hd == "") {
+                           Alertoast('Hit Point value can not be empty', 'Hit Point value was changed to 1');
+                           hd = "1";
+                           $("#HitPoint_Die").val("1");
+                       }
+
+                       recalculateHP(hd, d);
+
+                   });
+                   $("#HitPoint_TypeDie").change(function (event) {
+                       var hd = $('#HitPoint_Die').val();
+                       var d = $('#HitPoint_TypeDie').val();
+
+
+                       recalculateHP(hd, d);
+
+                   });
+
+               }
+           );
+</script>
+
+<!--recalculateHP-->
+<script>
+           function recalculateHP(hd, d) {
+
+               $.ajax({
+                type: "POST",
+                cache: false,
+                url: "@Url.Action("_RecalculateHP")",
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ 'hd': hd, 'd': d, 'TempId': @Model.TempID }),
                 success: function (data)
                 {
                     console.log(data);
