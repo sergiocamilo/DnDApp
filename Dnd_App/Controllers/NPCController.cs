@@ -166,5 +166,44 @@ namespace Dnd_App.Controllers
         }
 
         #endregion
+
+        #region Callbacks --> Speeds
+
+
+        [HttpPost]
+        public ActionResult _UpdateSpeed(Models.Enum.TypeSpeed _type, int _value, int TempID)
+        {
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            int LastValue = 0;
+
+            foreach (var s in Npc.Speeds.Where(r => r.TypeSpeed == _type))
+            {
+                LastValue = s.Speedft;
+                s.Speedft = _value;
+
+            }
+
+            return Json(new
+            {
+                nameValue = "Speed "+ _type,
+                lastValue = LastValue.ToString(),
+                newValue = _value
+            });
+
+        }
+
+        [HttpPost]
+        public PartialViewResult _AddSpeed(List<Models.Enum.TypeSpeed> list, int TempID)
+        {
+
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            //Npc.AddSpeed(list);
+
+
+            return PartialView(Npc.Speeds);
+        }
+
+
+        #endregion
     }
 }
