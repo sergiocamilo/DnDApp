@@ -1,2 +1,5 @@
 # DnDApp
-Web application
+Web application build characters and make combats
+
+## Getting Started
+

@@ -59,3 +59,14 @@
     -ms-overflow-style: none;
 }
 
+.bar-breadcrumb {
+    margin-left: 230px;
+}
+
+.bar-user {
+    margin-right: 10px;
+}
+
+.bar-logo {
+    margin-left: 10px;
+}
