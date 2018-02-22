@@ -209,6 +209,7 @@
     <Content Include="Content\tingle.css" />
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\materialize\initform.js" />
+    <Content Include="Scripts\materialize\loadform.js" />
     <Content Include="Scripts\materialize\materialize.js" />
     <Content Include="Scripts\materialize\materialize.min.js" />
     <Content Include="Scripts\tingle.js" />
@@ -219,16 +220,16 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="fonts\roboto\Roboto-Thin.woff2" />
-    <Content Include="fonts\roboto\Roboto-Thin.woff" />
-    <Content Include="fonts\roboto\Roboto-Regular.woff2" />
-    <Content Include="fonts\roboto\Roboto-Regular.woff" />
-    <Content Include="fonts\roboto\Roboto-Medium.woff2" />
-    <Content Include="fonts\roboto\Roboto-Medium.woff" />
-    <Content Include="fonts\roboto\Roboto-Light.woff2" />
-    <Content Include="fonts\roboto\Roboto-Light.woff" />
-    <Content Include="fonts\roboto\Roboto-Bold.woff2" />
-    <Content Include="fonts\roboto\Roboto-Bold.woff" />
+    <Content Include="fonts\Roboto-Thin.woff2" />
+    <Content Include="fonts\Roboto-Thin.woff" />
+    <Content Include="fonts\Roboto-Regular.woff2" />
+    <Content Include="fonts\Roboto-Regular.woff" />
+    <Content Include="fonts\Roboto-Medium.woff2" />
+    <Content Include="fonts\Roboto-Medium.woff" />
+    <Content Include="fonts\Roboto-Light.woff2" />
+    <Content Include="fonts\Roboto-Light.woff" />
+    <Content Include="fonts\Roboto-Bold.woff2" />
+    <Content Include="fonts\Roboto-Bold.woff" />
     <Content Include="Content\DUNGRG__.TTF" />
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
@@ -279,6 +280,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\materialize\fonts\" />
+    <Folder Include="fonts\roboto\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

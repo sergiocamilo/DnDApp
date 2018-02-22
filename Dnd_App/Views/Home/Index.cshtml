@@ -2,53 +2,54 @@
     ViewBag.Title = "Start Page";
 }
 
-
-<div class="parallax-container center valign-wrapper">
-    <div class="container">
-        <div class="row">
-            <div class="col s12 white-text">
-                <h1 class="white-text" id="logo" style="font-size: 200px;">DnDApp</h1>
-                <h5>Start creating npcs, pcs and combats</h5>
-                @Html.ActionLink("Register","Register","User",null, 
-                    new { @class="waves-effect waves-light btn-large yellow darken-2", @style="width:150px;"})
-                @Html.ActionLink("Log in", "Login", "User", null,
+<main>
+    <div class="parallax-container center valign-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 white-text">
+                    <h1 class="white-text" id="logo" style="font-size: 200px;">DnDApp</h1>
+                    <h5>Start creating npcs, pcs and combats</h5>
+                    @Html.ActionLink("Register", "Register", "User", null,
+                    new { @class = "waves-effect waves-light btn-large yellow darken-2", @style = "width:150px;" })
+                    @Html.ActionLink("Log in", "Login", "User", null,
                     new { @class = "waves-effect waves-light btn-large blue darken-2", @style = "width:150px;" })
+                </div>
             </div>
         </div>
+
+        <div class="parallax">
+            <img src="~/Content/img_parallax.png">
+        </div>
     </div>
 
-    <div class="parallax">
-        <img src="~/Content/img_parallax.png">
+
+    <div class="section white">
+        <div class="row container">
+            <div class="col s4">
+                <h4 class=" center" id="logo">Create NPCs</h4>
+                <p class="center light">
+                    Parallax is an effect where the background content or image in this case, is moved at a different speed than the foreground content while scrolling.
+                </p>
+            </div>
+
+            <div class="col s4">
+                <h4 class=" center" id="logo">Combats</h4>
+                <p class="center light">
+                    Parallax is an effect where the background content or image in this case, is moved at a different speed than the foreground content while scrolling.
+                </p>
+            </div>
+            <div class="col s4">
+                <h4 class=" center" id="logo">Create PCs</h4>
+                <p class="center light">
+                    Parallax is an effect where the background content or image in this case, is moved at a different speed than the foreground content while scrolling.
+                </p>
+            </div>
+
+        </div>
     </div>
-</div>
-
-
-<div class="section white">
-    <div class="row container">
-        <div class="col s4">
-            <h4 class=" center" id="logo">Create NPCs</h4>
-            <p class="center light">
-                Parallax is an effect where the background content or image in this case, is moved at a different speed than the foreground content while scrolling.
-            </p>
-        </div>
-
-        <div class="col s4">
-            <h4 class=" center" id="logo">Combats</h4>
-            <p class="center light">
-                Parallax is an effect where the background content or image in this case, is moved at a different speed than the foreground content while scrolling.
-            </p>
-        </div>
-        <div class="col s4">
-            <h4 class=" center" id="logo">Create PCs</h4>
-            <p class="center light">
-                Parallax is an effect where the background content or image in this case, is moved at a different speed than the foreground content while scrolling.
-            </p>
-        </div>
-
-    </div>
-</div>
-
+    
+</main>
 
 @section scripts{
-    
+
 }

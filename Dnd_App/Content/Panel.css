@@ -36,6 +36,14 @@ header, main, footer {
     font-size: 20px;
 }
 
+
+
+#logo-side {
+    font-family: 'DUNGRG__';
+    font-size: 70px;
+    margin-top: 0px;
+}
+
 @font-face {
     font-family: 'DUNGRG__';
     src: url('DUNGRG__.TTF') format('truetype');
@@ -43,12 +51,13 @@ header, main, footer {
 
 #li-logo {
     margin-bottom: 35px;
-    margin-top:25px;
+    margin-top:0px;
     
 }
 
 #li-a-logo {
     height: 80px;
+    margin-top: 0px;
 }
 
 #sn-li-a {
