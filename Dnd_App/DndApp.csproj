@@ -207,6 +207,8 @@
     <Content Include="Content\materialize.min.css" />
     <Content Include="Content\Panel.css" />
     <Content Include="Content\tingle.css" />
+    <Content Include="Scripts\app.js" />
+    <Content Include="Scripts\materialize\initform.js" />
     <Content Include="Scripts\materialize\materialize.js" />
     <Content Include="Scripts\materialize\materialize.min.js" />
     <Content Include="Scripts\tingle.js" />
