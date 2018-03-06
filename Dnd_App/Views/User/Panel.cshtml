@@ -10,35 +10,40 @@
 
 @Html.Partial("_sidenav")
 
-<div id="_CurrentView"></div>
+<main>
+    <div class="navbar-fixed">
+        <nav class="z-depth-0 cloud-horizontal">
+            <div class="nav-wrapper">
+                <div class="col s6">
+                    <a href="#!" class="breadcrumb white-text">Summary</a>
+                    <a href="#!" class="right light black-text"><i class="fa fa-user-o fa-fw"></i> @U.UserName</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div id="_CurrentView"></div>
+</main>
+
+
 
 
 @section scripts{
     <script>
         $(document).ready(
-            function loadDashboard() {
-                var view = '@TempData["CurrentAction"]';
-                var controller = '@TempData["CurrentController"]';
-                LoadView(view, controller);
+            function init() {
+                LoadDashboard();
             }
         );
     </script>
 
     <script>
-        function LoadView(view, controller) {
-
-
-
-            var urlAction = '@Url.Action("__view","__controller")';
-            urlAction = urlAction.replace("__view", view);
-            urlAction = urlAction.replace("__controller", controller);
-
+        function LoadDashboard() {
+            
             $.ajax({
                 type: "GET",
                 cache: false,
-                url: urlAction,
+                url: "@Url.Action("_Dashboard", "User")",
                 dataType: "html",
-                @* data: JSON.stringify({ 'id': @ViewBag.id }),*@
                 contentType: "application/json; charset=utf-8",
                 success: function (data)
                 {
@@ -46,12 +51,91 @@
                     _CurrentView.html(data);
                 },
                 failure: function (errMsg) {
-                    console.log("error ?")
                     alert(errMsg);
                 }
             });
         }
     </script>
+
+<script>
+        function LoadNPCs() {
+
+            $.ajax({
+                type: "GET",
+                cache: false,
+                url: "@Url.Action("_AllNPC", "NPC")",
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                success: function (data)
+                {
+                    var _CurrentView = $("#_CurrentView");
+                    _CurrentView.html(data);
+                },
+                failure: function (errMsg) {
+                    alert(errMsg);
+                }
+            });
+        }
+</script>
+
+
+
+
+
+
+
+
+
+<script src="~/Scripts/tingle.js"></script>
+
+<script>
+
+        var modal = new tingle.modal({
+            footer: false,
+            stickyFooter: false,
+            closeMethods: ['overlay', 'button', 'escape'],
+            closeLabel: "Close",
+            cssClass: ['custom-class-1', 'custom-class-2'],
+            onOpen: function () {
+                console.log('modal open');
+            },
+            onClose: function () {
+                console.log('modal closed');
+            },
+            beforeClose: function () {
+                // here's goes some logic
+                // e.g. save content before closing the modal
+                return true; // close the modal
+                return false; // nothing happens
+            }
+        });
+</script>
+
+<script>
+        function LoadView(id) {
+
+            $.ajax({
+                type: "GET",
+                cache: false,
+                data: { 'TempID': id },
+                url: '@Url.Action("_View", "NPC")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                success: function (data)
+                {
+                    modal.setContent(''+data);
+                    modal.open();
+                    //var _CurrentView = $("#_CurrentView");
+                    //_CurrentView.html(data);
+                },
+                failure: function (errMsg) {
+                    console.log("error ?")
+                    alert(errMsg);
+                }
+            });
+        }
+</script>
+
 }
 
 

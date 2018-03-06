@@ -18,8 +18,6 @@ namespace Dnd_App.Controllers
         [HttpGet]
         public ActionResult _AllNPC()
         {
-            TempData["CurrentAction"] = "_AllNPC";
-            TempData["CurrentController"] = "NPC";
             return PartialView();
         }
 

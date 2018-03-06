@@ -3,142 +3,75 @@
 }
 
 
-    <link type="text/css" rel="stylesheet" href="~/Content/tingle.css" media="screen,projection" />
+<link type="text/css" rel="stylesheet" href="~/Content/tingle.css" media="screen,projection" />
 
-<main>
-    <nav class="z-depth-0 grey darken-4">
-        <div class="nav-wrapper">
-            <div class="col s6">
-                <a href="#!" class="light breadcrumb white-text">MY NPCs</a>
-                <a href="#!" class="right light white-text"><i class="fa fa-user-o fa-fw"></i> @U.UserName</a>
-            </div>
-        </div>
-    </nav>
 
-    <p class="center-align">
-        @Html.ActionLink("Create new","New","NPC",new { @class="btn-large waves-effect waves-light blue-grey darken-1 center-align" })
-    </p>
-    <div class="row">
+<p class="left-align">
+    @Html.ActionLink("Create new", "New", "NPC", new { @class = "btn-large waves-effect waves-light blue-grey darken-1 center-align" })
+</p>
+<div class="row">
 
 
 
 
-        @for (int i = 0; i < 5; i++)
+    @for (int i = 0; i < 5; i++)
             {
-            <div class="col s12 m4">
-                <!-- Basic Card -->
-                <div class="card blue-grey darken-1 orange-to-orangeblack z-depth-2">
-                    <div class="card-content white-text">
-                        <span class="card-title">Name NPC</span>
-                        <hr />
-                        <p>Armor Class: item.Value.armorClass.total </p>
-                        <p>Hit Points: item.Value.hitPoint.hitPointsAVG </p>
-                        <hr />
-                        <div class="row">
-                            @*@foreach (var ascore in item.Value.abilitiesScores)
-                                {
-                                    <div class="col s6">
-                                        @if (@ascore.modValue >= 0)
-                                        {
-                                            <p>@ascore.shortName : @ascore.value (+@ascore.modValue)</p>
-                                        }
-                                        else
-                                        {
-                                            <p>@ascore.shortName : @ascore.value (@ascore.modValue)</p>
-                                        }
-                                    </div>
-                                }*@
-                            <div class="col s6">
-                                <p>str : 0 (+0)</p>
-                            </div>
-                            <div class="col s6">
-                                <p>str : 0 (+0)</p>
-                            </div>
-                            <div class="col s6">
-                                <p>str : 0 (+0)</p>
-                            </div>
-                            <div class="col s6">
-                                <p>str : 0 (+0)</p>
-                            </div>
-                            <div class="col s6">
-                                <p>str : 0 (+0)</p>
-                            </div>
-                            <div class="col s6">
-                                <p>str : 0 (+0)</p>
-                            </div>
-
+        <div class="col s12 m4">
+            <!-- Basic Card -->
+            <div class="card blue-grey darken-1 orange-to-orangeblack z-depth-2">
+                <div class="card-content white-text">
+                    <span class="card-title">Name NPC</span>
+                    <hr />
+                    <p>Armor Class: item.Value.armorClass.total </p>
+                    <p>Hit Points: item.Value.hitPoint.hitPointsAVG </p>
+                    <hr />
+                    <div class="row">
+                        @*@foreach (var ascore in item.Value.abilitiesScores)
+                            {
+                                <div class="col s6">
+                                    @if (@ascore.modValue >= 0)
+                                    {
+                                        <p>@ascore.shortName : @ascore.value (+@ascore.modValue)</p>
+                                    }
+                                    else
+                                    {
+                                        <p>@ascore.shortName : @ascore.value (@ascore.modValue)</p>
+                                    }
+                                </div>
+                            }*@
+                        <div class="col s6">
+                            <p>str : 0 (+0)</p>
                         </div>
-                    </div>
-                    <div class="card-action center">
-                        <a class="white-text" href="#">Edit</a>
-                        <a class="white-text" href="javascript:LoadView(1);">View</a>
-                        <a class="white-text" href="#">Delete</a>
+                        <div class="col s6">
+                            <p>str : 0 (+0)</p>
+                        </div>
+                        <div class="col s6">
+                            <p>str : 0 (+0)</p>
+                        </div>
+                        <div class="col s6">
+                            <p>str : 0 (+0)</p>
+                        </div>
+                        <div class="col s6">
+                            <p>str : 0 (+0)</p>
+                        </div>
+                        <div class="col s6">
+                            <p>str : 0 (+0)</p>
+                        </div>
+
                     </div>
                 </div>
+                <div class="card-action center">
+                    <a class="white-text" href="#">Edit</a>
+                    <a class="white-text" href="javascript:LoadView(1);">View</a>
+                    <a class="white-text" href="#">Delete</a>
+                </div>
             </div>
-        }
+        </div>
+    }
+</div>
 
 
 
 
-    </div>
-</main>
 
 
-    
-    <script src="~/Scripts/tingle.js"></script>
-
-    <script>
-        
-            
-    </script>
-
-    <script>
-
-        var modal = new tingle.modal({
-            footer: false,
-            stickyFooter: false,
-            closeMethods: ['overlay', 'button', 'escape'],
-            closeLabel: "Close",
-            cssClass: ['custom-class-1', 'custom-class-2'],
-            onOpen: function () {
-                console.log('modal open');
-            },
-            onClose: function () {
-                console.log('modal closed');
-            },
-            beforeClose: function () {
-                // here's goes some logic
-                // e.g. save content before closing the modal
-                return true; // close the modal
-                return false; // nothing happens
-            }
-        });
-    </script>
-
-    <script>
-        function LoadView(id) {
-
-            $.ajax({
-                type: "GET",
-                cache: false,
-                data: { 'TempID': id },
-                url: '@Url.Action("_View", "NPC")',
-                dataType: "html",
-                contentType: "application/json; charset=utf-8",
-                success: function (data)
-                {
-                    modal.setContent(''+data);
-                    modal.open();
-                    //var _CurrentView = $("#_CurrentView");
-                    //_CurrentView.html(data);
-                },
-                failure: function (errMsg) {
-                    console.log("error ?")
-                    alert(errMsg);
-                }
-            });
-        }
-</script>
-    
-    

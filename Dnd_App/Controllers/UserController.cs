@@ -15,11 +15,6 @@ namespace Dnd_App.Controllers
             {
                 return RedirectToAction("Login");
             }
-            if (TempData["CurrentAction"] == null || TempData["CurrentController"] == null)
-            {
-                TempData["CurrentAction"] = "_Dashboard";
-                TempData["CurrentController"] = "User";
-            }
             
             return View();
         }
@@ -27,8 +22,7 @@ namespace Dnd_App.Controllers
         [HttpGet]
         public ActionResult _Dashboard()
         {
-            TempData["CurrentAction"] = "_Dashboard";
-            TempData["CurrentController"] = "User";
+            
             return PartialView();
         }
 

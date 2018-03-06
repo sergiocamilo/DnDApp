@@ -1,33 +1,32 @@
-﻿<ul id="slide-out" class="side-nav fixed z-depth-0 noir">
+﻿<ul id="slide-out" class="side-nav fixed z-depth-0 red-to-red">
 
     <li id="li-logo" >
-        <a id="li-a-logo" href="#!user" class="brand-logo">
+        <a id="li-a-logo" class="brand-logo" onclick="LoadDashboard();">
             <h5 id="logo-side" class="white-text">DnDApp</h5>
         </a>
     </li>
-
     <li>
-        <a id="sn-li-a" class="waves-effect white-text menu" onclick="LoadView('_Dashboard', 'User');" href="">
+        <a id="sn-li-a" class="waves-effect white-text menu" onclick="LoadDashboard();">
             <i class="fa fa-th" style="color:white"></i>Dashboard
         </a>
     </li>
     <li>
-        <a id="sn-li-a" class="waves-effect white-text menu" href="#!name">
+        <a id="sn-li-a" class="waves-effect white-text menu" onclick="LoadProfile();">
             <i class="fa fa-user-o" style="color:white"></i>Profile
         </a>
     </li>
     <li>
-        <a id="sn-li-a" class="waves-effect white-text menu" onclick="LoadView('_AllNPC', 'NPC');">
+        <a id="sn-li-a" class="waves-effect white-text menu" onclick="LoadNPCs();">
             <i class="fa fa-shield" style="color:white"></i>My NPCs
         </a>
     </li>
     <li>
-        <a id="sn-li-a" class="waves-effect white-text menu" href="#!">
+        <a id="sn-li-a" class="waves-effect white-text menu" onclick="LoadPCs();">
             <i class="fa fa-user-o" style="color:white"></i>My PCs
         </a>
     </li>
     <li>
-        <a id="sn-li-a" class="waves-effect white-text menu" href="#!">
+        <a id="sn-li-a" class="waves-effect white-text menu" onclick="LoadCombat();">
             <i class="fa fa-user-o" style="color:white"></i>My Combats
         </a>
     </li>
