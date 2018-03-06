@@ -6,22 +6,44 @@
 
 @section styles{
     <link href="~/Content/Panel.css" rel="stylesheet" />
+    <link type="text/css" rel="stylesheet" href="~/Content/tingle.css" media="screen,projection" />
 }
 
 @Html.Partial("_sidenav")
 
 <main>
     <div class="navbar-fixed">
-        <nav class="z-depth-0 cloud-horizontal">
+        <nav class="z-depth-0 grey darken-4">
             <div class="nav-wrapper">
                 <div class="col s6">
-                    <a href="#!" class="breadcrumb white-text">Summary</a>
-                    <a href="#!" class="right light black-text"><i class="fa fa-user-o fa-fw"></i> @U.UserName</a>
+                    <a href="#!" class="light white-text">Panel</a>
+                    <a href="#!" class="light white-text"><i class="fa fa-user-o fa-fw"></i> @U.UserName</a>
                 </div>
             </div>
         </nav>
     </div>
-    <div id="_CurrentView"></div>
+    <div id="_CurrentView">
+        <div class="row">
+            <div class="col s2 l2 offset-l5">
+                <br />
+                <br />
+                <br />
+                <br />
+                <div class="preloader-wrapper big active center-align">
+                    <div class="spinner-layer spinner-blue-only">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div><div class="gap-patch">
+                            <div class="circle"></div>
+                        </div><div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
 </main>
 
 
@@ -38,7 +60,7 @@
 
     <script>
         function LoadDashboard() {
-            
+
             $.ajax({
                 type: "GET",
                 cache: false,
@@ -57,7 +79,7 @@
         }
     </script>
 
-<script>
+    <script>
         function LoadNPCs() {
 
             $.ajax({
@@ -76,7 +98,7 @@
                 }
             });
         }
-</script>
+    </script>
 
 
 
@@ -86,9 +108,9 @@
 
 
 
-<script src="~/Scripts/tingle.js"></script>
+    <script src="~/Scripts/tingle.js"></script>
 
-<script>
+    <script>
 
         var modal = new tingle.modal({
             footer: false,
@@ -109,9 +131,9 @@
                 return false; // nothing happens
             }
         });
-</script>
+    </script>
 
-<script>
+    <script>
         function LoadView(id) {
 
             $.ajax({
@@ -134,7 +156,7 @@
                 }
             });
         }
-</script>
+    </script>
 
 }
 
