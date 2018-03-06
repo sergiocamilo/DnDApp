@@ -1,5 +1,9 @@
 ﻿@model Dnd_App.Models.Characters.NPC
 
+@{ 
+
+}
+
 
 <ul class="collapsible z-depth-3" data-collapsible="accordion">
     <!--Basic Info -->
@@ -37,7 +41,6 @@
         </div>
     </li>
 
-
     <!--Armor Class -->
     <li>
         <div class="collapsible-header red-to-red white-text">
@@ -67,15 +70,11 @@
                                    id="armorClass_shield" name="armorClass_shield" type="checkbox" value=@Model.ArmorClass.Shield>
                             <label for="armorClass_shield">Shield ?</label>
                         </p>
-
                     }
                 </div>
-
-
             </div>
         </div>
     </li>
-
 
     <!--Hit points -->
     <li>
@@ -96,7 +95,6 @@
         </div>
     </li>
 
-
     <!--Speeds -->
     <li>
         <div class="collapsible-header teal darken-3 white-text">Speeds</div>
@@ -106,43 +104,43 @@
                     <select multiple="multiple" id="speedsMultiple">
                         @foreach (Dnd_App.Models.Enum.TypeSpeed speed in Enum.GetValues(typeof(Dnd_App.Models.Enum.TypeSpeed)))
                         {
-                            <option value="@((int)speed)">@speed.ToString() </option>
+                            if (!Model.Speeds.Contains(new Dnd_App.Models.Characters.Speed() { TypeSpeed = speed } , new Dnd_App.Models.Characters.Speed()) )
+                            {
+                                <option value="@((int)speed)">@speed.ToString()</option>
+                            }
+                            else
+                            {
+                                <option selected value="@((int)speed)">@speed.ToString()</option>
+                            }
                         }
                     </select>
                     <label>Select multiple speeds</label>
                 </div>
-                <div id="_npcSpeeds">Loading...</div>
+                <div id="_npcSpeeds"></div>
+            </div>
+        </div>
+    </li>
+
+    <!--Ability Scores -->
+    <li>
+        <div class="collapsible-header teal darken-3 white-text">Ability scores</div>
+        <div class="collapsible-body grey lighten-5">
+            <div class="row">
+                @for (int i = 0; i < Model.AbilitiesScores.Count; i++)
+                {
+                    <div class="input-field col s4">
+                        @Html.HiddenFor(m => m.AbilitiesScores[i].Name)
+                        @Html.HiddenFor(m => m.AbilitiesScores[i].ShortName)
+                        @Html.TextBoxFor(m => m.AbilitiesScores[i].Value, new { @type = "text", @id = @Model.AbilitiesScores[i].ShortName })
+                        @Html.HiddenFor(m => m.AbilitiesScores[i].ModValue)
+                        <label>@Model.AbilitiesScores[i].Name</label>
+                    </div>
+                }
             </div>
         </div>
     </li>
 
     @*
-
-        <!--Ability Scores -->
-        <li>
-            <div class="collapsible-header teal darken-3 white-text">@DnDApp.Models.ResourceEN.ABILITYSCORES</div>
-            <div class="collapsible-body grey lighten-5">
-                <div class="row">
-
-                    @for (int i = 0; i < Model.abilitiesScores.Count; i++)
-                    {
-                        <div class="input-field col s4">
-                            @Html.HiddenFor(m => m.abilitiesScores[i].name)
-                            @Html.HiddenFor(m => m.abilitiesScores[i].shortName)
-                            @Html.TextBoxFor(m => m.abilitiesScores[i].value, new { @type = "text", @id = @Model.abilitiesScores[i].shortName })
-                            @Html.HiddenFor(m => m.abilitiesScores[i].modValue)
-                            <label>@Model.abilitiesScores[i].name</label>
-                        </div>
-                    }
-
-                </div>
-
-
-
-            </div>
-        </li>
-
-
         <!--Saving Throws -->
         <li>
             <div class="collapsible-header teal darken-3 white-text">@DnDApp.Models.ResourceEN.SAVINGTHROWS</div>
@@ -329,9 +327,6 @@
                         @Html.EditorFor(model => model.telepathy, new { htmlAttributes = new { @type = "text", @id = "telepathy" } })
                         <label for="telepathy">Telepathy</label>
                     </div>
-
-
-
                 </div>
             </div>
         </li>
@@ -748,28 +743,10 @@
 <script>
         $(document).ready(
             function loadSpeeds() {
-
-                var list =  @Html.Raw(@Json.Encode(Model.Speeds));
-
-                console.log("***On load List Speeds" + list);
-
-                var xlist = [];
-
-                console.log($("select#speedsMultiple"));
-
-
-                for (var i = 0; i < list.length; i++) {
-                    xlist.push(list[i].typeSpeed);
-                    console.log($("select#speedsMultiple > option[value=" + list[i].typeSpeed + "]"));
-
-                    $("select#speedsMultiple > option[value=" + list[i].typeSpeed + "]").prop("selected", true);
-                }
-
-            $('#speedsMultiple').material_select('destroy');
-            $('#speedsMultiple').material_select();
-
-            addSpeed(xlist);
-        }
+                var selectedValues = $('#speedsMultiple').val();
+                console.log("[init] select speeds: " + selectedValues);
+                addSpeed(selectedValues);
+            }
     );
 </script>
 
@@ -782,7 +759,6 @@
 
                     var selectedValues = $('#speedsMultiple').val();
                     console.log("select speeds: " + selectedValues);
-
                     addSpeed(selectedValues);
 
                 });
@@ -793,28 +769,25 @@
 <!--addSpeed-->
 <script>
         function addSpeed(listSpeed) {
-
-        console.log("***Add speeds"+ listSpeed);
-
-        $.ajax({
-            type: "POST",
-            cache: false,
-            url: "@Url.Action("_AddSpeed")",
-            dataType: "html",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify({ 'list': listSpeed, 'TempID': @Model.TempID }),
-        success: function (data)
-        {
-            var _npcSpeeds = $("#_npcSpeeds");
-            _npcSpeeds.html(data);
-            reloadNpcView();
-        },
-        failure: function (errMsg) {
-            console.log("error ?")
-            alert(errMsg);
+            $.ajax({
+                type: "POST",
+                cache: false,
+                url: "@Url.Action("_AddSpeed")",
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ 'list': listSpeed, 'TempID': @Model.TempID }),
+                success: function (data)
+                {
+                    var _npcSpeeds = $("#_npcSpeeds");
+                    _npcSpeeds.html(data);
+                    reloadNpcView();
+                },
+                failure: function (errMsg) {
+                    console.log("error ?")
+                    alert(errMsg);
+                }
+            });
         }
-        });
-    }
 </script>
 
 <!--updateSpeed-->

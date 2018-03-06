@@ -197,6 +197,7 @@
     <Compile Include="Utils\TemporalDB.cs" />
     <Compile Include="Utils\Security.cs" />
     <Compile Include="Utils\Session.cs" />
+    <Compile Include="Utils\ViewHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\font-awesome.css" />
@@ -268,6 +269,7 @@
     <Content Include="Views\NPC\_AddSpeed.cshtml" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
+    <Content Include="Views\Shared\_Nav2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

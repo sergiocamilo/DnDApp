@@ -25,7 +25,6 @@ namespace Dnd_App.Controllers
         [HttpGet]
         public ActionResult New()
         {
-
             Utils.Presets Preset = new Utils.Presets();
             var NPC = Preset.GenerateEmptyNPC();
             Utils.TemporalDB.Instance.InsertNPC(NPC);

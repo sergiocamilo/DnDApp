@@ -7,21 +7,13 @@
 }
 
 <main>
-    <nav class="z-depth-0 grey darken-4">
-        <div class="nav-wrapper">
-                <a class="brand-logo bar-logo left" id="logo">DnDApp</a>
-                <div class="col s6 bar-breadcrumb">
-                    <a href="#!" class="light breadcrumb white-text">MY NPCs</a>
-                    <a class="light breadcrumb white-text">New</a>
-                    <a href="#!" class="right bar-user light white-text"><i class="fa fa-user-o fa-fw"></i> @U.UserName</a>
-                </div>
-            </div>
-    </nav>
-
+    @Html.Partial("_Nav2")
     <div class="row row-new-character">
 
         <div class="col s6 col-new-character">
-            <div id="_npcCreate"> Hola </div>
+            <div id="_npcCreate">
+
+            </div>
 
         </div>
         <div class="col s6 col-new-character">
@@ -39,14 +31,13 @@
             if (json["lastValue"] == "") {
                 json["lastValue"] = "void";
             }
-            Materialize.toast('<i class="fa fa-check-circle fa-fw"></i>   '+json["nameValue"] + ': "' + json["lastValue"] + '" was changed to "' + json["newValue"] + '"', 2500);
+            Materialize.toast('<i class="fa fa-check-circle fa-fw"></i> '+json["nameValue"] + ': "' + json["lastValue"] + '" was changed to "' + json["newValue"] + '"', 2500);
         }
     </script>
 
     <script>
         $(document).ready(
             function loadNPCView() {
-
                 reloadNpcView();
             }
         );
@@ -93,8 +84,6 @@
                         {
                             var _npcSenses = $("#_npcCreate");
                             _npcSenses.html(data);
-                            //$('.collapsible').collapsible();
-                            //$('select').material_select();
                         },
                         failure: function (errMsg) {
                             console.log("error ?");

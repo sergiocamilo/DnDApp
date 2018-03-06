@@ -16,9 +16,6 @@ namespace Dnd_App.Controllers
         {
             return View();
         }
-        
-
-
 
     }
 }
