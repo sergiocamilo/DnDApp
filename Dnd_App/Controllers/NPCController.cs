@@ -230,7 +230,33 @@ namespace Dnd_App.Controllers
             });
         }
 
+        #endregion
+
+        #region Callbacks --> Saving throw
+
+        public ActionResult _UpdateSavingThrow(Boolean _check, String _mod, int TempID)
+        {
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            var LastValue = Npc.AbilitiesScores.Find(ability => ability.ShortName.Equals(_mod))
+                .SavingThrow;
+            Npc.AbilitiesScores.Find(ability => ability.ShortName.Equals(_mod))
+                .SavingThrow = _check;
+
+            //Npc.RecalculateST();
+
+            return Json(new
+            {
+                nameValue = "Saving throw :"+ _mod,
+                lastValue = LastValue? "on": "off",
+                newValue = _check? "on" : "off"
+            });
+        }
+
+
 
         #endregion
+
+
+
     }
 }
