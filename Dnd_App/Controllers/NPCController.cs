@@ -202,5 +202,35 @@ namespace Dnd_App.Controllers
 
 
         #endregion
+
+        #region Callbacks --> Ability score
+
+        [HttpPost]
+        public ActionResult RecalculateAS(String _mod, int _value, int TempID)
+        {
+
+            if (_value < 1)
+                _value = 1;
+
+            if (_value > 30)
+                _value = 30;
+
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            var LastValue = Npc.AbilitiesScores.Find(ability => ability.ShortName.Equals(_mod))
+                .Value;
+
+            Npc.AbilitiesScores.Find(ability => ability.ShortName.Equals(_mod))
+                .Value = _value;
+
+            return Json(new
+            {
+                nameValue = _mod,
+                lastValue = LastValue.ToString(),
+                newValue = _value
+            });
+        }
+
+
+        #endregion
     }
 }

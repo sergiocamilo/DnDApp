@@ -1,6 +1,6 @@
 ﻿@model Dnd_App.Models.Characters.NPC
 
-@{ 
+@{
 
 }
 
@@ -57,19 +57,19 @@
                 <div class="input-field col s6">
                     @if (@Model.ArmorClass.Shield)
                     {
-                        <p>
-                            <input checked="checked" class="checkbox" data-val=@Model.ArmorClass.Shield
-                                   id="armorClass_shield" name="armorClass_shield" type="checkbox" value=@Model.ArmorClass.Shield>
-                            <label for="armorClass_shield">Shield ?</label>
-                        </p>
+                    <p>
+                        <input checked="checked" class="checkbox" data-val=@Model.ArmorClass.Shield
+                               id="armorClass_shield" name="armorClass_shield" type="checkbox" value=@Model.ArmorClass.Shield>
+                        <label for="armorClass_shield">Shield ?</label>
+                    </p>
                     }
                     else
                     {
-                        <p>
-                            <input class="checkbox" data-val=@Model.ArmorClass.Shield
-                                   id="armorClass_shield" name="armorClass_shield" type="checkbox" value=@Model.ArmorClass.Shield>
-                            <label for="armorClass_shield">Shield ?</label>
-                        </p>
+                    <p>
+                        <input class="checkbox" data-val=@Model.ArmorClass.Shield
+                               id="armorClass_shield" name="armorClass_shield" type="checkbox" value=@Model.ArmorClass.Shield>
+                        <label for="armorClass_shield">Shield ?</label>
+                    </p>
                     }
                 </div>
             </div>
@@ -104,7 +104,7 @@
                     <select multiple="multiple" id="speedsMultiple">
                         @foreach (Dnd_App.Models.Enum.TypeSpeed speed in Enum.GetValues(typeof(Dnd_App.Models.Enum.TypeSpeed)))
                         {
-                            if (!Model.Speeds.Contains(new Dnd_App.Models.Characters.Speed() { TypeSpeed = speed } , new Dnd_App.Models.Characters.Speed()) )
+                            if (!Model.Speeds.Contains(new Dnd_App.Models.Characters.Speed() { TypeSpeed = speed }, new Dnd_App.Models.Characters.Speed()))
                             {
                                 <option value="@((int)speed)">@speed.ToString()</option>
                             }
@@ -750,7 +750,6 @@
     );
 </script>
 
-
 <!--selectedSpeed-->
 <script>
         $(document).ready(
@@ -814,3 +813,88 @@
         }
 </script>
 
+
+
+
+
+
+<!--Ability scores      ------------------------------------------------------------------------------->
+<!--changeAS-->
+<script>
+        $(document).ready(
+            function changeAS() {
+                $("#Str").change(function (event) {
+                    var str = $('#Str').val();
+                    recalculateAS("Str", str);
+                });
+                $("#Dex").change(function (event) {
+                    var str = $('#Dex').val();
+                    recalculateAS("Dex", str);
+                });
+                $("#Con").change(function (event) {
+                    var str = $('#Con').val();
+                    recalculateAS("Con", str);
+                });
+                $("#Int").change(function (event) {
+                    var str = $('#Int').val();
+                    recalculateAS("Int", str);
+                });
+                $("#Wis").change(function (event) {
+                    var str = $('#Wis').val();
+                    recalculateAS("Wis", str);
+                });
+                $("#Cha").change(function (event) {
+                    var str = $('#Cha').val();
+                    recalculateAS("Cha", str);
+                });
+            }
+        );
+</script>
+
+<!--recalculateAS-->
+<script>
+           function recalculateAS(mod, value) {
+
+               if (isNaN(value)) {
+                   Alertoast('Ability Score: ' + mod + ' value must be a number');
+                   value = "10";
+                   $("#" + mod).val("10");
+               }
+
+               if (value == "") {
+                   Alertoast('Ability Score: ' + mod + ' value can not be empty');
+                   value = "10";
+                   $("#" + mod).val("10");
+               }
+
+               if (value < 1) {
+                   Alertoast('Ability Score: ' + mod + ' value can not be < 1');
+                   value = "1";
+                   $("#" + mod).val("1");
+               }
+
+               if (value > 30) {
+                   Alertoast('Ability Score: ' + mod + ' value can not be > 30');
+                   value = "30";
+                   $("#" + mod).val("30");
+               }
+
+               $.ajax({
+                    type: "POST",
+                    cache: false,
+                    url: "@Url.Action("RecalculateAS")",
+                    dataType: "html",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({ '_mod': mod, '_value': value, 'TempID': @Model.TempID}),
+                    success: function (data)
+                    {
+                        UpdateToast(data);
+                        reloadNpcView();
+                    },
+                    failure: function (errMsg) {
+                        console.log("error ?")
+                        alert(errMsg);
+                    }
+                });
+           }
+</script>
