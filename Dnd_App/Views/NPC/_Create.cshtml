@@ -57,19 +57,19 @@
                 <div class="input-field col s6">
                     @if (@Model.ArmorClass.Shield)
                     {
-                    <p>
-                        <input checked="checked" class="checkbox" data-val=@Model.ArmorClass.Shield
-                               id="armorClass_shield" name="armorClass_shield" type="checkbox" value=@Model.ArmorClass.Shield>
-                        <label for="armorClass_shield">Shield ?</label>
-                    </p>
+                        <p>
+                            <input checked="checked" class="checkbox" data-val=@Model.ArmorClass.Shield
+                                   id="armorClass_shield" name="armorClass_shield" type="checkbox" value=@Model.ArmorClass.Shield>
+                            <label for="armorClass_shield">Shield ?</label>
+                        </p>
                     }
                     else
                     {
-                    <p>
-                        <input class="checkbox" data-val=@Model.ArmorClass.Shield
-                               id="armorClass_shield" name="armorClass_shield" type="checkbox" value=@Model.ArmorClass.Shield>
-                        <label for="armorClass_shield">Shield ?</label>
-                    </p>
+                        <p>
+                            <input class="checkbox" data-val=@Model.ArmorClass.Shield
+                                   id="armorClass_shield" name="armorClass_shield" type="checkbox" value=@Model.ArmorClass.Shield>
+                            <label for="armorClass_shield">Shield ?</label>
+                        </p>
                     }
                 </div>
             </div>
@@ -128,54 +128,54 @@
             <div class="row">
                 @for (int i = 0; i < Model.AbilitiesScores.Count; i++)
                 {
-                    <div class="input-field col s4">
-                        @Html.HiddenFor(m => m.AbilitiesScores[i].Name)
-                        @Html.HiddenFor(m => m.AbilitiesScores[i].ShortName)
-                        @Html.TextBoxFor(m => m.AbilitiesScores[i].Value, new { @type = "text", @id = @Model.AbilitiesScores[i].ShortName })
-                        @Html.HiddenFor(m => m.AbilitiesScores[i].ModValue)
-                        <label>@Model.AbilitiesScores[i].Name</label>
-                    </div>
+                <div class="input-field col s4">
+                    @Html.HiddenFor(m => m.AbilitiesScores[i].Name)
+                    @Html.HiddenFor(m => m.AbilitiesScores[i].ShortName)
+                    @Html.TextBoxFor(m => m.AbilitiesScores[i].Value, new { @type = "text", @id = @Model.AbilitiesScores[i].ShortName })
+                    @Html.HiddenFor(m => m.AbilitiesScores[i].ModValue)
+                    <label>@Model.AbilitiesScores[i].Name</label>
+                </div>
                 }
             </div>
         </div>
     </li>
 
-    
-        <!--Saving Throws -->
-        <li>
-            <div class="collapsible-header teal darken-3 white-text">Saving throws</div>
-            <div class="collapsible-body grey lighten-5">
-                <div class="row">
-                    @for (int i = 0; i < Model.AbilitiesScores.Count; i++)
+
+    <!--Saving Throws -->
+    <li>
+        <div class="collapsible-header teal darken-3 white-text">Saving throws</div>
+        <div class="collapsible-body grey lighten-5">
+            <div class="row">
+                @for (int i = 0; i < Model.AbilitiesScores.Count; i++)
                     {
-                        <div class="input-field col s6">
-                            @if (Model.AbilitiesScores[i].SavingThrow)
+                    <div class="input-field col s6">
+                        @if (Model.AbilitiesScores[i].SavingThrow)
                             {
-                                <p>
-                                    <input checked="checked" class="checkbox" data-val="true"
-                                           id="ST@(Model.AbilitiesScores[i].ShortName)" name="ST@(Model.AbilitiesScores[i].ShortName)"
-                                           type="checkbox" value="true">
-                                    <label for="ST@(Model.AbilitiesScores[i].ShortName)">@Model.AbilitiesScores[i].Name</label>
-                                </p>
+                            <p>
+                                <input checked="checked" class="checkbox" data-val="true"
+                                       id="ST@(Model.AbilitiesScores[i].ShortName)" name="ST@(Model.AbilitiesScores[i].ShortName)"
+                                       type="checkbox" value="true">
+                                <label for="ST@(Model.AbilitiesScores[i].ShortName)">@Model.AbilitiesScores[i].Name</label>
+                            </p>
                             }
                             else
                             {
-                                <p>
-                                    <input class="checkbox" data-val="true"
-                                           id="ST@(Model.AbilitiesScores[i].ShortName)" name="ST@(Model.AbilitiesScores[i].ShortName)"
-                                           type="checkbox" value="true">
-                                    <label for="ST@(Model.AbilitiesScores[i].ShortName)">@Model.AbilitiesScores[i].Name</label>
-                                </p>
+                            <p>
+                                <input class="checkbox" data-val="true"
+                                       id="ST@(Model.AbilitiesScores[i].ShortName)" name="ST@(Model.AbilitiesScores[i].ShortName)"
+                                       type="checkbox" value="true">
+                                <label for="ST@(Model.AbilitiesScores[i].ShortName)">@Model.AbilitiesScores[i].Name</label>
+                            </p>
 
                             }
-                        </div>
+                    </div>
 
                     }
-                </div>
             </div>
-        </li>
+        </div>
+    </li>
 
-@*
+
     <!--Skills -->
     <li>
         <div class="collapsible-header teal darken-3 white-text">Skills</div>
@@ -209,203 +209,206 @@
         </div>
     </li>
 
-    <!--Conditions  (Vulnerabilities, resistances, immunities) -->
-    <li>
-        <div class="collapsible-header teal darken-3 white-text">Conditions</div>
-        <div class="collapsible-body grey lighten-5">
-            <div class="row">
-                <div class="input-field col s6">
-                    <select multiple="multiple" id="vulnerabilitiesMultiple">
-                        @foreach (DnDApp.Models.TypeDamage vul in Enum.GetValues(typeof(DnDApp.Models.TypeDamage)))
-                        {
-                            <option value="@((int)vul)">@vul.ToString() </option>
-                        }
-                    </select>
-                    <label>Select multiple damage vulnerabilities</label>
-                </div>
-                <div class="input-field col s6">
-                    <select multiple="multiple" id="resistancesMultiple">
-                        @foreach (DnDApp.Models.TypeDamage res in Enum.GetValues(typeof(DnDApp.Models.TypeDamage)))
-                        {
-                            <option value="@((int)res)">@res.ToString() </option>
-                        }
-                    </select>
-                    <label>Select multiple damage resistances</label>
-                </div>
-                <div class="input-field col s6">
-                    <select multiple="multiple" id="immunitiesDmgMultiple">
-                        @foreach (DnDApp.Models.TypeDamage imm in Enum.GetValues(typeof(DnDApp.Models.TypeDamage)))
-                        {
-                            <option value="@((int)imm)">@imm.ToString() </option>
-                        }
-                    </select>
-                    <label>Select multiple damage immunities</label>
-                </div>
-                <div class="input-field col s6">
-                    <select multiple="multiple" id="immunitiesCndMultiple">
-                        @foreach (DnDApp.Models.TypeCondition imm in Enum.GetValues(typeof(DnDApp.Models.TypeCondition)))
-                        {
-                            <option value="@((int)imm)">@imm.ToString() </option>
-                        }
-                    </select>
-                    <label>Select multiple condition immunities</label>
-                </div>
-            </div>
-        </div>
-    </li>
 
+    @*
 
-    <!--Senses -->
-    <li>
-        <div class="collapsible-header teal darken-3 white-text">Senses</div>
-        <div class="collapsible-body grey lighten-5">
-            <div class="row">
-                <div class="input-field col s12">
-                    <select multiple="multiple" id="sensesMultiple">
-                        @foreach (DnDApp.Models.TypeSense sense in Enum.GetValues(typeof(DnDApp.Models.TypeSense)))
-                        {
-                            <option value="@((int)sense)">@sense.ToString() </option>
-                        }
-                    </select>
-                    <label>Select multiple senses</label>
-                </div>
-                <div id="_npcSenses"></div>
-            </div>
-        </div>
-    </li>
-
-
-    <!--Languages -->
-    <li>
-        <div class="collapsible-header teal darken-3 white-text">Languages</div>
-        <div class="collapsible-body grey lighten-5">
-            <div class="row">
-                <div class="input-field col s6">
-                    <select multiple="multiple" id="languagesSpeakMultiple">
-                        <option value="0">Common</option>
-                        <option value="1">Dwarvish </option>
-                        <option value="2">Elvish </option>
-                        <option value="3">Giant </option>
-                        <option value="4">Gnomish </option>
-                        <option value="5">Goblin </option>
-                        <option value="6">Halfing </option>
-                        <option value="7">Orc </option>
-                        <option value="8">Abyssal </option>
-                        <option value="9">Celestial </option>
-                        <option value="10">Draconic </option>
-                        <option value="11">Deep Speech </option>
-                        <option value="12">Infernal </option>
-                        <option value="13">Primordial </option>
-                        <option value="14">Sylvan </option>
-                        <option value="15">Undercommon </option>
-                    </select>
-                    <label>Select multiple language speak</label>
-                </div>
-                <div class="input-field col s6">
-                    <select multiple="multiple" id="languagesUnderstandMultiple">
-                        <option value="0">Common </option>
-                        <option value="1">Dwarvish </option>
-                        <option value="2">Elvish </option>
-                        <option value="3">Giant </option>
-                        <option value="4">Gnomish </option>
-                        <option value="5">Goblin </option>
-                        <option value="6">Halfing </option>
-                        <option value="7">Orc </option>
-                        <option value="8">Abyssal </option>
-                        <option value="9">Celestial </option>
-                        <option value="10">Draconic </option>
-                        <option value="11">Deep Speech </option>
-                        <option value="12">Infernal </option>
-                        <option value="13">Primordial </option>
-                        <option value="14">Sylvan </option>
-                        <option value="15">Undercommon </option>
-                    </select>
-                    <label>Select multiple language understand</label>
-                </div>
-
-                <div class="input-field col s6">
-                    @Html.EditorFor(model => model.telepathy, new { htmlAttributes = new { @type = "text", @id = "telepathy" } })
-                    <label for="telepathy">Telepathy</label>
+        <!--Conditions  (Vulnerabilities, resistances, immunities) -->
+        <li>
+            <div class="collapsible-header teal darken-3 white-text">Conditions</div>
+            <div class="collapsible-body grey lighten-5">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <select multiple="multiple" id="vulnerabilitiesMultiple">
+                            @foreach (DnDApp.Models.TypeDamage vul in Enum.GetValues(typeof(DnDApp.Models.TypeDamage)))
+                            {
+                                <option value="@((int)vul)">@vul.ToString() </option>
+                            }
+                        </select>
+                        <label>Select multiple damage vulnerabilities</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <select multiple="multiple" id="resistancesMultiple">
+                            @foreach (DnDApp.Models.TypeDamage res in Enum.GetValues(typeof(DnDApp.Models.TypeDamage)))
+                            {
+                                <option value="@((int)res)">@res.ToString() </option>
+                            }
+                        </select>
+                        <label>Select multiple damage resistances</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <select multiple="multiple" id="immunitiesDmgMultiple">
+                            @foreach (DnDApp.Models.TypeDamage imm in Enum.GetValues(typeof(DnDApp.Models.TypeDamage)))
+                            {
+                                <option value="@((int)imm)">@imm.ToString() </option>
+                            }
+                        </select>
+                        <label>Select multiple damage immunities</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <select multiple="multiple" id="immunitiesCndMultiple">
+                            @foreach (DnDApp.Models.TypeCondition imm in Enum.GetValues(typeof(DnDApp.Models.TypeCondition)))
+                            {
+                                <option value="@((int)imm)">@imm.ToString() </option>
+                            }
+                        </select>
+                        <label>Select multiple condition immunities</label>
+                    </div>
                 </div>
             </div>
-        </div>
-    </li>
+        </li>
 
 
-    <!--Challenge -->
-    <li>
-        <div class="collapsible-header teal darken-3 white-text">Challenge Rating</div>
-        <div class="collapsible-body grey lighten-5">
-            <div class="row">
-                <div class="input-field col s12  ">
-                    <select id="chrating">
-                        @foreach (var challenge in Model.challenge.ChallengeList())
-                        {
-                            <option value="@(challenge.xp)"> Challenge  @challenge.value - Experience @challenge.xp XP - Proficiency +@challenge.proficiencyBonus </option>
-
-                        }
-                    </select>
-                    <label for="chrating">Challenge</label>
+        <!--Senses -->
+        <li>
+            <div class="collapsible-header teal darken-3 white-text">Senses</div>
+            <div class="collapsible-body grey lighten-5">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <select multiple="multiple" id="sensesMultiple">
+                            @foreach (DnDApp.Models.TypeSense sense in Enum.GetValues(typeof(DnDApp.Models.TypeSense)))
+                            {
+                                <option value="@((int)sense)">@sense.ToString() </option>
+                            }
+                        </select>
+                        <label>Select multiple senses</label>
+                    </div>
+                    <div id="_npcSenses"></div>
                 </div>
             </div>
-        </div>
-    </li>
+        </li>
 
 
-    <!--Special Traits -->
-    <li>
-        <div class="collapsible-header teal darken-3 white-text">Special Traits</div>
-        <div class="collapsible-body grey lighten-5">
-            <div class="row">
-                <div id="_npcSpecialTraits"></div>
-                <center>
-                    <a onclick="addSpecialTraits();" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
-                </center>
+        <!--Languages -->
+        <li>
+            <div class="collapsible-header teal darken-3 white-text">Languages</div>
+            <div class="collapsible-body grey lighten-5">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <select multiple="multiple" id="languagesSpeakMultiple">
+                            <option value="0">Common</option>
+                            <option value="1">Dwarvish </option>
+                            <option value="2">Elvish </option>
+                            <option value="3">Giant </option>
+                            <option value="4">Gnomish </option>
+                            <option value="5">Goblin </option>
+                            <option value="6">Halfing </option>
+                            <option value="7">Orc </option>
+                            <option value="8">Abyssal </option>
+                            <option value="9">Celestial </option>
+                            <option value="10">Draconic </option>
+                            <option value="11">Deep Speech </option>
+                            <option value="12">Infernal </option>
+                            <option value="13">Primordial </option>
+                            <option value="14">Sylvan </option>
+                            <option value="15">Undercommon </option>
+                        </select>
+                        <label>Select multiple language speak</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <select multiple="multiple" id="languagesUnderstandMultiple">
+                            <option value="0">Common </option>
+                            <option value="1">Dwarvish </option>
+                            <option value="2">Elvish </option>
+                            <option value="3">Giant </option>
+                            <option value="4">Gnomish </option>
+                            <option value="5">Goblin </option>
+                            <option value="6">Halfing </option>
+                            <option value="7">Orc </option>
+                            <option value="8">Abyssal </option>
+                            <option value="9">Celestial </option>
+                            <option value="10">Draconic </option>
+                            <option value="11">Deep Speech </option>
+                            <option value="12">Infernal </option>
+                            <option value="13">Primordial </option>
+                            <option value="14">Sylvan </option>
+                            <option value="15">Undercommon </option>
+                        </select>
+                        <label>Select multiple language understand</label>
+                    </div>
+
+                    <div class="input-field col s6">
+                        @Html.EditorFor(model => model.telepathy, new { htmlAttributes = new { @type = "text", @id = "telepathy" } })
+                        <label for="telepathy">Telepathy</label>
+                    </div>
+                </div>
             </div>
-        </div>
-    </li>
+        </li>
 
 
-    <!--Actions -->
-    <li>
-        <div class="collapsible-header teal darken-3 white-text">Actions</div>
-        <div class="collapsible-body grey lighten-5">
-            <div class="row">
-                <div id="_npcActions"></div>
-                <center>
-                    <a onclick="addAction(1);" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
-                </center>
+        <!--Challenge -->
+        <li>
+            <div class="collapsible-header teal darken-3 white-text">Challenge Rating</div>
+            <div class="collapsible-body grey lighten-5">
+                <div class="row">
+                    <div class="input-field col s12  ">
+                        <select id="chrating">
+                            @foreach (var challenge in Model.challenge.ChallengeList())
+                            {
+                                <option value="@(challenge.xp)"> Challenge  @challenge.value - Experience @challenge.xp XP - Proficiency +@challenge.proficiencyBonus </option>
+
+                            }
+                        </select>
+                        <label for="chrating">Challenge</label>
+                    </div>
+                </div>
             </div>
-        </div>
-    </li>
+        </li>
 
-    <!--Reactions -->
 
-    <li>
-        <div class="collapsible-header teal darken-3 white-text">Reactions</div>
-        <div class="collapsible-body grey lighten-5">
-            <div class="row">
-                <div id="_npcReactions"></div>
-                <center>
-                    <a onclick="addAction(2);" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
-                </center>
+        <!--Special Traits -->
+        <li>
+            <div class="collapsible-header teal darken-3 white-text">Special Traits</div>
+            <div class="collapsible-body grey lighten-5">
+                <div class="row">
+                    <div id="_npcSpecialTraits"></div>
+                    <center>
+                        <a onclick="addSpecialTraits();" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+                    </center>
+                </div>
             </div>
-        </div>
-    </li>
-    <!--Legendary Action -->
+        </li>
 
-    <li>
-        <div class="collapsible-header teal darken-3 white-text">Legendary Actions</div>
-        <div class="collapsible-body grey lighten-5">
-            <div class="row">
-                <div id="_npcLActions"></div>
-                <center>
-                    <a onclick="addAction(3);" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
-                </center>
+
+        <!--Actions -->
+        <li>
+            <div class="collapsible-header teal darken-3 white-text">Actions</div>
+            <div class="collapsible-body grey lighten-5">
+                <div class="row">
+                    <div id="_npcActions"></div>
+                    <center>
+                        <a onclick="addAction(1);" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+                    </center>
+                </div>
             </div>
-        </div>
-    </li>
-*@
+        </li>
+
+        <!--Reactions -->
+
+        <li>
+            <div class="collapsible-header teal darken-3 white-text">Reactions</div>
+            <div class="collapsible-body grey lighten-5">
+                <div class="row">
+                    <div id="_npcReactions"></div>
+                    <center>
+                        <a onclick="addAction(2);" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+                    </center>
+                </div>
+            </div>
+        </li>
+        <!--Legendary Action -->
+
+        <li>
+            <div class="collapsible-header teal darken-3 white-text">Legendary Actions</div>
+            <div class="collapsible-body grey lighten-5">
+                <div class="row">
+                    <div id="_npcLActions"></div>
+                    <center>
+                        <a onclick="addAction(3);" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+                    </center>
+                </div>
+            </div>
+        </li>
+    *@
 </ul>
 
 
@@ -741,28 +744,28 @@
 <!--Speeds      --------------------------------------------------------------------------------------->
 <!--loadSpeeds on load-->
 <script>
-        $(document).ready(
-            function loadSpeeds() {
-                var selectedValues = $('#speedsMultiple').val();
-                console.log("[init] select speeds: " + selectedValues);
-                addSpeed(selectedValues);
-            }
-    );
+           $(document).ready(
+               function loadSpeeds() {
+                   var selectedValues = $('#speedsMultiple').val();
+                   console.log("[init] select speeds: " + selectedValues);
+                   addSpeed(selectedValues);
+               }
+           );
 </script>
 
 <!--selectedSpeed-->
 <script>
-        $(document).ready(
-            function selectedSpeed() {
-                $("#speedsMultiple").change(function (event) {
+           $(document).ready(
+               function selectedSpeed() {
+                   $("#speedsMultiple").change(function (event) {
 
-                    var selectedValues = $('#speedsMultiple').val();
-                    console.log("select speeds: " + selectedValues);
-                    addSpeed(selectedValues);
+                       var selectedValues = $('#speedsMultiple').val();
+                       console.log("select speeds: " + selectedValues);
+                       addSpeed(selectedValues);
 
-                });
-            }
-        );
+                   });
+               }
+           );
 </script>
 
 <!--addSpeed-->
@@ -903,7 +906,6 @@
 
 
 <!--Saving Throw      ------------------------------------------------------------------------------->
-
 <!--SavingThrowUpdate-->
 <script>
            $(document).ready(
@@ -961,3 +963,114 @@
                 });
            }
 </script>
+
+
+
+<!--Skills      -------------------------------------------------------------------------------------->
+<!--updateSkill dd-->
+<script>
+        function updateSkill(name, value) {
+
+            $.ajax({
+                type: "POST",
+                cache: false,
+                url: "@Url.Action("_updateSkill")",
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ 'name': name, 'value': value, 'TempID': @Model.TempID }),
+                success: function (data)
+                {
+                    UpdateToast(data);
+                    reloadNpcView();
+                },
+                failure: function (errMsg) {
+                    console.log("error size")
+                    alert(errMsg);
+                }
+            });
+        }
+</script>
+
+<!--loadSkills on load-->
+<script>
+        $(document).ready(
+            function loadSkills() {
+
+
+                        var list =  @Html.Raw(@Json.Encode(Model.Skills));
+
+                console.log(list);
+
+                var xlist = [];
+
+                for (var i = 0; i < list.length; i++) {
+                    xlist.push(list[i].SkillName);
+                    $("select#skillsMultiple > option[value=" + list[i].SkillName + "]").prop("selected", true);
+                }
+
+                //$("select#skillsMultiple > optgroup > option[value=" +  + "]").prop("selected", true);
+
+                console.log(xlist);
+                $('#skillsMultiple').material_select('destroy');
+                $('#skillsMultiple').material_select();
+
+                $.ajax({
+                    type: "POST",
+                    cache: false,
+                    url: "@Url.Action("_addSkills")",
+                    dataType: "html",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({ 'list': xlist, 'TempID': @Model.TempID }),
+                    success: function (data)
+                    {
+                        var _npcSkills = $("#_npcSkills");
+                        _npcSkills.html(data);
+                        reloadNpcView();
+                    },
+                    failure: function (errMsg) {
+                        console.log("error ?")
+                        alert(errMsg);
+                    }
+                });
+        }
+    );
+</script>
+
+<!--selectedSkills-->
+<script>
+            $(document).ready(
+                function selectedSpeed() {
+                    $("#skillsMultiple").change(function (event) {
+
+                        var selectedValues = $('#skillsMultiple').val();
+                        console.log("select skills: " + selectedValues);
+
+                        $.ajax({
+                            type: "POST",
+                            cache: false,
+                            url: "@Url.Action("_addSkills")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ 'list': selectedValues, 'TempID': @Model.TempID }),
+                                success: function (data)
+                                {
+                                    var _npcSkills = $("#_npcSkills");
+                                    _npcSkills.html(data);
+                                    reloadNpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error ?")
+                                    alert(errMsg);
+                                }
+                            });
+
+                    });
+                }
+            );
+</script>
+
+
+
+
+
+

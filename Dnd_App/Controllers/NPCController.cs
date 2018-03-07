@@ -256,6 +256,52 @@ namespace Dnd_App.Controllers
 
         #endregion
 
+        #region Callbacks --> Skills
+
+        [HttpPost]
+        public PartialViewResult _addSkills(List<Models.Enum.SkillName> list, int TempID)
+        {
+
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            var newListSkills = new List<Models.Characters.Skill>();
+
+            if (list != null)
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    newListSkills.Add(new Models.Characters.Skill { SkillName = list[i], Value = 0 });
+                }
+            }
+
+            Npc.Skills = newListSkills;
+
+            //Npc.RecalculateSkills();
+
+            return PartialView(Npc.Skills);
+        }
+
+        [HttpPost]
+        public ActionResult _updateSkill(Models.Enum.SkillName name, int value, int TempID)
+        {
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            int LastValue = 0;
+            foreach (var s in Npc.Skills.Where(r => r.SkillName == name))
+            {
+                LastValue = s.Bonus;
+                s.Bonus = value;
+                //Npc.RecalculateSkills();
+            }
+
+            return Json(new
+            {
+                nameValue = "Bonus "+ name.ToString(),
+                lastValue = LastValue +"",
+                newValue = value + ""
+            });
+        }
+
+        #endregion
+
 
 
     }

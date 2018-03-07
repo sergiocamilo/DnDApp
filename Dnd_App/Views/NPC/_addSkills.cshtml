@@ -1,0 +1,47 @@
+﻿@model List<Dnd_App.Models.Characters.Skill>
+
+
+<div class="row">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <div class="input-field col s6">
+            @Html.EditorFor(model => Model[i].Bonus, new
+       {
+           htmlAttributes =
+                new { @type = "text", @id = "valueskill" + (int)Model[i].SkillName , @data_val = @Model[i].SkillName }
+       })
+            <label for="valueskill@((int)Model[i].SkillName)">Additional bonus @Model[i].SkillName</label>
+        </div>
+    }
+</div>
+
+
+<script>
+    $(document).ready(
+        function _Skill() {
+
+            $("input[id^=valueskill]").change(function () {
+                var value = $(this).val();
+                var name = $(this).data("val");
+
+                if (isNaN(value)) {
+                    Alertoast('Skill bonus value must be a number', 'Skill bonus value was changed to 0');
+                    value = "0";
+                    $(this).val("0");
+                }
+
+                if (value == "") {
+                    Alertoast('Skill bonus value can not be empty', 'Skill bonus value was changed to 0');
+                    value = "0";
+                    $(this).val("0");
+                }
+
+                updateSkill(name, value);
+            });
+        }
+    );
+</script>
+
+<script src="~/Scripts/materialize/loadform.js"></script>
+
+
