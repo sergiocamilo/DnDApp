@@ -425,9 +425,59 @@ namespace Dnd_App.Controllers
 
         #endregion
 
+        #region Callbacks --> Languages
+
+        [HttpPost]
+        public void _addLanguagesSpeak(List<Models.Enum.LanguageName> list, int TempID)
+        {
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            var newLanguagesSpeak = new List<Models.Characters.Language>();
+
+            if (list != null)
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    newLanguagesSpeak.Add(new Models.Characters.Language()
+                    { LanguageName = (Models.Enum.LanguageName)list[i] });
+                }
+            }
+            Npc.LanguagesSpeak = newLanguagesSpeak;
+        }
+
+        [HttpPost]
+        public void _addLanguagesUnderstand(List<Models.Enum.LanguageName> list, int TempID)
+        {
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            var newLanguagesUnderstand = new List<Models.Characters.Language>();
+
+            if (list != null)
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    newLanguagesUnderstand.Add(new Models.Characters.Language()
+                    { LanguageName = (Models.Enum.LanguageName)list[i] });
+                }
+            }
+            Npc.LanguagesUndersatand = newLanguagesUnderstand;
+        }
+
+        [HttpPost]
+        public ActionResult _updateTelepathy(int val, int TempID)
+        {
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            var LastValue = Npc.Telepathy;
+            Npc.Telepathy = val;
 
 
+            return Json(new
+            {
+                nameValue = "Telepathy ",
+                lastValue = LastValue + "",
+                newValue = val + ""
+            });
+        }
 
+        #endregion
 
     }
 }

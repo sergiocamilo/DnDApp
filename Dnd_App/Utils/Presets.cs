@@ -64,7 +64,9 @@ namespace Dnd_App.Utils
             Empty.Senses = new List<Sense>();
            
             Empty.LanguagesSpeak = new List<Language>();
+            Empty.LanguagesSpeak.Add(new Language() { LanguageName = LanguageName.Dwarvish });
             Empty.LanguagesUndersatand = new List<Language>();
+            Empty.LanguagesUndersatand.Add(new Language() { LanguageName = LanguageName.Giant });
             Empty.Telepathy = 0;
 
             Empty.Challenge = new Challenge() { Value = "10", XP = 5900, ProficiencyBonus = 4 };

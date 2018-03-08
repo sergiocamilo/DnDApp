@@ -212,50 +212,50 @@
 
    
 
-        <!--Conditions  (Vulnerabilities, resistances, immunities) -->
-        <li>
-            <div class="collapsible-header teal darken-3 white-text">Conditions</div>
-            <div class="collapsible-body grey lighten-5">
-                <div class="row">
-                    <div class="input-field col s6">
-                        <select multiple="multiple" id="vulnerabilitiesMultiple">
-                            @foreach (Dnd_App.Models.Enum.TypeDamage vul in Enum.GetValues(typeof(Dnd_App.Models.Enum.TypeDamage)))
-                            {
-                                <option value="@((int)vul)">@vul.ToString() </option>
-                            }
-                        </select>
-                        <label>Select multiple damage vulnerabilities</label>
-                    </div>
-                    <div class="input-field col s6">
-                        <select multiple="multiple" id="resistancesMultiple">
-                            @foreach (Dnd_App.Models.Enum.TypeDamage res in Enum.GetValues(typeof(Dnd_App.Models.Enum.TypeDamage)))
-                            {
-                                <option value="@((int)res)">@res.ToString() </option>
-                            }
-                        </select>
-                        <label>Select multiple damage resistances</label>
-                    </div>
-                    <div class="input-field col s6">
-                        <select multiple="multiple" id="immunitiesDmgMultiple">
-                            @foreach (Dnd_App.Models.Enum.TypeDamage imm in Enum.GetValues(typeof(Dnd_App.Models.Enum.TypeDamage)))
-                            {
-                                <option value="@((int)imm)">@imm.ToString() </option>
-                            }
-                        </select>
-                        <label>Select multiple damage immunities</label>
-                    </div>
-                    <div class="input-field col s6">
-                        <select multiple="multiple" id="immunitiesCndMultiple">
-                            @foreach (Dnd_App.Models.Enum.TypeCondition imm in Enum.GetValues(typeof(Dnd_App.Models.Enum.TypeCondition)))
-                            {
-                                <option value="@((int)imm)">@imm.ToString() </option>
-                            }
-                        </select>
-                        <label>Select multiple condition immunities</label>
-                    </div>
+    <!--Conditions  (Vulnerabilities, resistances, immunities) -->
+    <li>
+        <div class="collapsible-header teal darken-3 white-text">Conditions</div>
+        <div class="collapsible-body grey lighten-5">
+            <div class="row">
+                <div class="input-field col s6">
+                    <select multiple="multiple" id="vulnerabilitiesMultiple">
+                        @foreach (Dnd_App.Models.Enum.TypeDamage vul in Enum.GetValues(typeof(Dnd_App.Models.Enum.TypeDamage)))
+                        {
+                            <option value="@((int)vul)">@vul.ToString() </option>
+                        }
+                    </select>
+                    <label>Select multiple damage vulnerabilities</label>
+                </div>
+                <div class="input-field col s6">
+                    <select multiple="multiple" id="resistancesMultiple">
+                        @foreach (Dnd_App.Models.Enum.TypeDamage res in Enum.GetValues(typeof(Dnd_App.Models.Enum.TypeDamage)))
+                        {
+                            <option value="@((int)res)">@res.ToString() </option>
+                        }
+                    </select>
+                    <label>Select multiple damage resistances</label>
+                </div>
+                <div class="input-field col s6">
+                    <select multiple="multiple" id="immunitiesDmgMultiple">
+                        @foreach (Dnd_App.Models.Enum.TypeDamage imm in Enum.GetValues(typeof(Dnd_App.Models.Enum.TypeDamage)))
+                        {
+                            <option value="@((int)imm)">@imm.ToString() </option>
+                        }
+                    </select>
+                    <label>Select multiple damage immunities</label>
+                </div>
+                <div class="input-field col s6">
+                    <select multiple="multiple" id="immunitiesCndMultiple">
+                        @foreach (Dnd_App.Models.Enum.TypeCondition imm in Enum.GetValues(typeof(Dnd_App.Models.Enum.TypeCondition)))
+                        {
+                            <option value="@((int)imm)">@imm.ToString() </option>
+                        }
+                    </select>
+                    <label>Select multiple condition immunities</label>
                 </div>
             </div>
-        </li>
+        </div>
+    </li>
 
 
     <!--Senses -->
@@ -277,7 +277,7 @@
         </div>
     </li>
 
-@*
+
 
     <!--Languages -->
     <li>
@@ -328,13 +328,14 @@
                 </div>
 
                 <div class="input-field col s6">
-                    @Html.EditorFor(model => model.telepathy, new { htmlAttributes = new { @type = "text", @id = "telepathy" } })
+                    @Html.EditorFor(model => Model.Telepathy, new { htmlAttributes = new { @type = "text", @id = "telepathy" } })
                     <label for="telepathy">Telepathy</label>
                 </div>
             </div>
         </div>
     </li>
 
+@*
 
     <!--Challenge -->
     <li>
@@ -1336,3 +1337,147 @@
 </script>
 
 
+
+
+<!--Languages      -------------------------------------------------------------------------------------->
+
+<!--language on load-->
+<script>
+        $(document).ready(
+            function loadlanguage() {
+
+
+                var lanSpeak =  @Html.Raw(@Json.Encode(Model.LanguagesSpeak));
+                var lanUnder =  @Html.Raw(@Json.Encode(Model.LanguagesUndersatand));
+
+                console.log(lanSpeak);
+                console.log($("select#languagesSpeakMultiple"));
+
+
+                for (var i = 0; i < lanSpeak.length; i++) {
+                    console.log($("select#languagesSpeakMultiple > option[value=" + lanSpeak[i] + "]"));
+                    $("select#languagesSpeakMultiple > option[value=" + lanSpeak[i] + "]").prop("selected", true);
+                }
+                $('#languagesSpeakMultiple').material_select('destroy');
+                $('#languagesSpeakMultiple').material_select();
+
+                for (var i = 0; i < lanUnder.length; i++) {
+                    console.log(lanUnder[i]);
+
+                    $("select#languagesUnderstandMultiple > option[value=" + lanUnder[i] + "]").prop("selected", true);
+                }
+                $('#languagesUnderstandMultiple').material_select('destroy');
+                $('#languagesUnderstandMultiple').material_select();
+
+        }
+    );
+</script>
+
+<!--selectedLanSpeak-->
+<script>
+            $(document).ready(
+                function selectedLanSpeak() {
+                    $("#languagesSpeakMultiple").change(function (event) {
+
+                        var selectedValues = $('#languagesSpeakMultiple').val();
+
+                        $.ajax({
+                            type: "POST",
+                            cache: false,
+                            url: "@Url.Action("_addLanguagesSpeak")",
+                            dataType: "html",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify({ 'list': selectedValues, 'TempID': @Model.TempID }),
+                            success: function (data)
+                            {
+                                console.log("success ?");
+                                reloadNpcView();
+                            },
+                            failure: function (errMsg) {
+                                console.log("error ?")
+                                alert(errMsg);
+                            }
+                        });
+                    });
+                }
+            );
+</script>
+
+<!--selectedLanUnderstand-->
+<script>
+            $(document).ready(
+                function selectedLanUnderstand() {
+                    $("#languagesUnderstandMultiple").change(function (event) {
+
+                        var selectedValues = $('#languagesUnderstandMultiple').val();
+
+                        $.ajax({
+                            type: "POST",
+                            cache: false,
+                            url: "@Url.Action("_addLanguagesUnderstand")",
+                            dataType: "html",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify({ 'list': selectedValues, 'TempID': @Model.TempID }),
+                            success: function (data)
+                            {
+                                console.log("success ?");
+                                reloadNpcView();
+                            },
+                            failure: function (errMsg) {
+                                console.log("error ?")
+                                alert(errMsg);
+                            }
+                        });
+                    });
+                }
+            );
+</script>
+
+<!--updateTelepathy-->
+<script>
+               $(document).ready(
+                   function updateTelepathy() {
+                       $("#telepathy").focusout(function (event) {
+                           var val = $('#telepathy').val();
+
+                           if (isNaN(val)) {
+                               Alertoast('Telepathy value must be a number');
+                               value = "0";
+                               $('#telepathy').val("0");
+                           }
+
+                           if (val == "") {
+                               Alertoast('Telepathy value can not be empty');
+                               val = "0";
+                               $('#telepathy').val("0");
+                           }
+
+                           if (val < 0) {
+                               Alertoast('Telepathy value can not be < 0');
+                               val = "0";
+                               $('#telepathy').val("0");
+                           }
+
+
+
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_updateTelepathy")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ 'val': val, 'TempID': @Model.TempID }),
+                                success: function (data)
+                                {
+                                    UpdateToast(data);
+                                    reloadNpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error telepathy")
+                                    alert(errMsg);
+                                }
+                            });
+                       });
+                   }
+               );
+</script>
