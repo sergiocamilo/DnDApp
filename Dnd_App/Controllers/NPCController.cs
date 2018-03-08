@@ -303,6 +303,83 @@ namespace Dnd_App.Controllers
         #endregion
 
 
+        #region Callbacks --> Vul res con
 
+        [HttpPost]
+        public void _addVulnerabilities(List<Models.Enum.TypeDamage> list, int TempID)
+        {
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            var newListVulnerabilities = new List<Models.Characters.Damage>();
+
+            if (list != null)
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    newListVulnerabilities.Add(new Models.Characters.Damage()
+                    { TypeDamage = (Models.Enum.TypeDamage)list[i] }
+                    );
+                }
+            }
+            Npc.Vulnerabilities = newListVulnerabilities;
+        }
+
+        [HttpPost]
+        public void _addResistances(List<Models.Enum.TypeDamage> list, int TempID)
+        {
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+
+            var newListResistances = new List<Models.Characters.Damage>();
+
+            if (list != null)
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    newListResistances.Add(new Models.Characters.Damage()
+                    { TypeDamage = (Models.Enum.TypeDamage)list[i] }
+                    );
+                }
+            }
+            Npc.Resistances = newListResistances;
+        }
+
+        [HttpPost]
+        public void _addImmunitiesDMG(List<Models.Enum.TypeDamage> list, int TempID)
+        {
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+
+            var newListImmunitiesDMG = new List<Models.Characters.Damage>();
+
+            if (list != null)
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    newListImmunitiesDMG.Add(new Models.Characters.Damage()
+                    { TypeDamage = (Models.Enum.TypeDamage)list[i] }
+                    );
+                }
+            }
+            Npc.ImmunitiesDamage = newListImmunitiesDMG;
+        }
+
+        [HttpPost]
+        public void _addImmunitiesCND(List<Models.Enum.TypeCondition> list, int TempID)
+        {
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+
+            var newListImmunitiesCND = new List<Models.Characters.Condition>();
+
+            if (list != null)
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    newListImmunitiesCND.Add(new Models.Characters.Condition()
+                    { TypeCondition = (Models.Enum.TypeCondition)list[i] });
+                }
+            }
+            Npc.ImmunitiesCondition = newListImmunitiesCND;
+        }
+
+
+        #endregion
     }
 }
