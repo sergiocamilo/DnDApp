@@ -50,5 +50,60 @@ namespace Dnd_App.Models.Characters
 
         public List<Action> LegendaryActions { set; get; }
         public List<Action> Reactions { set; get; }
+
+
+        public void AddSpeed(List<Enum.TypeSpeed> list)
+        {
+            var newListSpeeds = new List<Speed>();
+
+            if (list == null)
+                list = new List<TypeSpeed>();
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                newListSpeeds.Add(new Speed () { TypeSpeed = list[i], Speedft = 30 });
+            }
+
+            if (list.Count <= this.Speeds.Count)
+            {
+                this.Speeds = this.Speeds.Intersect(newListSpeeds, new Speed()).ToList();
+            }
+            else
+            {
+                newListSpeeds = newListSpeeds.Except(this.Speeds, new Speed()).ToList();
+                this.Speeds.AddRange(newListSpeeds);
+            }
+        }
+
+
+        public void AddSenses(List<Enum.TypeSense> list)
+        {
+            var newListSenses = new List<Sense>();
+
+            if (list == null)
+                list = new List<TypeSense>();
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                newListSenses.Add( new Sense() { TypeSense = list[i], range = 0 });
+            }
+
+            if (list.Count <= this.Senses.Count)
+            {
+                this.Senses = this.Senses.Intersect(newListSenses, new Sense()).ToList();
+            }
+            else
+            {
+                newListSenses = newListSenses.Except(this.Senses, new Sense()).ToList();
+                this.Senses.AddRange(newListSenses);
+            }
+        }
+
+
+
+
+
+
+
     }
 }

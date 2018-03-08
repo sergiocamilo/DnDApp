@@ -194,7 +194,7 @@ namespace Dnd_App.Controllers
         {
 
             var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
-            //Npc.AddSpeed(list);
+            Npc.AddSpeed(list);
 
 
             return PartialView(Npc.Speeds);
@@ -381,5 +381,53 @@ namespace Dnd_App.Controllers
 
 
         #endregion
+
+        #region Callbacks --> Senses
+
+        [HttpPost]
+        public PartialViewResult _addSenses(List<Models.Enum.TypeSense> list, int TempID)
+        {
+
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            Npc.AddSenses(list);
+            
+            //Npc.RecalculatePerception();
+
+
+            return PartialView(Npc.Senses);
+        }
+
+
+        [HttpPost]
+        public ActionResult _UpdateSenses(Models.Enum.TypeSense _type, int _value, int TempID)
+        {
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            int LastValue = 0;
+
+            foreach (var s in Npc.Senses.Where(r => r.TypeSense == _type))
+            {
+                LastValue = s.range;
+                s.range = _value;
+            }
+
+            //Npc.RecalculatePerception();
+
+            return Json(new
+            {
+                nameValue = _type.ToString(),
+                lastValue = LastValue + "",
+                newValue = _value + ""
+            });
+
+        }
+
+
+
+        #endregion
+
+
+
+
+
     }
 }

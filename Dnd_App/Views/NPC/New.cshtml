@@ -27,6 +27,7 @@
 
     <script>
         function UpdateToast(data) {
+            console.log(data);
             var json = JSON.parse(data);
             if (json["lastValue"] == "") {
                 json["lastValue"] = "void";

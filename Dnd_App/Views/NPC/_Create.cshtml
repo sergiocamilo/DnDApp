@@ -257,7 +257,7 @@
             </div>
         </li>
 
-@*
+
     <!--Senses -->
     <li>
         <div class="collapsible-header teal darken-3 white-text">Senses</div>
@@ -277,7 +277,7 @@
         </div>
     </li>
 
-
+@*
 
     <!--Languages -->
     <li>
@@ -1231,8 +1231,108 @@
             );
 </script>
 
-<!--Skills      -------------------------------------------------------------------------------------->
+<!--Senses      -------------------------------------------------------------------------------------->
+
+<!--loadSenses on load-->
+<script>
+        $(document).ready(
+            function loadSenses() {
 
 
+                var list =  @Html.Raw(@Json.Encode(Model.Senses));
+
+                console.log(list);
+
+                var xlist = [];
+
+                for (var i = 0; i < list.length; i++) {
+                    xlist.push(list[i].TypeSense);
+                    $("select#sensesMultiple > option[value=" + list[i].TypeSense + "]").prop("selected", true);
+                }
+
+                $('#sensesMultiple').material_select('destroy');
+                $('#sensesMultiple').material_select();
+
+                $.ajax({
+                            type: "POST",
+                            cache: false,
+                        url: "@Url.Action("_addSenses")",
+                        dataType: "html",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({ 'list': xlist, 'TempID': @Model.TempID }),
+                        success: function (data)
+                        {
+                            var _npcSenses = $("#_npcSenses");
+                            _npcSenses.html(data);
+                            reloadNpcView();
+                        },
+                        failure: function (errMsg) {
+                            console.log("error ?")
+                            alert(errMsg);
+                        }
+                    });
+        }
+    );
+</script>
+
+<!--selectedSenses-->
+<script>
+            $(document).ready(
+                function selectedSenses() {
+                    $("#sensesMultiple").change(function (event) {
+
+                        var selectedValues = $('#sensesMultiple').val();
+                        console.log("select senses: " + selectedValues);
+
+                        $.ajax({
+                            type: "POST",
+                            cache: false,
+                            url: "@Url.Action("_addSenses")",
+                        dataType: "html",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({ 'list': selectedValues, 'TempID': @Model.TempID }),
+                        success: function (data)
+                        {
+                            var _npcSenses = $("#_npcSenses");
+                            _npcSenses.html(data);
+                            reloadNpcView();
+                        },
+                        failure: function (errMsg) {
+                            console.log("error ?")
+                            alert(errMsg);
+                        }
+                    });
+
+                    });
+                }
+            );
+</script>
+
+<!--updateSense-->
+<script>
+
+        function updateSense(_type, _value) {
+
+            $.ajax({
+                type: "POST",
+                cache: false,
+                url: "@Url.Action("_UpdateSenses")",
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ '_type': _type, '_value': _value, 'TempID': @Model.TempID}),
+                success: function (data)
+                {
+                    console.log(data);
+                    reloadNpcView();
+                    UpdateToast(data);
+
+                },
+                failure: function (errMsg) {
+                    console.log("error sense")
+                    alert(errMsg);
+                }
+            });
+        }
+</script>
 
 
