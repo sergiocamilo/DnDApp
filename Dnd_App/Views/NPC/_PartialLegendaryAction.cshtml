@@ -1,0 +1,114 @@
+﻿@model List<Dnd_App.Models.Characters.Action>
+
+
+<div class="row">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <div class="col s12  ">
+            <div class="col s12">
+                <p>
+                    <h5>Legendary actions @(i + 1)</h5>
+                    <a class="waves-effect waves-light btn-flat red" id="ActionDelete" data-val="@(Model[i].Name)">Delete</a>
+                </p>
+            </div>
+            <div class="input-field col s6">
+                @Html.EditorFor(m => Model[i].Name, new
+           {
+               htmlAttributes = new
+               {
+                   @class = "form-control",
+                   @id = "lnaction" + i,
+                   @data_val = @Model[i].Name
+               }
+           })
+                <label for="lnaction@(i)">Name action @(i + 1)</label>
+            </div>
+            <div class="input-field col s6">
+                @Html.EditorFor(m => Model[i].Limited, new
+           {
+               htmlAttributes = new
+               {
+                   @class = "form-control",
+                   @id = "llaction" + i,
+                   @data_val = @Model[i].Name
+               }
+           })
+                <label for="llaction@(i)">Limite action @(i + 1)</label>
+            </div>
+            <div class="input-field col s12">
+                @Html.TextAreaFor(m => Model[i].Description, new
+           {
+               @data_val = @Model[i].Name,
+               @class = "materialize-textarea",
+               @data_length = "450",
+               @id = "ldaction" + i
+           })
+                <label for="ldaction@(i)">Description action @(i + 1)</label>
+            </div>
+        </div>
+    }
+</div>
+
+
+<script>
+    $(document).ready(
+        function _textLActions() {
+
+            $("textarea[id^=ldaction]").change(function () {
+                var text = $(this).val();
+                var value = $(this).data("val");
+                console.log(text + " - " + value);
+                editTextAction(3,text,value);
+            });
+        }
+
+    );
+
+    $(document).ready(
+        function _nameLActions() {
+
+            $("input[id^=lnaction]").change(function () {
+                var name = $(this).val();
+                var preName = $(this).data("val");
+                console.log(name + " - " + preName);
+
+                editNameAction(3, preName, name);
+            });
+        }
+
+    );
+
+    $(document).ready(
+        function _limiteLActions() {
+
+            $("input[id^=llaction]").change(function () {
+                var limite = $(this).val();
+                var name = $(this).data("val");
+                console.log(limite);
+                console.log(name);
+                editLimiteAction(3, name, limite);
+
+
+            });
+        }
+
+    );
+
+
+    $(document).ready(
+                function _deleteRActions() {
+
+                    $("a[id=ActionDelete]").click(function () {
+                        var value = $(this).data("val");
+                        deleteAction(3, value);
+                    });
+                }
+        );
+
+
+
+</script>
+
+
+
+<script src="~/Scripts/materialize/loadform.js"></script>

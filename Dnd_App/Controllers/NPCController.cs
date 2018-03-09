@@ -586,6 +586,706 @@ namespace Dnd_App.Controllers
 
         #endregion
 
+        #region Callbacks --> Actions
+
+        [HttpPost]
+        public PartialViewResult _PartialAction(int TempID)
+        {
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            return PartialView(Npc.Actions);
+        }
+        [HttpPost]
+        public PartialViewResult _PartialReaction(int TempID)
+        {
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            return PartialView(Npc.Reactions);
+        }
+
+        [HttpPost]
+        public PartialViewResult _PartialLegendaryAction(int TempID)
+        {
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            return PartialView(Npc.LegendaryActions);
+        }
+
+        [HttpPost]
+        public void _addAction(int type, int TempID)
+        {
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            switch (type)
+            {
+                case 1:
+                    Npc.Actions.Add(new Models.Characters.Action() { Name = "new_action", AbilityAction = "Str" });
+                    break;
+                case 2:
+                    Npc.Reactions.Add(new Models.Characters.Action() { Name = "new reaction" });
+                    break;
+                case 3:
+                    Npc.LegendaryActions.Add(new Models.Characters.Action() { Name = "new legendary action" });
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        [HttpPost]
+        public void _deleteAction(int type, String name, int TempID)
+        {
+            if (name == null)
+            {
+                name = "";
+            }
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            switch (type)
+            {
+                case 1:
+                    Npc.Actions.RemoveAll(x => x.Name == name);
+                    break;
+                case 2:
+                    Npc.Reactions.RemoveAll(x => x.Name == name);
+                    break;
+                case 3:
+                    Npc.LegendaryActions.RemoveAll(x => x.Name == name);
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
+        [HttpPost]
+        public ActionResult _editTextAction(int type, String name, String text, int TempID)
+        {
+            if (name == null)
+            {
+                name = "";
+            }
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            string LastValue = "";
+
+            switch (type)
+            {
+                case 1:
+                    foreach (var a in Npc.Actions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.Description;
+                        a.Description = text;
+                    }
+                    break;
+                case 2:
+                    foreach (var a in Npc.Reactions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.Description;
+                        a.Description = text;
+                    }
+                    break;
+                case 3:
+                    foreach (var a in Npc.LegendaryActions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.Description;
+                        a.Description = text;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            return Json(new
+            {
+                nameValue = "Action description " + name,
+                lastValue = LastValue + "",
+                newValue = text + ""
+            });
+        }
+
+        [HttpPost]
+        public ActionResult _editNameAction(int type, String preName, String name, int TempID)
+        {
+            if (name == null)
+            {
+                name = "";
+            }
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+
+            switch (type)
+            {
+                case 1:
+                    foreach (var a in Npc.Actions.Where(r => r.Name == preName))
+                    {
+                        a.Name = name;
+                    }
+                    break;
+                case 2:
+                    foreach (var a in Npc.Reactions.Where(r => r.Name == preName))
+                    {
+                        a.Name = name;
+                    }
+                    break;
+                case 3:
+                    foreach (var a in Npc.LegendaryActions.Where(r => r.Name == preName))
+                    {
+                        a.Name = name;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            return Json(new
+            {
+                nameValue = "Action name " + name,
+                lastValue = preName + "",
+                newValue = name + ""
+            });
+        }
+
+        [HttpPost]
+        public ActionResult _editLimiteAction(int type, String name, String value, int TempID)
+        {
+            if (name == null)
+            {
+                name = "";
+            }
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            string LastValue = "";
+
+            switch (type)
+            {
+                case 1:
+                    foreach (var a in Npc.Actions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.Limited;
+                        a.Limited = value;
+                    }
+                    break;
+                case 2:
+                    foreach (var a in Npc.Reactions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.Limited;
+                        a.Limited = value;
+                    }
+                    break;
+                case 3:
+                    foreach (var a in Npc.LegendaryActions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.Limited;
+                        a.Limited = value;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            return Json(new
+            {
+                nameValue = "Action description " + name,
+                lastValue = LastValue + "",
+                newValue = value + ""
+            });
+        }
+
+        //recalcular
+        [HttpPost]
+        public ActionResult _editTypeAction(int type, String name, int value, int TempID)
+        {
+            if (name == null)
+            {
+                name = "";
+            }
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            string LastValue = "";
+
+            switch (type)
+            {
+                case 1:
+                    foreach (var a in Npc.Actions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.TypeAction.ToString();
+                        a.TypeAction = (Models.Enum.TypeAction)value;
+                    }
+                    break;
+                case 2:
+                    foreach (var a in Npc.Reactions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.TypeAction.ToString();
+                        a.TypeAction = (Models.Enum.TypeAction)value;
+                    }
+                    break;
+                case 3:
+                    foreach (var a in Npc.LegendaryActions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.TypeAction.ToString();
+                        a.TypeAction = (Models.Enum.TypeAction)value;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            //npc.RecalculateAttackAction();
+            //npc.RecalculateHitAction();
+
+            return Json(new
+            {
+                nameValue = "Action type " + name,
+                lastValue = LastValue + "",
+                newValue = value + ""
+            });
+        }
+
+        //recalcular
+        [HttpPost]
+        public ActionResult _editBonusAttckAction(int type, String name, int value, int TempID)
+        {
+            if (name == null)
+            {
+                name = "";
+            }
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            string LastValue = "";
+
+            switch (type)
+            {
+                case 1:
+                    foreach (var a in Npc.Actions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.BonusAttack.ToString();
+                        a.BonusAttack = value;
+                    }
+                    break;
+                case 2:
+                    foreach (var a in Npc.Reactions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.BonusAttack.ToString();
+                        a.BonusAttack = value;
+                    }
+                    break;
+                case 3:
+                    foreach (var a in Npc.LegendaryActions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.BonusAttack.ToString();
+                        a.BonusAttack = value;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            //Npc.RecalculateAttackAction();
+            return Json(new
+            {
+                nameValue = "Action bonus " + name,
+                lastValue = LastValue + "",
+                newValue = value + ""
+            });
+        }
+
+        [HttpPost]
+        public ActionResult _editAbilityAction(int type, String name, String value, int TempID)
+        {
+            if (name == null)
+            {
+                name = "";
+            }
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            string LastValue = "";
+
+            switch (type)
+            {
+                case 1:
+                    foreach (var a in Npc.Actions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.AbilityAction;
+                        a.AbilityAction = value;
+                    }
+                    break;
+                case 2:
+                    foreach (var a in Npc.Reactions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.AbilityAction;
+                        a.AbilityAction = value;
+                    }
+                    break;
+                case 3:
+                    foreach (var a in Npc.LegendaryActions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.AbilityAction;
+                        a.AbilityAction = value;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            //npc.RecalculateAttackAction();
+            //npc.RecalculateHitAction();
+            return Json(new
+            {
+                nameValue = "Action ability action " + name,
+                lastValue = LastValue + "",
+                newValue = value + ""
+            });
+        }
+
+        [HttpPost]
+        public ActionResult _editRangeAction(int type, String name, int value, int TempID)
+        {
+            if (name == null)
+            {
+                name = "";
+            }
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            string LastValue = "";
+
+            switch (type)
+            {
+                case 1:
+                    foreach (var a in Npc.Actions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.Range.ToString();
+                        a.Range = value;
+                    }
+                    break;
+                case 2:
+                    foreach (var a in Npc.Reactions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.Range.ToString();
+                        a.Range = value;
+                    }
+                    break;
+                case 3:
+                    foreach (var a in Npc.LegendaryActions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.Range.ToString();
+                        a.Range = value;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            return Json(new
+            {
+                nameValue = "Action range " + name,
+                lastValue = LastValue + "",
+                newValue = value + ""
+            });
+        }
+
+        [HttpPost]
+        public ActionResult _editMinAction(int type, String name, int value, int TempID)
+        {
+            if (name == null)
+            {
+                name = "";
+            }
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            string LastValue = "";
+
+            switch (type)
+            {
+                case 1:
+                    foreach (var a in Npc.Actions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.Min.ToString();
+                        a.Min = value;
+                    }
+                    break;
+                case 2:
+                    foreach (var a in Npc.Reactions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.Min.ToString();
+                        a.Min = value;
+                    }
+                    break;
+                case 3:
+                    foreach (var a in Npc.LegendaryActions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.Min.ToString();
+                        a.Min = value;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            return Json(new
+            {
+                nameValue = "Action min " + name,
+                lastValue = LastValue + "",
+                newValue = value + ""
+            });
+        }
+
+        [HttpPost]
+        public ActionResult _editMaxAction(int type, String name, int value, int TempID)
+        {
+            if (name == null)
+            {
+                name = "";
+            }
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            string LastValue = "";
+
+            switch (type)
+            {
+                case 1:
+                    foreach (var a in Npc.Actions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.Max.ToString();
+                        a.Max = value;
+                    }
+                    break;
+                case 2:
+                    foreach (var a in Npc.Reactions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.Max.ToString();
+                        a.Max = value;
+                    }
+                    break;
+                case 3:
+                    foreach (var a in Npc.LegendaryActions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.Max.ToString();
+                        a.Max = value;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            return Json(new
+            {
+                nameValue = "Action max " + name,
+                lastValue = LastValue + "",
+                newValue = value + ""
+            });
+        }
+
+        [HttpPost]
+        public ActionResult _editTargetAction(int type, String name, String value, int TempID)
+        {
+            if (name == null)
+            {
+                name = "";
+            }
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            string LastValue = "";
+
+            switch (type)
+            {
+                case 1:
+                    foreach (var a in Npc.Actions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.Target;
+                        a.Target = value;
+                    }
+                    break;
+                case 2:
+                    foreach (var a in Npc.Reactions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.Target;
+                        a.Target = value;
+                    }
+                    break;
+                case 3:
+                    foreach (var a in Npc.LegendaryActions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.Target;
+                        a.Target = value;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            return Json(new
+            {
+                nameValue = "Action target " + name,
+                lastValue = LastValue + "",
+                newValue = value + ""
+            });
+        }
+
+        [HttpPost]
+        public ActionResult _editHitDieAction(int type, String name, int value, int TempID)
+        {
+            if (name == null)
+            {
+                name = "";
+            }
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            string LastValue = "";
+
+            switch (type)
+            {
+                case 1:
+                    foreach (var a in Npc.Actions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.HitDie.ToString();
+                        a.HitDie = value;
+                    }
+                    break;
+                case 2:
+                    foreach (var a in Npc.Reactions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.HitDie.ToString();
+                        a.HitDie = value;
+                    }
+                    break;
+                case 3:
+                    foreach (var a in Npc.LegendaryActions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.HitDie.ToString();
+                        a.HitDie = value;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            //npc.RecalculateHitAction();
+
+            return Json(new
+            {
+                nameValue = "Action hit die " + name,
+                lastValue = LastValue + "",
+                newValue = value + ""
+            });
+        }
+
+
+        [HttpPost]
+        public ActionResult _editBonusDamageAction(int type, String name, int value, int TempID)
+        {
+            if (name == null)
+            {
+                name = "";
+            }
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            string LastValue = "";
+
+            switch (type)
+            {
+                case 1:
+                    foreach (var a in Npc.Actions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.BonusDamage.ToString();
+                        a.BonusDamage = value;
+                    }
+                    break;
+                case 2:
+                    foreach (var a in Npc.Reactions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.BonusDamage.ToString();
+                        a.BonusDamage = value;
+                    }
+                    break;
+                case 3:
+                    foreach (var a in Npc.LegendaryActions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.BonusDamage.ToString();
+                        a.BonusDamage = value;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            //npc.RecalculateHitAction();
+
+            return Json(new
+            {
+                nameValue = "Action hit die " + name,
+                lastValue = LastValue + "",
+                newValue = value + ""
+            });
+        }
+
+        [HttpPost]
+        public ActionResult _editDieAction(int type, String name, int value, int TempID)
+        {
+            if (name == null)
+            {
+                name = "";
+            }
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            string LastValue = "";
+
+            switch (type)
+            {
+                case 1:
+                    foreach (var a in Npc.Actions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.Die.ToString();
+                        a.Die = (Models.Enum.TypeDie)value;
+                    }
+                    break;
+                case 2:
+                    foreach (var a in Npc.Reactions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.Die.ToString();
+                        a.Die = (Models.Enum.TypeDie)value;
+                    }
+                    break;
+                case 3:
+                    foreach (var a in Npc.LegendaryActions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.Die.ToString();
+                        a.Die = (Models.Enum.TypeDie)value;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            //npc.RecalculateHitAction();
+
+            return Json(new
+            {
+                nameValue = "Action hit die " + name,
+                lastValue = LastValue + "",
+                newValue = value + ""
+            });
+        }
+
+        [HttpPost]
+        public ActionResult _editTypeDamageAction(int type, String name, int value, int TempID)
+        {
+            if (name == null)
+            {
+                name = "";
+            }
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            string LastValue = "";
+
+            switch (type)
+            {
+                case 1:
+                    foreach (var a in Npc.Actions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.TypeDamage.ToString();
+                        a.TypeDamage = (Models.Enum.TypeDamage)value;
+                    }
+                    break;
+                case 2:
+                    foreach (var a in Npc.Reactions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.TypeDamage.ToString();
+                        a.TypeDamage = (Models.Enum.TypeDamage)value;
+                    }
+                    break;
+                case 3:
+                    foreach (var a in Npc.LegendaryActions.Where(r => r.Name == name))
+                    {
+                        LastValue = a.TypeDamage.ToString();
+                        a.TypeDamage = (Models.Enum.TypeDamage)value;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            return Json(new
+            {
+                nameValue = "Action damage type " + name,
+                lastValue = LastValue + "",
+                newValue = value + ""
+            });
+        }
+
+        #endregion
 
 
     }

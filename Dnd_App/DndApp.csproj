@@ -273,6 +273,9 @@
     <Content Include="Views\NPC\_addSkills.cshtml" />
     <Content Include="Views\NPC\_addSenses.cshtml" />
     <Content Include="Views\NPC\_PartialSpecialTraits.cshtml" />
+    <Content Include="Views\NPC\_PartialAction.cshtml" />
+    <Content Include="Views\NPC\_PartialReaction.cshtml" />
+    <Content Include="Views\NPC\_PartialLegendaryAction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
