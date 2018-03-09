@@ -335,7 +335,7 @@
         </div>
     </li>
 
-@*
+
 
     <!--Challenge -->
     <li>
@@ -344,9 +344,9 @@
             <div class="row">
                 <div class="input-field col s12  ">
                     <select id="chrating">
-                        @foreach (var challenge in Model.challenge.ChallengeList())
+                        @foreach (var challenge in Model.Challenge.ChallengeList())
                         {
-                            <option value="@(challenge.xp)"> Challenge  @challenge.value - Experience @challenge.xp XP - Proficiency +@challenge.proficiencyBonus </option>
+                            <option value="@(challenge.XP)"> Challenge  @challenge.Value - Experience @challenge.XP XP - Proficiency +@challenge.ProficiencyBonus </option>
 
                         }
                     </select>
@@ -355,7 +355,7 @@
             </div>
         </div>
     </li>
-
+@*
 
     <!--Special Traits -->
     <li>
@@ -1481,3 +1481,43 @@
                    }
                );
 </script>
+
+
+<!--Challenge      -------------------------------------------------------------------------------------->
+
+<!--updateChallenge-->
+<script>
+           $(document).ready(
+               function updateChallenge() {
+                   $("#chrating").change(function (event) {
+                       var val = $('#chrating').val();
+                       console.log(val);
+
+
+                       $.ajax({
+                           type: "POST",
+                           cache: false,
+                            url: "@Url.Action("_updateChallenge")",
+                            dataType: "html",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify({ 'val': val , 'TempID': @Model.TempID}),
+                            success: function (data)
+                            {
+                                UpdateToast(data);
+                                reloadNpcView();
+                            },
+                            failure: function (errMsg) {
+                                console.log("error challenge")
+                                alert(errMsg);
+                            }
+                        });
+                   });
+               }
+           );
+</script>
+
+
+
+
+
+

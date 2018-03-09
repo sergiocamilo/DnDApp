@@ -479,5 +479,34 @@ namespace Dnd_App.Controllers
 
         #endregion
 
+
+        #region Callbacks --> Challenge
+
+        [HttpPost]
+        public ActionResult _updateChallenge(int val, int TempID)
+        {
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            var aux = Npc.Challenge.ChallengeList().Find(con => con.XP == val);
+
+            var LastValue = Npc.Challenge.Value;
+
+            Npc.Challenge.ProficiencyBonus = aux.ProficiencyBonus;
+            Npc.Challenge.Value = aux.Value;
+            Npc.Challenge.XP = aux.XP;
+
+            //Npc.RecalculatePorficiency();
+
+            return Json(new
+            {
+                nameValue = "Challenge rating ",
+                lastValue = LastValue + "",
+                newValue = aux.Value + ""
+            });
+
+        }
+
+
+        #endregion
+
     }
 }
