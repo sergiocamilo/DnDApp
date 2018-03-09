@@ -272,6 +272,7 @@
     <Content Include="Views\Shared\_Nav2.cshtml" />
     <Content Include="Views\NPC\_addSkills.cshtml" />
     <Content Include="Views\NPC\_addSenses.cshtml" />
+    <Content Include="Views\NPC\_PartialSpecialTraits.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

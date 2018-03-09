@@ -508,5 +508,85 @@ namespace Dnd_App.Controllers
 
         #endregion
 
+        #region Callbacks --> Special Traits
+
+
+        [HttpPost]
+        public PartialViewResult _PartialSpecialTraits(int TempID)
+        {
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            return PartialView(Npc.SpecialTraits);
+        }
+
+        [HttpPost]
+        public void _addSpecialTrait(int TempID)
+        {
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            Npc.SpecialTraits.Add(new Models.Characters.SpecialTrait() { Name = "new special trait" });
+
+        }
+
+        [HttpPost]
+        public void _deleteSpecialTraits(String name, int TempID)
+        {
+            if (name == null)
+            {
+                name = "";
+            }
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+
+            Npc.SpecialTraits.RemoveAll(x => x.Name == name);
+        }
+
+        [HttpPost]
+        public ActionResult _editTextSpecialTraits(String name, String text, int TempID)
+        {
+            if (name == null)
+            {
+                name = "";
+            }
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            string LastValue = "";
+            foreach (var a in Npc.SpecialTraits.Where(r => r.Name == name))
+            {
+                LastValue = a.Description;
+                a.Description = text;
+            }
+
+            return Json(new
+            {
+                nameValue = "Special trait " + name,
+                lastValue = LastValue + "",
+                newValue = text + ""
+            });
+        }
+
+        [HttpPost]
+        public ActionResult _editNameSpecialTraits(String preName, String name, int TempID)
+        {
+            if (name == null)
+            {
+                name = "";
+            }
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+
+
+            foreach (var a in Npc.SpecialTraits.Where(r => r.Name == preName))
+            {
+                a.Name = name;
+            }
+
+            return Json(new
+            {
+                nameValue = "Special trait " + name,
+                lastValue = preName + "",
+                newValue = name + ""
+            });
+        }
+
+        #endregion
+
+
+
     }
 }

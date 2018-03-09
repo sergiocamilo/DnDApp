@@ -355,7 +355,7 @@
             </div>
         </div>
     </li>
-@*
+
 
     <!--Special Traits -->
     <li>
@@ -370,7 +370,7 @@
         </div>
     </li>
 
-
+@*
     <!--Actions -->
     <li>
         <div class="collapsible-header teal darken-3 white-text">Actions</div>
@@ -1515,6 +1515,166 @@
                }
            );
 </script>
+
+
+
+<!--Special traits      -------------------------------------------------------------------------------------->
+
+<!--loadSpecialTraits on load-->
+<script>
+    $(document).ready(
+        function loadSpecialTraits() {
+
+            $.ajax({
+                type: "POST",
+                cache: false,
+                url: "@Url.Action("_PartialSpecialTraits")",
+                dataType: "html",
+                data: JSON.stringify({'TempID': @Model.TempID}),
+                contentType: "application/json; charset=utf-8",
+                success: function (data)
+                {
+                    var _npcSenses = $("#_npcSpecialTraits");
+                    _npcSenses.html(data);
+                },
+                failure: function (errMsg) {
+                    console.log("error ?")
+                    alert(errMsg);
+                }
+            });
+        }
+    );
+</script>
+
+
+<!--SpecialTraits-->
+<script>
+        function SpecialTraits() {
+
+            $.ajax({
+                type: "POST",
+                cache: false,
+                url: "@Url.Action("_PartialSpecialTraits")",
+                dataType: "html",
+                data: JSON.stringify({'TempID': @Model.TempID}),
+                contentType: "application/json; charset=utf-8",
+                success: function (data)
+                {
+                    var _npcSenses = $("#_npcSpecialTraits");
+                    _npcSenses.html(data);
+                },
+                failure: function (errMsg) {
+                    console.log("error ?")
+                    alert(errMsg);
+                }
+            });
+        }
+</script>
+
+<!--addSpecialTraits-->
+<script>
+
+        function addSpecialTraits() {
+
+            $.ajax({
+                type: "POST",
+                cache: false,
+                url: "@Url.Action("_addSpecialTrait")",
+                        dataType: "html",
+                        data: JSON.stringify({'TempID': @Model.TempID}),
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data)
+                        {
+                            SpecialTraits();
+                            reloadNpcView();
+                        },
+                        failure: function (errMsg) {
+                            console.log("error ?")
+                            alert(errMsg);
+                        }
+                    });
+        }
+</script>
+
+<!--deleteSpecialTraits-->
+<script>
+
+            function deleteSpecialTraits(name) {
+
+
+                       $.ajax({
+                           type: "POST",
+                           cache: false,
+                            url: "@Url.Action("_deleteSpecialTraits")",
+                            dataType: "html",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify({'name': name, 'TempID': @Model.TempID}),
+                            success: function (data)
+                            {
+                                SpecialTraits();
+                                reloadNpcView();
+                            },
+                            failure: function (errMsg) {
+                                console.log("error ?")
+                                alert(errMsg);
+                            }
+                });
+
+            }
+</script>
+
+
+<!--editTextSpecialTrait-->
+<script>
+
+            function editTextSpecialtrait(text, value) {
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_editTextSpecialTraits")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({'name': value, 'text': text, 'TempID': @Model.TempID}),
+                                success: function (data)
+                                {
+                                    UpdateToast(data);
+                                    reloadNpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error ?")
+                                    alert(errMsg);
+                                }
+                            });
+                }
+</script>
+
+<!--editNameSpecialtrait-->
+<script>
+
+            function editNameSpecialtrait(preName, name) {
+                               $.ajax({
+                                   type: "POST",
+                                   cache: false,
+                                    url: "@Url.Action("_editNameSpecialTraits")",
+                                    dataType: "html",
+                                    contentType: "application/json; charset=utf-8",
+                                    data: JSON.stringify({'preName': preName, 'name': name, 'TempID': @Model.TempID}),
+                                    success: function (data)
+                                    {
+                                        UpdateToast(data);
+                                        SpecialTraits();
+                                        reloadNpcView();
+                                    },
+                                    failure: function (errMsg) {
+                                        console.log("error ?")
+                                        alert(errMsg);
+                                    }
+                                });
+                    }
+</script>
+
+
+
 
 
 

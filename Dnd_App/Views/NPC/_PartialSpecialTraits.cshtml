@@ -1,0 +1,103 @@
+﻿@model  List<Dnd_App.Models.Characters.SpecialTrait>
+
+
+
+<div class="row">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <div class="col s12  ">
+            <div class="col s12">
+                <h5>Special trait @(i + 1)</h5>
+                <a class="waves-effect waves-light btn-flat red right" id="SpecialtraitDelete" data-val="@(Model[i].Name)">Delete</a>
+            </div>
+            <div class="input-field col s6">
+                @Html.EditorFor(m => Model[i].Name, new
+           {
+               htmlAttributes = new
+               {
+                   @class = "form-control",
+                   @id = "specialtrait" + i,
+                   @data_val = @Model[i].Name
+               }
+           })
+                <label for="specialtrait@(i)">Name special trait @(i + 1)</label>
+            </div>
+
+            <div class="input-field col s12">
+                @Html.TextAreaFor(m => Model[i].Description, new
+           {
+               @data_val = @Model[i].Name,
+               @class = "materialize-textarea",
+               @data_length = "450",
+               @id = "specialtrait" + i
+           })
+                <label for="specialtrait@(i)">Description special trait @(i + 1)</label>
+            </div>
+        </div>
+    }
+</div>
+
+
+<script>
+
+
+    $(document).ready(
+        function _nameSpecialtrait() {
+
+            $("input[id^=specialtrait]").change(function () {
+                var name = $(this).val();
+                var preName = $(this).data("val");
+
+                if (name == "") {
+                    alert('Name can not be empty');
+                    Materialize.toast('The name was changed to ' + preName , 3000);
+                    name = preName;
+                    $(this).val(preName);
+                }
+                else {
+                    editNameSpecialtrait(preName, name);
+                }
+            });
+        }
+
+    );
+
+    $(document).ready(
+        function _textSpecialtrait() {
+
+            $("textarea[id^=specialtrait]").change(function () {
+                var text = $(this).val();
+                var value = $(this).data("val");
+
+                if (text == "") {
+                    alert('Text can not be empty');
+                    Materialize.toast('Text was changed to "description here"', 3000);
+                    text = "description here";
+                    $(this).val("description here");
+                }
+
+                editTextSpecialtrait(text, value);
+            });
+        }
+
+    );
+
+
+    $(document).ready(
+        function _deleteSpecialtrait() {
+
+            $("a[id=SpecialtraitDelete]").click(function () {
+
+                        var value = $(this).data("val");
+                        deleteSpecialTraits(value);
+                    });
+                }
+        );
+
+
+
+</script>
+
+<script src="~/Scripts/materialize/loadform.js"></script>
+
+
