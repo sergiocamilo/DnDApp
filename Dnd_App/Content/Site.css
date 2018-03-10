@@ -22,13 +22,26 @@
 }
 
 .statblock {
-    
+    padding-top: 20px;
 }
 
     .statblock h4 {
-        
+        font-weight: 500;
+        margin-bottom: 5px;
     }
     .statblock p {
+        font-size:11px;
+    }
+    .statblock span {
+        font-size: 14px;
+    }
+
+    .statblock .font-italic{
+        font-style:italic;
+    }
+
+    .statblock .font-bold {
+        font-weight: bold;
     }
 
     .statblock hr {
@@ -57,6 +70,9 @@
     padding: .5rem;
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: none;
+    height: calc(100% - 65px);
+    height: -webkit-calc(100% - 65px); /* google, safari */
+    height: -moz-calc(100% - 65px); /* firefox */
 }
 
 .bar-breadcrumb {
@@ -79,4 +95,17 @@
 
 .card .card-action {
     background-color: transparent;
+}
+
+.npcview{
+    margin-top: 7px;
+}
+
+.collapsible-header {
+    font-size:19px;
+
+}
+
+.ul-collap{
+    border:0px;
 }

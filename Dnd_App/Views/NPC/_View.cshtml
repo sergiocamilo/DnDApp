@@ -1,100 +1,124 @@
 ﻿@model Dnd_App.Models.Characters.NPC
 
+@{
+    //LOGIC
+
+    #region BASIC INFO
+    var TextDescription = "";
+    TextDescription += Model.Size.TypeSize + " ";
+    TextDescription += Model.TypeCreature;
+    if (Model.Tag != "")
+    {
+        TextDescription += " (" + Model.Tag + ")";
+    }
+    TextDescription += ", ";
+
+    var TextAlignment = "";
+    if (Model.AlignmentAttitude == Dnd_App.Models.Enum.TypeAlignAttitude.none && Model.AlignmentMorality == Dnd_App.Models.Enum.TypeAlignMorality.none)
+    {
+        TextAlignment += "unaligned";
+    }
+    else if (Model.AlignmentAttitude == Dnd_App.Models.Enum.TypeAlignAttitude.none && Model.AlignmentMorality != Dnd_App.Models.Enum.TypeAlignMorality.none)
+    {
+        TextAlignment += Model.AlignmentMorality;
+    }
+    else if (Model.AlignmentAttitude != Dnd_App.Models.Enum.TypeAlignAttitude.none && Model.AlignmentMorality == Dnd_App.Models.Enum.TypeAlignMorality.none)
+    {
+        TextAlignment += Model.AlignmentAttitude;
+    }
+    else if (Model.AlignmentAttitude == Dnd_App.Models.Enum.TypeAlignAttitude.neutral && Model.AlignmentMorality == Dnd_App.Models.Enum.TypeAlignMorality.neutral)
+    {
+        TextAlignment += Model.AlignmentAttitude;
+    }
+    else
+    {
+        TextAlignment += Model.AlignmentAttitude + " " + Model.AlignmentMorality;
+    }
+    #endregion
+
+    #region ARMOR
+
+    var TextArmor = " ";
+    TextArmor += Model.ArmorClass.Total + " (";
+    if (Model.ArmorClass.Shield)
+    {
+        TextArmor += @Dnd_App.Utils.Helpers.Description(Model.ArmorClass.Name) + ", shield)";
+    }
+    else
+    {
+        TextArmor += @Dnd_App.Utils.Helpers.Description(Model.ArmorClass.Name) + ")";
+    }
+
+    #endregion
+
+    #region HITPOINTS
+
+    var TextHP = " ";
+    TextHP += Model.HitPoint.HitPointsAVG + " ";
+    TextHP += "(" + Model.HitPoint.Die + "" + Model.HitPoint.TypeDie;
+    if (Model.HitPoint.BonusMultiplied > 0)
+    {
+        TextHP += " + " + Model.HitPoint.BonusMultiplied+ ")";
+    }
+    else if (Model.HitPoint.BonusMultiplied < 0)
+    {
+        TextHP += Model.HitPoint.BonusMultiplied + ")";
+    }
+    else
+    {
+        TextHP += ")";
+    }
+
+    #endregion
+
+    #region SPEEDS
+
+    var TextSpeeds = " ";
+    for (int i = 0; i < Model.Speeds.Count; i++)
+    {
+        if (@Model.Speeds[i].TypeSpeed != Dnd_App.Models.Enum.TypeSpeed.Base)
+        {
+            TextSpeeds += Model.Speeds[i].TypeSpeed + " " + Model.Speeds[i].Speedft + "ft.";
+        }
+        else
+        {
+            TextSpeeds += Model.Speeds[i].Speedft + "ft.";
+        }
+        if (i != Model.Speeds.Count - 1)
+        {
+            TextSpeeds += ", ";
+        }
+    }
+
+    #endregion
+
+}
+
+
 
 <div id="_NpcView" class="statblock card-panel yellow-to-orange black-text">
 
     <div id="_BasicInfo">
         <h4>@Model.Name</h4>
-        <span>@Model.Size.TypeSize</span>
-        <span>@Model.TypeCreature</span>
-
-        @if (Model.Tag != "")
-        {
-            <span>(@Model.Tag)</span>
-        }
-        ,
-        @if (Model.AlignmentAttitude == Dnd_App.Models.Enum.TypeAlignAttitude.none && Model.AlignmentMorality == Dnd_App.Models.Enum.TypeAlignMorality.none)
-        {
-            <span>unaligned</span>
-        }
-        else if (Model.AlignmentAttitude == Dnd_App.Models.Enum.TypeAlignAttitude.none && Model.AlignmentMorality != Dnd_App.Models.Enum.TypeAlignMorality.none)
-        {
-            <span id="moralityUpdate">@Model.AlignmentMorality</span>
-        }
-        else if (Model.AlignmentAttitude != Dnd_App.Models.Enum.TypeAlignAttitude.none && Model.AlignmentMorality == Dnd_App.Models.Enum.TypeAlignMorality.none)
-        {
-            <span id="attitudeUpdate">@Model.AlignmentAttitude</span>
-        }
-        else if (Model.AlignmentAttitude == Dnd_App.Models.Enum.TypeAlignAttitude.neutral && Model.AlignmentMorality == Dnd_App.Models.Enum.TypeAlignMorality.neutral)
-        {
-            <span id="attitudeUpdate">@Model.AlignmentAttitude</span>
-        }
-        else
-        {
-            <span id="attitudeUpdate">@Model.AlignmentAttitude</span>
-            <span id="moralityUpdate">@Model.AlignmentMorality</span>
-        }
+        <div class="font-italic">
+            <span>@TextDescription @TextAlignment</span>
+        </div>
     </div>
-
 
     <hr />
 
     <div id="_ArmorClass">
-        <span>Armor class</span>
-        <span> @Model.ArmorClass.Total</span>
-        @{if (@Model.ArmorClass.Shield)
-            {
-
-                <span> (@Dnd_App.Utils.Helpers.Description(Model.ArmorClass.Name), shield)</span>
-            }
-            else
-            {
-                <span> (@Dnd_App.Utils.Helpers.Description(Model.ArmorClass.Name))</span>
-            }
-        }
+        <span class="font-bold">Armor class</span><span>@TextArmor</span>
     </div>
 
 
     <div id="_Hitpoints">
-        <span>Hit points</span>
-        <span> @Model.HitPoint.HitPointsAVG </span>
-        <span>(@Model.HitPoint.Die@Model.HitPoint.TypeDie</span>
-        @if (Model.HitPoint.BonusMultiplied > 0)
-        {
-            <span> +@Model.HitPoint.BonusMultiplied)</span>
-        }
-        else if (Model.HitPoint.BonusMultiplied < 0)
-        {
-            <span> @Model.HitPoint.BonusMultiplied)</span>
-        }
-        else
-        {
-            <span>)</span>
-        }
+        <span class="font-bold">Hit points</span><span>@TextHP</span>
     </div>
 
 
     <div id="_Speeds">
-        <span>Speed </span>
-        @for (int i = 0; i < Model.Speeds.Count; i++)
-        {
-            if (@Model.Speeds[i].TypeSpeed != Dnd_App.Models.Enum.TypeSpeed.Base)
-            {
-                <span>@Model.Speeds[i].TypeSpeed </span>
-                <span> @Model.Speeds[i].Speedft ft.</span>
-            }
-            else
-            {
-                <span> </span>
-                <span>@Model.Speeds[i].Speedft ft.</span>
-            }
-            if (i != Model.Speeds.Count - 1)
-            {
-                <span>,</span>
-            }
-
-
-        }
+        <span class="font-bold">Speed</span><span>@TextSpeeds</span>
     </div>
 
     <hr />

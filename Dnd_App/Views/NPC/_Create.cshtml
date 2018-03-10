@@ -5,11 +5,11 @@
 }
 
 
-<ul class="collapsible z-depth-3" data-collapsible="accordion">
+<ul class="collapsible z-depth-3 ul-collap" data-collapsible="accordion">
     <!--Basic Info -->
     <li>
-        <div class="collapsible-header orange-to-orangeblack white-text active">Basic info</div>
-        <div class="collapsible-body grey lighten-5">
+        <div class="collapsible-header center red-to-red white-text active">Basic info</div>
+        <div class="collapsible-body white">
             <div class="row">
                 <div class="input-field col s6">
                     @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @type = "text" } })
@@ -43,10 +43,10 @@
 
     <!--Armor Class -->
     <li>
-        <div class="collapsible-header red-to-red white-text">
+        <div class="collapsible-header center  white-text red-to-red">
             Armor class
         </div>
-        <div class="collapsible-body grey lighten-5">
+        <div class="collapsible-body white">
             <div class="row">
                 <div class="input-field col s6">
                     @Html.EnumDropDownListFor(m => m.ArmorClass.Name, new { @type = "text" })
@@ -78,7 +78,7 @@
 
     <!--Hit points -->
     <li>
-        <div class="collapsible-header teal darken-3 white-text">Hit Ponits</div>
+        <div class="collapsible-header center red-to-red white-text">Hit Ponits</div>
         <div class="collapsible-body grey lighten-5">
             <div class="row">
                 <div class="input-field col s6">
@@ -97,8 +97,8 @@
 
     <!--Speeds -->
     <li>
-        <div class="collapsible-header teal darken-3 white-text">Speeds</div>
-        <div class="collapsible-body grey lighten-5">
+        <div class="collapsible-header center red-to-red white-text">Speeds</div>
+        <div class="collapsible-body white">
             <div class="row">
                 <div class="input-field col s12">
                     <select multiple="multiple" id="speedsMultiple">
@@ -123,8 +123,8 @@
 
     <!--Ability Scores -->
     <li>
-        <div class="collapsible-header teal darken-3 white-text">Ability scores</div>
-        <div class="collapsible-body grey lighten-5">
+        <div class="collapsible-header center red-to-red white-text">Ability scores</div>
+        <div class="collapsible-body white">
             <div class="row">
                 @for (int i = 0; i < Model.AbilitiesScores.Count; i++)
                 {
@@ -143,8 +143,8 @@
 
     <!--Saving Throws -->
     <li>
-        <div class="collapsible-header teal darken-3 white-text">Saving throws</div>
-        <div class="collapsible-body grey lighten-5">
+        <div class="collapsible-header center red-to-red white-text">Saving throws</div>
+        <div class="collapsible-body white">
             <div class="row">
                 @for (int i = 0; i < Model.AbilitiesScores.Count; i++)
                     {
@@ -178,8 +178,8 @@
 
     <!--Skills -->
     <li>
-        <div class="collapsible-header teal darken-3 white-text">Skills</div>
-        <div class="collapsible-body grey lighten-5">
+        <div class="collapsible-header center red-to-red white-text">Skills</div>
+        <div class="collapsible-body white">
             <div class="row">
                 <div class="input-field col s12">
                     <select multiple="multiple" id="skillsMultiple">
@@ -214,8 +214,8 @@
 
     <!--Conditions  (Vulnerabilities, resistances, immunities) -->
     <li>
-        <div class="collapsible-header teal darken-3 white-text">Conditions</div>
-        <div class="collapsible-body grey lighten-5">
+        <div class="collapsible-header center red-to-red white-text">Conditions</div>
+        <div class="collapsible-body white">
             <div class="row">
                 <div class="input-field col s6">
                     <select multiple="multiple" id="vulnerabilitiesMultiple">
@@ -260,8 +260,8 @@
 
     <!--Senses -->
     <li>
-        <div class="collapsible-header teal darken-3 white-text">Senses</div>
-        <div class="collapsible-body grey lighten-5">
+        <div class="collapsible-header center red-to-red white-text">Senses</div>
+        <div class="collapsible-body white">
             <div class="row">
                 <div class="input-field col s12">
                     <select multiple="multiple" id="sensesMultiple">
@@ -281,8 +281,8 @@
 
     <!--Languages -->
     <li>
-        <div class="collapsible-header teal darken-3 white-text">Languages</div>
-        <div class="collapsible-body grey lighten-5">
+        <div class="collapsible-header center red-to-red white-text">Languages</div>
+        <div class="collapsible-body white">
             <div class="row">
                 <div class="input-field col s6">
                     <select multiple="multiple" id="languagesSpeakMultiple">
@@ -339,8 +339,8 @@
 
     <!--Challenge -->
     <li>
-        <div class="collapsible-header teal darken-3 white-text">Challenge Rating</div>
-        <div class="collapsible-body grey lighten-5">
+        <div class="collapsible-header center red-to-red white-text">Challenge Rating</div>
+        <div class="collapsible-body white">
             <div class="row">
                 <div class="input-field col s12  ">
                     <select id="chrating">
@@ -359,8 +359,8 @@
 
     <!--Special Traits -->
     <li>
-        <div class="collapsible-header teal darken-3 white-text">Special Traits</div>
-        <div class="collapsible-body grey lighten-5">
+        <div class="collapsible-header center red-to-red white-text">Special Traits</div>
+        <div class="collapsible-body white">
             <div class="row">
                 <div id="_npcSpecialTraits"></div>
                 <center>
@@ -373,8 +373,8 @@
 
     <!--Actions -->
     <li>
-        <div class="collapsible-header teal darken-3 white-text">Actions</div>
-        <div class="collapsible-body grey lighten-5">
+        <div class="collapsible-header center red-to-red white-text">Actions</div>
+        <div class="collapsible-body white">
             <div class="row">
                 <div id="_npcActions"></div>
                 <center>
@@ -387,8 +387,8 @@
     <!--Reactions -->
 
     <li>
-        <div class="collapsible-header teal darken-3 white-text">Reactions</div>
-        <div class="collapsible-body grey lighten-5">
+        <div class="collapsible-header center red-to-red white-text">Reactions</div>
+        <div class="collapsible-body white">
             <div class="row">
                 <div id="_npcReactions"></div>
                 <center>
@@ -400,8 +400,8 @@
     <!--Legendary Action -->
 
     <li>
-        <div class="collapsible-header teal darken-3 white-text">Legendary Actions</div>
-        <div class="collapsible-body grey lighten-5">
+        <div class="collapsible-header center red-to-red white-text">Legendary Actions</div>
+        <div class="collapsible-body white">
             <div class="row">
                 <div id="_npcLActions"></div>
                 <center>

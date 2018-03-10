@@ -17,7 +17,7 @@
 
         </div>
         <div class="col s6 col-new-character">
-            <div id="_npcInfo"></div>
+           <div class="npcview z-depth-3" id="_npcInfo"></div>
         </div>
     </div>
 </main>
@@ -36,11 +36,13 @@
         }
     </script>
      <!--Alert dd-->
+
     <script>
         function Alertoast(alert) {
             Materialize.toast('<i class="fa fa-exclamation-circle fa-fw"></i> ' + alert + '' , 3000);
         }
     </script>
+
     <script>
         $(document).ready(
             function loadNPCView() {
@@ -48,7 +50,6 @@
             }
         );
     </script>
-
 
     <script>
         function reloadNpcView() {
