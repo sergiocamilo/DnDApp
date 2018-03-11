@@ -32,14 +32,14 @@
             if (json["lastValue"] == "") {
                 json["lastValue"] = "void";
             }
-            Materialize.toast('<i class="fa fa-check-circle fa-fw"></i> '+json["nameValue"] + ': "' + json["lastValue"] + '" was changed to "' + json["newValue"] + '"', 2500);
+            Materialize.toast('<i class="fa fa-check-circle fa-fw"></i> ' + json["nameValue"] + ': "' + json["lastValue"] + '" was changed to "' + json["newValue"] + '"', 3000);
         }
     </script>
      <!--Alert dd-->
 
     <script>
         function Alertoast(alert) {
-            Materialize.toast('<i class="fa fa-exclamation-circle fa-fw"></i> ' + alert + '' , 3000);
+            Materialize.toast('<i class="fa fa-exclamation-circle fa-fw"></i> ' + alert + '', 3000);
         }
     </script>
 

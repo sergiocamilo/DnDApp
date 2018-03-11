@@ -58,7 +58,7 @@
     TextHP += "(" + Model.HitPoint.Die + "" + Model.HitPoint.TypeDie;
     if (Model.HitPoint.BonusMultiplied > 0)
     {
-        TextHP += " + " + Model.HitPoint.BonusMultiplied+ ")";
+        TextHP += " + " + Model.HitPoint.BonusMultiplied + ")";
     }
     else if (Model.HitPoint.BonusMultiplied < 0)
     {
@@ -88,6 +88,216 @@
         {
             TextSpeeds += ", ";
         }
+    }
+
+    #endregion
+
+    #region SKILLS
+
+    var TextSkills = " ";
+
+    if (Model.Skills.Count > 0)
+    {
+        for (int i = 0; i < Model.Skills.Count; i++)
+        {
+            TextSkills += Dnd_App.Utils.Helpers.Description(Model.Skills[i].SkillName);
+            if (@Model.Skills[i].Total > 0)
+            {
+                TextSkills += " + " + Model.Skills[i].Total;
+            }
+            else
+            {
+                TextSkills += " " + Model.Skills[i].Total;
+            }
+            if (i != Model.Skills.Count - 1)
+            {
+                TextSkills += ", ";
+            }
+        }
+    }
+    #endregion
+
+    #region VUL RES COND
+
+    var TextVUL = "";
+
+    if (Model.Vulnerabilities.Count > 0)
+    {
+        for (int i = 0; i < Model.Vulnerabilities.Count; i++)
+        {
+            TextVUL += Model.Vulnerabilities[i].TypeDamage;
+            if (i != Model.Vulnerabilities.Count - 1)
+            {
+                TextVUL += ", ";
+            }
+        }
+    }
+
+    var TextRES = "";
+
+    if (Model.Resistances.Count > 0)
+    {
+        for (int i = 0; i < Model.Resistances.Count; i++)
+        {
+            TextRES += Model.Resistances[i].TypeDamage;
+            if (i != Model.Resistances.Count - 1)
+            {
+                TextRES += ", ";
+            }
+        }
+    }
+
+    var TextIMMD = "";
+
+    if (Model.ImmunitiesDamage.Count > 0)
+    {
+        for (int i = 0; i < Model.ImmunitiesDamage.Count; i++)
+        {
+            TextIMMD += Model.ImmunitiesDamage[i].TypeDamage;
+            if (i != Model.ImmunitiesCondition.Count - 1)
+            {
+                TextIMMD += ", ";
+            }
+        }
+    }
+
+    var TextIMMC = "";
+
+    if (Model.ImmunitiesCondition.Count > 0)
+    {
+        for (int i = 0; i < Model.ImmunitiesCondition.Count; i++)
+        {
+            TextIMMC += Model.ImmunitiesCondition[i].TypeCondition;
+            if (i != Model.ImmunitiesCondition.Count - 1)
+            {
+                TextIMMC += ", ";
+            }
+        }
+    }
+
+
+    #endregion
+
+    #region Senses
+
+    var TextSenses = "";
+
+    for (int i = 0; i < Model.Senses.Count; i++)
+    {
+        TextSenses += Dnd_App.Utils.Helpers.Description(Model.Senses[i].TypeSense) + " ";
+        if (@Model.Senses[i].TypeSense != Dnd_App.Models.Enum.TypeSense.passivePerception)
+        {
+            TextSenses += Model.Senses[i].range + " ft.";
+        }
+        else
+        {
+            TextSenses += Model.Senses[i].range;
+        }
+        if (i != Model.Senses.Count - 1)
+        {
+            TextSenses += ", ";
+        }
+    }
+
+    #endregion
+
+    #region LANGUAGES
+
+    var TextLAN = "";
+
+    if (Model.LanguagesSpeak.Count == 0 && Model.LanguagesUndersatand.Count == 0 && Model.Telepathy <= 0)
+    {
+        TextLAN += "-";
+    }
+    else
+    {
+        if (Model.Telepathy > 0)
+        {
+            TextLAN += " telepathy " + Model.Telepathy + " ft.";
+            if (Model.LanguagesSpeak.Count != 0 || Model.LanguagesUndersatand.Count != 0)
+            {
+                TextLAN += ", ";
+            }
+        }
+        for (int i = 0; i < Model.LanguagesSpeak.Count; i++)
+        {
+
+            TextLAN += Dnd_App.Utils.Helpers.Description(@Model.LanguagesSpeak[i].LanguageName);
+            if (i != Model.LanguagesSpeak.Count - 1)
+            {
+                TextLAN += ", ";
+            }
+        }
+        if (Model.LanguagesSpeak.Count > 0 && Model.LanguagesUndersatand.Count > 0)
+        {
+            TextLAN += ", ";
+        }
+        if (Model.LanguagesUndersatand.Count > 0)
+        {
+            TextLAN += " understands ";
+            for (int i = 0; i < Model.LanguagesUndersatand.Count; i++)
+            {
+                TextLAN += Dnd_App.Utils.Helpers.Description(@Model.LanguagesUndersatand[i].LanguageName);
+                if (i != Model.LanguagesUndersatand.Count - 1)
+                {
+                    TextLAN += ", ";
+                }
+
+            }
+            TextLAN += " but can't speak";
+        }
+    }
+
+    #endregion
+
+    #region ACTIONS
+
+    List<String> TextActions = new List<string>();
+
+    for (int i = 0; i < Model.Actions.Count; i++)
+    {
+        var TextAction = "";
+
+        if (Model.Actions[i].Limited != null && Model.Actions[i].Limited != "")
+        {
+            TextAction+= "("+ Model.Actions[i].Limited+ ") ";
+        }
+
+        TextAction += Dnd_App.Utils.Helpers.Description(Model.Actions[i].TypeAction) + ": +" + Model.Actions[i].TotalBonusAttack + " to hit, ";
+
+        if (Model.Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeAttack
+            || Model.Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeWeaponAttack
+            || Model.Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeorRangedAttack
+            || Model.Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeorRangedWeaponAttack)
+        {
+            TextAction += " reach " + Model.Actions[i].Range + "ft.";
+        }
+
+        if (Model.Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.RangeAttack
+            || Model.Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.RangeWeaponAttack
+            || Model.Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeorRangedAttack
+            || Model.Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeorRangedWeaponAttack)
+        {
+            TextAction += "range " + Model.Actions[i].Min / @Model.Actions[i].Max + " ft.";
+        }
+
+        TextAction += ", ";
+
+        TextAction += Model.Actions[i].Target + ".";
+
+        var bonus = Model.Actions[i].BonusDamage + Model.Actions[i].AbilityDamage;
+        if (bonus < 0)
+        {
+            TextAction += "Hit: " + Model.Actions[i].Damage + " (" + Model.Actions[i].HitDie +" "+ Model.Actions[i].Die +" "+ bonus + ") ";
+        }
+        else
+        {
+            TextAction += "Hit: " + Model.Actions[i].Damage + " (" + @Model.Actions[i].HitDie + " " + Model.Actions[i].Die + " + " + bonus + ") ";
+        }
+        TextAction += Model.Actions[i].TypeDamage  + " damage. ";
+        TextAction += Model.Actions[i].Description;
+
+        TextActions.Add(TextAction);
     }
 
     #endregion
@@ -127,11 +337,11 @@
         <div class="row">
             @foreach (var item in Model.AbilitiesScores)
             {
-                <div class="col s2">
-                    <span>@item.ShortName</span>
+                <div class="col s2 center">
+                    <span class="font-bold">@item.ShortName</span>
                     <br />
                     <span>@item.Value</span>
-                    @if (item.ModValue > 0)
+                    @if (item.ModValue >= 0)
                 {
                         <span>(+@item.ModValue)</span>
                     }
@@ -176,21 +386,7 @@
         <!-- Skill-->
         @if (Model.Skills.Count > 0)
         {
-            <span>Skills </span>
-            for (int i = 0; i < Model.Skills.Count; i++)
-            {
-                <span>@Dnd_App.Utils.Helpers.Description(Model.Skills[i].SkillName)</span>
-                if (@Model.Skills[i].Total > 0)
-                {
-                    <span>+@Model.Skills[i].Total</span>
-                }
-                else
-                {
-                    <span>@Model.Skills[i].Total </span>
-                }
-                if (i != Model.Skills.Count - 1)
-                {<span>,</span>}
-            }
+            <span class="font-bold">Skills </span><span>@TextSkills</span>
             <br />
         }
     </div>
@@ -199,55 +395,31 @@
     <div class="_VulResCond">
         @if (Model.Vulnerabilities.Count > 0)
         {
-            <span>Damage Vulnerabilities </span>
-            for (int i = 0; i < Model.Vulnerabilities.Count; i++)
-            {
-                <span>@Model.Vulnerabilities[i].TypeDamage</span>
-                if (i != Model.Vulnerabilities.Count - 1)
-                {<span>,</span>}
-            }
+            <span class="font-bold">Damage Vulnerabilities </span> <span>@TextVUL</span>
             <br />
         }
 
         <!-- Damage Resistances-->
         @if (Model.Resistances.Count > 0)
         {
-            <span>Damage Resistances </span>
-            for (int i = 0; i < Model.Resistances.Count; i++)
-            {
-                <span>@Model.Resistances[i].TypeDamage</span>
-                if (i != Model.Resistances.Count - 1)
-                {<span>,</span>}
-            }
+            <span class="font-bold">Damage Resistances </span> <span>@TextRES</span>
             <br />
         }
 
         <!-- Damage Immunities-->
         @if (Model.ImmunitiesDamage.Count > 0)
         {
-            <span> Damage Immunities </span>
-            for (int i = 0; i < Model.ImmunitiesDamage.Count; i++)
-            {
-                <span>@Model.ImmunitiesDamage[i].TypeDamage</span>
-                if (i != Model.ImmunitiesDamage.Count - 1)
-                {<span>,</span>}
-            }
+            <span class="font-bold"> Damage Immunities </span> <span>@TextIMMD</span>
             <br />
         }
 
         <!-- Condition Immunities-->
         @if (Model.ImmunitiesCondition.Count > 0)
         {
-            <span> Condition Immunities </span>
-            for (int i = 0; i < Model.ImmunitiesCondition.Count; i++)
-            {
-                <span>@Model.ImmunitiesCondition[i].TypeCondition</span>
-                if (i != Model.ImmunitiesCondition.Count - 1)
-                {<span>,</span>}
-            }
+            <span class="font-bold"> Condition Immunities </span> <span>@TextIMMC</span>
+
             <br />
         }
-
     </div>
 
 
@@ -255,96 +427,29 @@
         <!-- Senses-->
         @if (Model.Senses.Count > 0)
         {
-            <span> Senses </span>
-            for (int i = 0; i < Model.Senses.Count; i++)
-            {
-                <span>@Dnd_App.Utils.Helpers.Description(Model.Senses[i].TypeSense)</span>
-                if (@Model.Senses[i].TypeSense != Dnd_App.Models.Enum.TypeSense.passivePerception)
-                {
-                    <span> @Model.Senses[i].range ft</span>
-                }
-                else
-                {
-                    <span> @Model.Senses[i].range</span>
-                }
-
-
-                if (i != Model.Senses.Count - 1)
-                {<span>,</span>}
-            }
+            <span class="font-bold">Senses </span><span>@TextSenses</span>
             <br />
         }
     </div>
 
 
     <div class="_Languages">
-
-        <span>Languages </span>
-
-        @if (Model.LanguagesSpeak.Count == 0 && Model.LanguagesUndersatand.Count == 0 && Model.Telepathy <= 0)
-        {
-            <text>-</text>
-        }
-        else
-        {
-            if (Model.Telepathy > 0)
-            {
-                <span>telepathy @Model.Telepathy ft.</span>
-                if (Model.LanguagesSpeak.Count != 0 || Model.LanguagesUndersatand.Count != 0)
-                {
-                    <text>,</text>
-                }
-            }
-
-            for (int i = 0; i < Model.LanguagesSpeak.Count; i++)
-            {
-
-                <span>@Dnd_App.Utils.Helpers.Description(@Model.LanguagesSpeak[i].LanguageName)</span>
-                if (i != Model.LanguagesSpeak.Count - 1)
-                {
-                    <text>,</text>
-                }
-            }
-
-            if (Model.LanguagesSpeak.Count > 0 && Model.LanguagesUndersatand.Count > 0)
-            {
-                <text>,</text>
-            }
-            if (Model.LanguagesUndersatand.Count > 0)
-            {
-                <span>understands</span>
-                for (int i = 0; i < Model.LanguagesUndersatand.Count; i++)
-                {
-                    <span>@Dnd_App.Utils.Helpers.Description(@Model.LanguagesUndersatand[i].LanguageName)</span>
-                    if (i != Model.LanguagesUndersatand.Count - 1)
-                    {
-                        <text>,</text>
-                    }
-
-                }
-                <span>but can't speak</span>
-            }
-        }
-
-
+        <span class="font-bold">Languages </span><span>@TextLAN</span>
+        <br />
     </div>
 
-
-    <br />
-
     <div class="_Challenge">
-        <span>Challenge </span>
+        <span class="font-bold">Challenge </span>
         <span>@Model.Challenge.Value </span>
         <span>(@Model.Challenge.XP XP) </span>
     </div>
-
 
     <hr />
 
     <div class="_Traits">
         @for (int i = 0; i < Model.SpecialTraits.Count; i++)
         {
-            <span><strong>@Model.SpecialTraits[i].Name</strong> @Model.SpecialTraits[i].Description</span>
+            <span class="font-bold font-italic">@Model.SpecialTraits[i].Name.</span><span> @Model.SpecialTraits[i].Description</span>
             if (i != Model.SpecialTraits.Count - 1)
             {
                 <br />
@@ -355,98 +460,38 @@
 
 
     <div class="_Actions">
+    @if (Model.Actions.Count > 0)
+    {
         <h5>Actions</h5>
         <hr />
-        @for (int i = 0; i < Model.Actions.Count; i++)
+        for (int i = 0; i < Model.Actions.Count; i++)
         {
-            <span><strong>@Model.Actions[i].Name.</strong> </span>
-
-            if (Model.Actions[i].Limited != null && Model.Actions[i].Limited != "")
-            {
-                <span> (@Model.Actions[i].Limited) </span>
-            }
-
-            <span>@Dnd_App.Utils.Helpers.Description(Model.Actions[i].TypeAction): +@Model.Actions[i].TotalBonusAttack to hit,</span>
-
-            if (Model.Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeAttack
-                || Model.Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeWeaponAttack
-                || Model.Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeorRangedAttack
-                || Model.Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeorRangedWeaponAttack)
-            {
-                <span>reach @Model.Actions[i].Range ft.</span>
-            }
-
-            if (Model.Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.RangeAttack
-                || Model.Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.RangeWeaponAttack
-                || Model.Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeorRangedAttack
-                || Model.Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeorRangedWeaponAttack)
-            {
-                <span>range @Model.Actions[i].Min/@Model.Actions[i].Max ft.</span>
-            }
-
-            <text>,</text>
-
-            <span>@Model.Actions[i].Target.</span>
-            var bonus = Model.Actions[i].BonusDamage + Model.Actions[i].AbilityDamage;
-            if (bonus < 0)
-            {
-                <span>Hit: @Model.Actions[i].Damage (@Model.Actions[i].HitDie@Model.Actions[i].Die@bonus)</span>
-            }
-            else
-            {
-                <span>Hit: @Model.Actions[i].Damage (@Model.Actions[i].HitDie@Model.Actions[i].Die+@bonus)</span>
-            }
-            <span>@Model.Actions[i].TypeDamage damage.</span>
-
-            <span>@Model.Actions[i].Description</span>
-
+            <span class="font-bold font-italic">@Model.Actions[i].Name.</span> <span>@TextActions[i]</span>
             if (i != Model.Actions.Count - 1)
             {
                 <br />
                 <br />
             }
         }
-
+    }
     </div>
 
 
-    @*
-        @if (Model.legendaryActions.Count > 0)
-        {
-            <h5>Legendary Actions</h5>
-            <hr />
-            for (int i = 0; i < Model.legendaryActions.Count; i++)
-            {
-                <span><strong>@Model.legendaryActions[i].name.</strong> </span>
-                if (Model.legendaryActions[i].limited != null && Model.legendaryActions[i].limited != "")
-                {
-                    <span> (@Model.legendaryActions[i].limited) </span>
-                }
-
-                <span>@Model.legendaryActions[i].description</span>
-                if (i != Model.legendaryActions.Count - 1)
-                {
-                    <br />
-                    <br />
-                }
-            }
-
-        }
-
-        @if (Model.reactions.Count > 0)
+    <div class="Reactions">
+        @if (Model.Reactions.Count > 0)
         {
             <h5>Reactions</h5>
             <hr />
-            for (int i = 0; i < Model.reactions.Count; i++)
+            for (int i = 0; i < Model.Reactions.Count; i++)
             {
-                <span><strong>@Model.reactions[i].name.</strong> </span>
-                if (Model.reactions[i].limited != null && Model.reactions[i].limited != "")
+                <span class="font-bold font-italic">@Model.Reactions[i].Name.</span>
+                if (Model.Reactions[i].Limited != null && Model.Reactions[i].Limited != "")
                 {
-                    <span> (@Model.reactions[i].limited) </span>
+                    <span> (@Model.Reactions[i].Limited) </span>
                 }
 
-                <span>@Model.reactions[i].description</span>
-                if (i != Model.reactions.Count - 1)
+                <span>@Model.Reactions[i].Description</span>
+                if (i != Model.Reactions.Count - 1)
                 {
                     <br />
                     <br />
@@ -454,8 +499,30 @@
             }
 
         }
+    </div>
 
-    *@
 
+    <div class="_LegendaryActions">
+    @if (Model.LegendaryActions.Count > 0)
+    {
+        <h5>Legendary Actions</h5>
+        <hr />
+        for (int i = 0; i < Model.LegendaryActions.Count; i++)
+        {
+            <span class="font-bold font-italic">@Model.LegendaryActions[i].Name.</span>
+            if (Model.LegendaryActions[i].Limited != null && Model.LegendaryActions[i].Limited != "")
+            {
+                <span> (@Model.LegendaryActions[i].Limited) </span>
+            }
 
+            <span>@Model.LegendaryActions[i].Description</span>
+            if (i != Model.LegendaryActions.Count - 1)
+            {
+                <br />
+                <br />
+            }
+        }
+
+    }
+    </div>
 </div>

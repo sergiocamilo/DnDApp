@@ -97,8 +97,9 @@
     background-color: transparent;
 }
 
-.npcview{
-    margin-top: 7px;
+.npcview {
+    margin-top: 7.5px;
+    margin-bottom: 15px;
 }
 
 .collapsible-header {
