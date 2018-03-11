@@ -13,7 +13,7 @@ namespace Dnd_App.Models.Characters
     {
         [Key]
         public int id { set; get; }
-        public int TempID { set; get; }
+        public long TempID { set; get; }
 
         //Basic Info
         public String name { set; get; }

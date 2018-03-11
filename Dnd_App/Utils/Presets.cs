@@ -85,6 +85,54 @@ namespace Dnd_App.Utils
 
         #region PC templates
 
+        public PC GenerateEmptyPC()
+        {
+            PC Empty =  new PC()
+            {
+                name = "Name",
+                alignmentAttitude = TypeAlignAttitude.lawful,
+                alignmentMorality = TypeAlignMorality.neutral,
+                armorClass = new Armor(),
+                level = new Challenge("1st", 0, 2),
+                senses = new List<Sense>(),
+                presetSenses = new List<Sense>(),
+                savingThrows = new List<SavingThrow>(),
+                presetSavingThrows = new List<SavingThrow>(),
+                size = new Size(),
+                speeds = new List<Speed>(),
+                presetSpeeds = new List<Speed>(),
+                vulnerabilities = new List<Damage>(),
+                presetVulnerabilities = new List<Damage>(),
+                immunitiesDamage = new List<Damage>(),
+                presetImmunitiesDamage = new List<Damage>(),
+                resistances = new List<Damage>(),
+                presetResistances = new List<Damage>(),
+                immunitiesCondition = new List<Condition>(),
+                presetImmunitiesCondition = new List<Condition>(),
+                specialTraits = new List<SpecialTrait>(),
+                presetSpecialTraits = new List<SpecialTrait>(),
+                hitPoint = new HitPoint(),
+                actions = new List<Models.Characters.Action>(),
+                presetActions = new List<Models.Characters.Action>(),
+                languagesSpeak = new List<Language>(),
+                presetLanguagesSpeak = new List<Language>(),
+                languagesUndersatand = new List<Language>(),
+                presetLanguagesUndersatand = new List<Language>(),
+                skills = new List<Skill>(),
+                presetSkills = new List<Skill>(),
+                abilitiesScores = new List<AbilityScore>() {
+                    new AbilityScore() { Name = "Strenght", ShortName = "Str", Value = 10, ModValue = 0 },
+                    new AbilityScore() { Name = "Dexterity", ShortName = "Dex", Value = 10, ModValue = 4 },
+                    new AbilityScore() { Name = "Constitution", ShortName = "Con", Value = 10, ModValue = 4 },
+                    new AbilityScore() { Name = "Intelligence", ShortName = "Int", Value = 10, ModValue = 3 },
+                    new AbilityScore() { Name = "Wisdom", ShortName = "Wis", Value = 10, ModValue = 0, SavingThrow = true },
+                    new AbilityScore() { Name = "Charisma", ShortName = "Cha", Value = 10, ModValue = 0, SavingThrow = true }
+                }
+            };
+
+            return Empty;
+        }
+
         public PC LoadRace(PC pc, Race race)
         {
             switch (race)

@@ -14,29 +14,38 @@ namespace Dnd_App.Utils
         public Models.User User;
 
         public Dictionary<long, NPC> NPCInstances { get; set; }
+        public Dictionary<long, PC> PCInstances { get; set; }
         public long NPCInstancesIndex;
+        public long PCInstancesIndex;
 
         public NPC Deva{ get; }
 
         private TemporalDB()
         {
-            User = new Models.User();
-            User.Id = 1;
-            User.UserName = "sergio";
-            User.Password = "123";
-            User.Role = Role.Admin;
+            User = new Models.User()
+            {
+                Id = 1,
+                UserName = "sergio",
+                Password = "123",
+                Role = Role.Admin
+            };
+            
 
             Deva = new NPC();
             Deva = GenerateDEVA();
 
             NPCInstances = new Dictionary<long, NPC>();
             NPCInstances.Add(0, Deva);
-
             NPCInstancesIndex = 1;
+
+
+            PCInstances = new Dictionary<long, PC>();
+            PCInstancesIndex = 1;
 
 
         }
 
+        
         public static TemporalDB Instance
         {
             get
@@ -48,6 +57,9 @@ namespace Dnd_App.Utils
                 return instance;
             }
         }
+
+
+        #region NPC methods
 
         private NPC GenerateDEVA()
         {
@@ -171,7 +183,7 @@ namespace Dnd_App.Utils
                 Description = ""
             });
 
-            
+
             DEVA.LegendaryActions = new List<Models.Characters.Action>();
             DEVA.Reactions = new List<Models.Characters.Action>();
 
@@ -179,7 +191,6 @@ namespace Dnd_App.Utils
 
 
         }
-
 
         public void InsertNPC(NPC NewNPC)
         {
@@ -195,6 +206,32 @@ namespace Dnd_App.Utils
         {
             return NPCInstances[TempID];
         }
+
+
+        #endregion
+        
+
+        #region PC methods
+
+        public void InsertPC(PC NewPC)
+        {
+            lock (new { })
+            {
+                NewPC.TempID = PCInstancesIndex;
+                PCInstances.Add(PCInstancesIndex, NewPC);
+                PCInstancesIndex++;
+            }
+        }
+
+        public PC SelectPC(long TempID)
+        {
+            return PCInstances[TempID];
+        }
+
+        #endregion
+
+
+
 
 
     }

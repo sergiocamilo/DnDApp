@@ -100,6 +100,26 @@
         }
     </script>
 
+    <script>
+            function LoadPCs() {
+
+                $.ajax({
+                    type: "GET",
+                    cache: false,
+                    url: "@Url.Action("_AllPC", "PC")",
+                    dataType: "html",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data)
+                    {
+                        var _CurrentView = $("#_CurrentView");
+                        _CurrentView.html(data);
+                    },
+                    failure: function (errMsg) {
+                        alert(errMsg);
+                    }
+                });
+            }
+    </script>
 
 
 
@@ -133,7 +153,7 @@
         });
     </script>
 
-    <script>
+    @*<script>
         function LoadView(id) {
 
             $.ajax({
@@ -156,7 +176,7 @@
                 }
             });
         }
-    </script>
+    </script>*@
 
 }
 
