@@ -52,6 +52,155 @@ namespace Dnd_App.Models.Characters
         public List<Action> Reactions { set; get; }
 
 
+        #region CALCULOS
+
+        public void RecalculatePorficiency()
+        {
+            RecalculatePerception();
+            RecalculateAttackAction();
+            RecalculateST();
+            RecalculateSkills();
+        }
+
+        public void RecalculateAbilityModifier()
+        {
+            foreach (var item in this.AbilitiesScores)
+            {
+                double aux = (item.Value - 10.0) / 2.0;
+                item.ModValue = (int)Math.Floor(aux);
+            }
+
+            RecalculateHP();
+            RecalculateAC();
+            RecalculateSkills();
+            RecalculateST();
+            RecalculatePerception();
+            RecalculateHitAction();
+            RecalculateAttackAction();
+        }
+
+        public void RecalculateAC()
+        {
+            this.ArmorClass.Bonus = this.AbilitiesScores.Find(con => con.ShortName == "Dex").ModValue;
+            this.ArmorClass.RecalculateAC();
+        }
+
+        public void RecalculateHP()
+        {
+            this.HitPoint.BonusCon = this.AbilitiesScores.Find(con => con.ShortName == "Con").ModValue;
+            this.HitPoint.RecalculateHP();
+        }
+
+        public void RecalculateHitAction()
+        {
+            foreach (var item in this.Actions)
+            {
+
+                if (item.TypeAction == TypeAction.MeleeAttack || item.TypeAction == TypeAction.MeleeWeaponAttack)
+                {
+                    item.AbilityDamage = this.AbilitiesScores.Find(con => con.ShortName == "Str").ModValue;
+                    var aux = new TypeHitDie().GetValueDie(item.Die);
+                    item.Damage = item.HitDie * (int)Math.Floor(aux) + item.BonusDamage + item.AbilityDamage;
+                }
+                else if (item.TypeAction == TypeAction.RangeAttack || item.TypeAction == TypeAction.RangeWeaponAttack)
+                {
+                    item.AbilityDamage = this.AbilitiesScores.Find(con => con.ShortName == "Dex").ModValue;
+
+                    var aux = new TypeHitDie().GetValueDie(item.Die);
+                    item.Damage = item.HitDie * (int)Math.Floor(aux) + item.BonusDamage + item.AbilityDamage;
+                }
+                else
+                {
+                    item.AbilityDamage = this.AbilitiesScores.Find(con => con.ShortName == item.AbilityAction).ModValue;
+
+                    var aux = new TypeHitDie().GetValueDie(item.Die);
+                    item.Damage = item.HitDie * (int)Math.Floor(aux) + item.BonusDamage + item.AbilityDamage;
+                }
+
+
+            }
+        }
+
+        public void RecalculateAttackAction()
+        {
+            foreach (var item in this.Actions)
+            {
+                if (item.TypeAction == TypeAction.MeleeAttack || item.TypeAction == TypeAction.MeleeAttack)
+                {
+                    item.TotalBonusAttack = this.Challenge.ProficiencyBonus +
+                        this.AbilitiesScores.Find(con => con.ShortName == "Str").ModValue +
+                        item.BonusAttack;
+                }
+                else
+                {
+                    item.TotalBonusAttack = this.Challenge.ProficiencyBonus +
+                        this.AbilitiesScores.Find(con => con.ShortName == "Dex").ModValue +
+                        item.BonusAttack;
+                }
+            }
+        }
+
+        public void RecalculateST()
+        {
+            var stnew = new List<SavingThrow>();
+            foreach (var item in AbilitiesScores)
+            {
+                if (item.SavingThrow)
+                {
+                    stnew.Add(new SavingThrow()
+                    {
+                        ModName = item.ShortName,
+                        Value = item.ModValue + this.Challenge.ProficiencyBonus
+                    });
+                }
+
+            }
+
+            this.SavingThrows = stnew;
+        }
+
+        public void RecalculateSkills()
+        {
+            foreach (var item in this.Skills)
+            {
+                if (item.SkillName == SkillName.Athletics)
+                {
+                    item.Total = this.Challenge.ProficiencyBonus + this.AbilitiesScores.Find(con => con.ShortName == "Str").ModValue + item.Bonus;
+                }
+                else if (item.SkillName == SkillName.Acrobatics || item.SkillName == SkillName.SleightofHand || item.SkillName == SkillName.Stealth)
+                {
+                    item.Total = this.Challenge.ProficiencyBonus + this.AbilitiesScores.Find(con => con.ShortName == "Dex").ModValue + item.Bonus;
+                }
+                else if (item.SkillName == SkillName.Arcana || item.SkillName == SkillName.History || item.SkillName == SkillName.Investigation
+                    || item.SkillName == SkillName.Nature || item.SkillName == SkillName.Religion)
+                {
+                    item.Total = this.Challenge.ProficiencyBonus + this.AbilitiesScores.Find(con => con.ShortName == "Int").ModValue + item.Bonus;
+                }
+                else if (item.SkillName == SkillName.AnimalHandling || item.SkillName == SkillName.Insight || item.SkillName == SkillName.Medicine
+                    || item.SkillName == SkillName.Perception || item.SkillName == SkillName.Survival)
+                {
+                    item.Total = this.Challenge.ProficiencyBonus + this.AbilitiesScores.Find(con => con.ShortName == "Wis").ModValue + item.Bonus;
+                }
+                else
+                {
+                    item.Total = this.Challenge.ProficiencyBonus + this.AbilitiesScores.Find(con => con.ShortName == "Cha").ModValue + item.Bonus;
+                }
+            }
+        }
+
+        public void RecalculatePerception()
+        {
+
+            foreach (var item in this.Senses)
+            {
+                if (item.TypeSense == TypeSense.passivePerception)
+                {
+                    item.range = 10 + this.AbilitiesScores.Find(con => con.ShortName == "Wis").ModValue + this.Challenge.ProficiencyBonus;
+                }
+            }
+
+        }
+
         public void AddSpeed(List<Enum.TypeSpeed> list)
         {
             var newListSpeeds = new List<Speed>();
@@ -100,7 +249,7 @@ namespace Dnd_App.Models.Characters
         }
 
 
-
+        #endregion
 
 
 

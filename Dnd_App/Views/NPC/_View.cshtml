@@ -92,6 +92,36 @@
 
     #endregion
 
+    #region ST
+
+    var TextST = "";
+
+    if (Model.SavingThrows != null && Model.SavingThrows.Count > 0)
+    {
+
+        for (int i = 0; i < Model.SavingThrows.Count; i++)
+        {
+            TextST += Model.SavingThrows[i].ModName;
+            if (@Model.SavingThrows[i].Value >= 0)
+            {
+                TextST += " +" + Model.SavingThrows[i].Value;
+            }
+            else
+            {
+                TextST += Model.SavingThrows[i].Value;
+            }
+            if (i != Model.SavingThrows.Count - 1)
+            {
+                TextST += ", ";
+            }
+
+        }
+    }
+
+
+    #endregion
+
+
     #region SKILLS
 
     var TextSkills = " ";
@@ -116,6 +146,7 @@
         }
     }
     #endregion
+
 
     #region VUL RES COND
 
@@ -360,23 +391,7 @@
     <div class="_SavingThrows">
         @if (Model.SavingThrows != null && Model.SavingThrows.Count > 0)
         {
-            <span>Saving Throws </span>
-            for (int i = 0; i < Model.SavingThrows.Count; i++)
-            {
-                <span>@Model.SavingThrows[i].ModName </span>
-                if (@Model.SavingThrows[i].Value > 0)
-                {
-                    <span>+@Model.SavingThrows[i].Value</span>
-                }
-                else
-                {
-                    <span>@Model.SavingThrows[i].Value </span>
-                }
-                if (i != Model.SavingThrows.Count - 1)
-                {<span>,</span>}
-
-            }
-        <!--end Saving Throws-->
+            <span class="font-bold">Saving Throws </span> <span>@TextST</span>
             <br />
         }
     </div>

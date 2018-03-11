@@ -126,7 +126,7 @@ namespace Dnd_App.Controllers
             Npc.ArmorClass.Name = _nameAC;
             Npc.ArmorClass.Shield = _isShield;
 
-            //Npc.RecalculateAC();
+            Npc.RecalculateAC();
 
             return Json(new
             {
@@ -152,7 +152,7 @@ namespace Dnd_App.Controllers
             Npc.HitPoint.TypeDie = d;
 
             var LastValue = Npc.HitPoint.HitPointsAVG;
-            //npc.RecalculateHP();
+            Npc.RecalculateHP();
 
             return Json(new
             {
@@ -222,6 +222,8 @@ namespace Dnd_App.Controllers
             Npc.AbilitiesScores.Find(ability => ability.ShortName.Equals(_mod))
                 .Value = _value;
 
+            Npc.RecalculateAbilityModifier();
+
             return Json(new
             {
                 nameValue = _mod,
@@ -242,7 +244,7 @@ namespace Dnd_App.Controllers
             Npc.AbilitiesScores.Find(ability => ability.ShortName.Equals(_mod))
                 .SavingThrow = _check;
 
-            //Npc.RecalculateST();
+            Npc.RecalculateST();
 
             return Json(new
             {
@@ -275,7 +277,7 @@ namespace Dnd_App.Controllers
 
             Npc.Skills = newListSkills;
 
-            //Npc.RecalculateSkills();
+            Npc.RecalculateSkills();
 
             return PartialView(Npc.Skills);
         }
@@ -289,7 +291,7 @@ namespace Dnd_App.Controllers
             {
                 LastValue = s.Bonus;
                 s.Bonus = value;
-                //Npc.RecalculateSkills();
+                Npc.RecalculateSkills();
             }
 
             return Json(new
@@ -391,7 +393,7 @@ namespace Dnd_App.Controllers
             var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
             Npc.AddSenses(list);
             
-            //Npc.RecalculatePerception();
+            Npc.RecalculatePerception();
 
 
             return PartialView(Npc.Senses);
@@ -410,7 +412,7 @@ namespace Dnd_App.Controllers
                 s.range = _value;
             }
 
-            //Npc.RecalculatePerception();
+            Npc.RecalculatePerception();
 
             return Json(new
             {
@@ -494,7 +496,7 @@ namespace Dnd_App.Controllers
             Npc.Challenge.Value = aux.Value;
             Npc.Challenge.XP = aux.XP;
 
-            //Npc.RecalculatePorficiency();
+            Npc.RecalculatePorficiency();
 
             return Json(new
             {
@@ -821,8 +823,8 @@ namespace Dnd_App.Controllers
                 default:
                     break;
             }
-            //npc.RecalculateAttackAction();
-            //npc.RecalculateHitAction();
+            Npc.RecalculateAttackAction();
+            Npc.RecalculateHitAction();
 
             return Json(new
             {
@@ -869,7 +871,7 @@ namespace Dnd_App.Controllers
                 default:
                     break;
             }
-            //Npc.RecalculateAttackAction();
+            Npc.RecalculateAttackAction();
             return Json(new
             {
                 nameValue = "Action bonus " + name,
@@ -914,8 +916,8 @@ namespace Dnd_App.Controllers
                 default:
                     break;
             }
-            //npc.RecalculateAttackAction();
-            //npc.RecalculateHitAction();
+            Npc.RecalculateAttackAction();
+            Npc.RecalculateHitAction();
             return Json(new
             {
                 nameValue = "Action ability action " + name,
@@ -1138,7 +1140,7 @@ namespace Dnd_App.Controllers
                 default:
                     break;
             }
-            //npc.RecalculateHitAction();
+            Npc.RecalculateHitAction();
 
             return Json(new
             {
@@ -1185,7 +1187,7 @@ namespace Dnd_App.Controllers
                 default:
                     break;
             }
-            //npc.RecalculateHitAction();
+            Npc.RecalculateHitAction();
 
             return Json(new
             {
@@ -1231,7 +1233,7 @@ namespace Dnd_App.Controllers
                 default:
                     break;
             }
-            //npc.RecalculateHitAction();
+            Npc.RecalculateHitAction();
 
             return Json(new
             {
