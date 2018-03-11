@@ -304,7 +304,6 @@ namespace Dnd_App.Controllers
 
         #endregion
 
-
         #region Callbacks --> Vul res con
 
         [HttpPost]
@@ -480,7 +479,6 @@ namespace Dnd_App.Controllers
         }
 
         #endregion
-
 
         #region Callbacks --> Challenge
 
