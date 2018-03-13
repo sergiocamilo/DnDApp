@@ -1,0 +1,58 @@
+﻿
+@model List<Dnd_App.Models.Characters.Sense>
+
+
+<div class="row">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        if (Model[i].TypeSense != Dnd_App.Models.Enum.TypeSense.passivePerception)
+        {
+            <div class="input-field col s6">
+                @Html.EditorFor(model => Model[i].range, new
+           {
+               htmlAttributes =
+                        new { @type = "text", @id = "valuesense" + (int)Model[i].TypeSense, @data_val = @Model[i].TypeSense }
+           })
+                <label for="valuesense@((int)Model[i].TypeSense)">@Model[i].TypeSense</label>
+            </div>
+        }
+
+
+    }
+</div>
+
+
+<script>
+    $(document).ready(
+        function _Senses() {
+
+            $("input[id^=valuesense]").change(function () {
+                var value = $(this).val();
+                var name = $(this).data("val");
+
+                if (isNaN(value)) {
+                    Alertoast('Sense value must be a number', 'Sense value was changed to 20');
+                    value = "20";
+                    $(this).val("20");
+                }
+
+                if (value == "") {
+                    Alertoast('Sense value can not be empty', 'Sense value was changed to 20');
+                    value = "20";
+                    $(this).val("20");
+                }
+
+
+
+                updateSense(name, value);
+
+
+
+            });
+        }
+    );
+
+
+</script>
+
+<script src="~/Scripts/materialize/loadform.js"></script>

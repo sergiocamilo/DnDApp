@@ -309,7 +309,7 @@
             || Model.Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeorRangedAttack
             || Model.Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeorRangedWeaponAttack)
         {
-            TextAction += "range " + Model.Actions[i].Min / @Model.Actions[i].Max + " ft.";
+            TextAction += "range " + Model.Actions[i].Min +"/"+ @Model.Actions[i].Max + " ft.";
         }
 
         TextAction += ", ";

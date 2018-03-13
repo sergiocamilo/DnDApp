@@ -144,7 +144,7 @@
 
     var TextRES = "";
     var Resistances = new List<Dnd_App.Models.Characters.Damage>();
-    Resistances = Model.resistances.Concat(Model.resistances).ToList();
+    Resistances = Model.resistances.Concat(Model.presetResistances).ToList();
 
 
     if (Resistances.Count > 0)
@@ -305,7 +305,7 @@
             || Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeorRangedAttack
             || Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeorRangedWeaponAttack)
         {
-            TextAction += "range " + Actions[i].Min / Actions[i].Max + " ft.";
+            TextAction += "range " + Actions[i].Min +"/"+ Actions[i].Max + " ft.";
         }
 
         TextAction += ", ";

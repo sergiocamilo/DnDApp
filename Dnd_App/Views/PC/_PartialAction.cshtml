@@ -1,0 +1,592 @@
+﻿@model List<Dnd_App.Models.Characters.Action>
+
+
+
+<div class="row">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <div class="col s12  ">
+            <div class="col s12">
+                <p>
+                    <h5>Action @(i + 1)</h5>
+                    <a class="waves-effect waves-light red btn right" id="ActionDelete" data-val="@(Model[i].Name)">Delete</a>
+                </p>
+            </div>
+            <div class="input-field col s6">
+                @Html.EditorFor(m => Model[i].Name, new
+           {
+               htmlAttributes = new
+               {
+                   @class = "form-control",
+                   @id = "naction" + i,
+                   @data_val = @Model[i].Name
+               }
+           })
+                <label for="naction@(i)">Name action @(i + 1)</label>
+            </div>
+
+            <div class="input-field col s6">
+                @Html.EditorFor(m => Model[i].Limited, new
+           {
+               htmlAttributes = new
+               {
+                   @class = "form-control",
+                   @id = "laction" + i,
+                   @data_val = @Model[i].Name
+               }
+           })
+                <label for="laction@(i)">Limite action @(i + 1)</label>
+            </div>
+
+            <div class="input-field col s6">
+                @Html.EnumDropDownListFor(m => Model[i].TypeAction, new
+           {
+               @id = "typeaction" + i,
+               @type = "text",
+               @data_val = @Model[i].Name
+           })
+                <label for="typeaction@(i)">Type action @(i + 1)</label>
+            </div>
+
+            <div class="input-field col s3">
+                @Html.EditorFor(m => Model[i].BonusAttack, new
+           {
+               htmlAttributes = new
+               {
+                   @type = "text",
+                   @class = "form-control",
+                   @id = "bonattaction" + i,
+                   @data_val = @Model[i].Name
+               }
+           })
+                <label for="bonattaction@(i)">Bonus attack action @(i + 1)</label>
+            </div>
+
+            <div class="input-field col s3">
+                <select id="abilityaction@(i)" data-val=@Model[i].Name>
+                    <option value="Str">Str</option>
+                    <option value="Dex">Dex</option>
+                </select>
+                <label for="abilityaction@(i)">Ability score action @(i + 1)</label>
+            </div>
+
+
+
+            <div class="input-field col s4">
+                @Html.EditorFor(m => Model[i].Range, new
+           {
+               htmlAttributes = new
+               {
+                   @type = "text",
+                   @class = "form-control",
+                   @id = "rangeaction" + i,
+                   @data_val = @Model[i].Name
+               }
+           })
+                <label for="rangeaction@(i)">Range action @(i + 1)</label>
+            </div>
+
+            <div class="input-field col s4">
+                @Html.EditorFor(m => Model[i].Min, new
+           {
+               htmlAttributes = new
+               {
+                   @type = "text",
+                   @class = "form-control",
+                   @id = "minaction" + i,
+                   @data_val = @Model[i].Name
+               }
+           })
+                <label for="minaction@(i)">Min action @(i + 1)</label>
+            </div>
+
+            <div class="input-field col s4">
+                @Html.EditorFor(m => Model[i].Max, new
+           {
+               htmlAttributes = new
+               {
+                   @type = "text",
+                   @class = "form-control",
+                   @id = "maxaction" + i,
+                   @data_val = @Model[i].Name
+               }
+           })
+                <label for="maxaction@(i)">Max action @(i + 1)</label>
+            </div>
+
+            <div class="input-field col s12">
+                @Html.EditorFor(m => Model[i].Target, new
+           {
+               htmlAttributes = new
+               {
+                   @type = "text",
+                   @class = "form-control",
+                   @id = "targetaction" + i,
+                   @data_val = @Model[i].Name
+               }
+           })
+                <label for="targetaction@(i)">Target action @(i + 1)</label>
+            </div>
+
+            <div class="input-field col s4">
+                @Html.EditorFor(m => Model[i].HitDie, new
+           {
+               htmlAttributes = new
+               {
+                   @type = "text",
+                   @class = "form-control",
+                   @id = "hitDieaction" + i,
+                   @data_val = @Model[i].Name
+               }
+           })
+                <label for="hitDieaction@(i)">Hit die action @(i + 1)</label>
+            </div>
+
+            <div class="input-field col s4">
+                @Html.EnumDropDownListFor(m => Model[i].Die, new { @id = "dieaction" + i, @type = "text", @data_val = @Model[i].Name })
+                <label for="dieaction@(i)">Die action @(i + 1)</label>
+            </div>
+
+            <div class="input-field col s4">
+                @Html.EditorFor(m => Model[i].BonusDamage, new
+           {
+               htmlAttributes = new
+               {
+                   @type = "text",
+                   @class = "form-control",
+                   @id = "bonusdmgaction" + i,
+                   @data_val = @Model[i].Name
+               }
+           })
+                <label for="bonusdmgaction@(i)">Bonus damage action @(i + 1)</label>
+            </div>
+
+            <div class="input-field col s6">
+                @Html.EnumDropDownListFor(m => Model[i].TypeDamage, new { @id = "typedmgaction" + i, @type = "text", @data_val = @Model[i].Name })
+                <label for="typedmgaction@(i)">Type damage action @(i + 1)</label>
+            </div>
+
+            <div class="input-field col s12">
+                @Html.TextAreaFor(m => Model[i].Description, new
+           {
+               @data_val = @Model[i].Name,
+               @class = "materialize-textarea",
+               @data_length = "450",
+               @id = "daction" + i
+           })
+                <label for="daction@(i)">Description action @(i + 1)</label>
+            </div>
+
+
+
+        </div>
+    }
+</div>
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $('select').material_select();
+    });
+
+</script>
+
+
+
+<script>
+
+    $(document).ready(
+        function _TypeDamageActions() {
+
+            $("select[id^=typedmgaction]").change(function (event) {
+                var value = $(this).val();
+                var name = $(this).data("val");
+                editTypeDamageAction(1, name, value);
+            });
+        }
+
+    );
+
+
+    $(document).ready(
+        function _DieActions() {
+
+            $("select[id^=dieaction]").change(function (event) {
+                var value = $(this).val();
+                var name = $(this).data("val");
+                editDieAction(1, name, value);
+            });
+        }
+
+    );
+
+    $(document).ready(
+        function _BonusDamageActions() {
+
+            $("input[id^=bonusdmgaction]").change(function () {
+                var value = $(this).val();
+                var name = $(this).data("val");
+
+                if (isNaN(value)) {
+                    Alertoast('Bonus damage value must be a number', 'Bonus damage value was changed to 0');
+                    value = "0";
+                    $(this).val("0");
+                }
+
+                if (value == "") {
+                    Alertoast('Bonus damage value can not be empty', 'Bonus damage value was changed to 0');
+                    value = "0";
+                    $(this).val("0");
+                }
+
+
+                editBonusDamageAction(1, name, value);
+            });
+        }
+
+    );
+
+    $(document).ready(
+        function _HitDieActions() {
+
+            $("input[id^=hitDieaction]").change(function () {
+                var value = $(this).val();
+                var name = $(this).data("val");
+                editHitDieAction(1, name, value);
+            });
+        }
+
+    );
+
+    $(document).ready(
+        function _TargetRangeActions() {
+
+            $("input[id^=targetaction]").change(function () {
+                var value = $(this).val();
+                var name = $(this).data("val");
+
+                if (isNaN(value)) {
+                    Alertoast('Range value must be a number', 'Range value was changed to 0');
+                    value = "0";
+                    $(this).val("0");
+                }
+
+                if (value == "") {
+                    Alertoast('Range value can not be empty', 'Range value was changed to 0');
+                    value = "0";
+                    $(this).val("0");
+                }
+
+                editTargetAction(1, name, value);
+            });
+        }
+
+    );
+
+    $(document).ready(
+        function _MaxRangeActions() {
+
+            $("input[id^=maxaction]").change(function () {
+                var value = $(this).val();
+                var name = $(this).data("val");
+
+                if (isNaN(value)) {
+                    Alertoast('Max range value must be a number', 'Max range value was changed to 0');
+                    value = "0";
+                    $(this).val("0");
+                }
+
+                if (value == "") {
+                    Alertoast('Max range value can not be empty', 'Max range value was changed to 0');
+                    value = "0";
+                    $(this).val("0");
+                }
+
+
+                editMaxAction(1, name, value);
+            });
+        }
+
+    );
+
+
+    $(document).ready(
+        function _MinRangeActions() {
+
+            $("input[id^=minaction]").change(function () {
+                var value = $(this).val();
+                var name = $(this).data("val");
+
+                if (isNaN(value)) {
+                    Alertoast('Min range value must be a number', 'Min range value was changed to 0');
+                    value = "0";
+                    $(this).val("0");
+                }
+
+                if (value == "") {
+                    Alertoast('Min range value can not be empty', 'Min range value was changed to 0');
+                    value = "0";
+                    $(this).val("0");
+                }
+
+
+
+                editMinAction(1, name, value);
+            });
+        }
+
+    );
+
+
+    $(document).ready(
+        function _RangeActions() {
+
+            $("input[id^=rangeaction]").change(function () {
+                var value = $(this).val();
+                var name = $(this).data("val");
+
+                if (isNaN(value)) {
+                    Alertoast('Range action value must be a number', 'Range action value was changed to 0');
+                    value = "0";
+                    $(this).val("0");
+                }
+
+                if (value == "") {
+                    Alertoast('Range action value can not be empty', 'Range action value was changed to 0');
+                    value = "0";
+                    $(this).val("0");
+                }
+
+
+
+                editRangeAction(1, name, value);
+            });
+        }
+
+    );
+
+
+    $(document).ready(
+        function _bonusAttackActions() {
+
+            $("input[id^=bonattaction]").change(function () {
+                var value = $(this).val();
+                var name = $(this).data("val");
+
+                if (isNaN(value)) {
+                    Alertoast('Bonus attack value must be a number', 'Bonus attack value was changed to 0');
+                    value = "0";
+                    $(this).val("0");
+                }
+
+                if (value == "") {
+                    Alertoast('Bonus attack value can not be empty', 'Bonus attack value was changed to 0');
+                    value = "0";
+                    $(this).val("0");
+                }
+
+
+                editBonusAttckAction(1, name, value);
+            });
+        }
+
+    );
+
+
+    $(document).ready(
+        function _typeActions() {
+
+            $("select[id^=typeaction]").change(function (event) {
+                var value = $(this).val();
+                var name = $(this).data("val");
+                editTypeAction(1, name, value);
+            });
+        }
+
+    );
+
+
+
+
+
+    $(document).ready(
+        function _AbilityActions() {
+
+            $("select[id^=abilityaction]").change(function (event) {
+                var value = $(this).val();
+                var name = $(this).data("val");
+                console.log(name);
+                editAbilityAction(1, name, value);
+            });
+        }
+
+    );
+
+
+
+    $(document).ready(
+        function _blockoptionsActions() {
+
+            $("select[id^=typeaction]").change(function (event) {
+                var value = $(this).val();
+
+
+                if (value == 0 || value == 1) {
+                    $("select[id^=abilityaction]").prop("disabled", true);
+                    $("select[id^=abilityaction]").material_select();
+
+                    $("input[id^=minaction]").prop("disabled", true);
+                    $("input[id^=maxaction]").prop("disabled", true);
+                    $("input[id^=rangeaction]").prop("disabled", false);
+                }
+
+                if (value == 2 || value == 3) {
+
+
+                    $("select[id^=abilityaction]").prop("disabled", true);
+                    $("select[id^=abilityaction]").material_select();
+
+                    $("input[id^=minaction]").prop("disabled", false);
+                    $("input[id^=maxaction]").prop("disabled", false);
+                    $("input[id^=rangeaction]").prop("disabled", true);
+                }
+
+                if (value == 4 || value == 5) {
+                    $("select[id^=abilityaction]").prop("disabled", false);
+                    $("select[id^=abilityaction]").material_select();
+
+                    $("input[id^=minaction]").prop("disabled", false);
+                    $("input[id^=maxaction]").prop("disabled", false);
+                    $("input[id^=rangeaction]").prop("disabled", false);
+                }
+
+
+
+                var name = $(this).data("val");
+                //editTypeAction(1, name, value);
+            });
+        }
+
+    );
+
+    $(document).ready(
+        function loadblockoptionsActions() {
+
+             var list =  @Html.Raw(@Json.Encode(Model));
+
+             for (var i = 0; i < list.length; i++) {
+
+                 var value = list[i].TypeAction;
+
+                 if (value == 0 || value == 1) {
+
+                     $("select#abilityaction" + i).prop("disabled", true);
+                     $("select#abilityaction" + i).material_select();
+
+
+                    $("input#minaction" + i).prop("disabled", true);
+                    $("input#maxaction" + i).prop("disabled", true);
+                    $("input#rangeaction" + i).prop("disabled", false);
+
+                }
+
+                 if (value == 2 || value == 3) {
+                     $("select#abilityaction" + i).prop("disabled", true);
+                     $("select#abilityaction" + i).material_select();
+
+                    $("input#minaction" + i).prop("disabled", false);
+                    $("input#maxaction" + i).prop("disabled", false);
+                    $("input#rangeaction" + i).prop("disabled", true);
+
+                }
+
+                 if (value == 4 || value == 5) {
+                     $("select#abilityaction" + i).prop("disabled", false);
+                     $("select#abilityaction" + i).material_select();
+
+                    $("input#minaction" + i).prop("disabled", false);
+                    $("input#maxaction" + i).prop("disabled", false);
+                    $("input#rangeaction" + i).prop("disabled", false);
+                }
+            }
+
+
+        }
+
+    );
+
+
+
+
+    $(document).ready(
+        function _textActions() {
+
+            $("textarea[id^=daction]").change(function () {
+                var text = $(this).val();
+                var value = $(this).data("val");
+                editTextAction(1,text,value);
+            });
+        }
+
+    );
+
+    $(document).ready(
+        function _nameActions() {
+
+            $("input[id^=naction]").change(function () {
+                var name = $(this).val();
+                var preName = $(this).data("val");
+
+                if (name == "") {
+                    alert('Name action can not be empty');
+                    Materialize.toast('Name action was changed to ' + preName, 3000);
+                    name = preName;
+                    $(this).val(preName);
+                }
+
+
+                editNameAction(1, preName, name);
+            });
+        }
+
+    );
+
+    $(document).ready(
+        function _limiteActions() {
+
+            $("input[id^=laction]").change(function () {
+                var limite = $(this).val();
+                var name = $(this).data("val");
+                editLimiteAction(1, name, limite);
+                console.log(limite);
+                console.log(name);
+
+            });
+        }
+
+    );
+
+
+
+
+
+
+    $(document).ready(
+                function _deleteActions() {
+
+                    $("a[id=ActionDelete]").click(function () {
+                        var value = $(this).data("val");
+                        deleteAction(1, value);
+                    });
+                }
+        );
+
+
+
+</script>
+
+
+<script src="~/Scripts/materialize/loadform.js"></script>
+

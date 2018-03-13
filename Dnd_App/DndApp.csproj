@@ -285,6 +285,11 @@
     <Content Include="Views\PC\New.cshtml" />
     <Content Include="Views\PC\_Create.cshtml" />
     <Content Include="Views\PC\_View.cshtml" />
+    <Content Include="Views\PC\_AddSpeed.cshtml" />
+    <Content Include="Views\PC\_addSkills.cshtml" />
+    <Content Include="Views\PC\_addSenses.cshtml" />
+    <Content Include="Views\PC\_PartialSpecialTraits.cshtml" />
+    <Content Include="Views\PC\_PartialAction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

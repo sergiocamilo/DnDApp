@@ -1,0 +1,52 @@
+﻿@model List<Dnd_App.Models.Characters.Speed>
+
+
+
+<div class="row">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <div class="input-field col s6">
+            @Html.EditorFor(model => Model[i].Speedft, 
+            new{ htmlAttributes =
+                new { @type = "text",
+                    @id = "valuespeed" + (int)Model[i].TypeSpeed,
+                    @data_val = @Model[i].TypeSpeed
+                }
+             })
+            <label for="valuespeed@((int)Model[i].TypeSpeed)">@Model[i].TypeSpeed</label>
+        </div>
+    }
+</div>
+
+
+
+<script>
+    $(document).ready(
+        function _BonusDamageActions() {
+
+            $("input[id^=valuespeed]").change(function () {
+                var value = $(this).val();
+                var name = $(this).data("val");
+
+                if (isNaN(value)) {
+                    Alertoast('Speed value must be a number', 'Speed value was changed to 20');
+                    value = "20";
+                    $(this).val("20");
+                }
+
+                if (value == "") {
+                    Alertoast('Speed value can not be empty', 'Speed value was changed to 20');
+                    value = "20";
+                    $(this).val("20");
+                }
+
+
+                updateSpeed(name, value);
+            });
+        }
+    );
+
+
+</script>
+
+<script src="~/Scripts/materialize/loadform.js"></script>
