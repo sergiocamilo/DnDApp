@@ -1,0 +1,2227 @@
+﻿@model Dnd_App.Models.Characters.PC
+
+<ul id="collap_create" class="collapsible" data-collapsible="accordion" style="margin-top: 0px;">
+    <!--Armor Class -->
+    <li>
+        <div class="collapsible-header teal darken-3 white-text" id="collap_body_acl" onclick="collapseAll();">
+            ArmorClass
+        </div>
+        <div class="collapsible-body grey lighten-5">
+            <div class="row">
+                <div class="col s8">
+                    <label>
+                        Armor Class: @Model.armorClass.Name
+
+                        @if (@Model.armorClass.Shield)
+                        {
+                            <text>+ Shield</text>
+                        }
+                    </label>
+                </div>
+                <div class="input-field col s4">
+                    @Html.EditorFor(model => model.armorBonus, new { htmlAttributes = new { @type = "text" } })
+                    <label for="name">Bonus</label>
+                </div>
+                <div class="input-field col s4">
+                    
+                </div>
+
+            </div>
+        </div>
+    </li>
+
+    <!--Hitpoint -->
+    <li>
+        <div class="collapsible-header teal darken-3 white-text" id="collap_body_htp" onclick="collapseAll();">
+            Hitpoints
+        </div>
+        <div class="collapsible-body grey lighten-5">
+            <div class="row">
+                <div class="col s8">
+                    <label> @Model.level.Value level,(@Model.hitPoint.HitPointsAVG) HitDice @Model.hitPoint.Die@Model.hitPoint.TypeDie </label>
+                </div>
+                <div class="input-field col s4">
+                    @Html.EditorFor(m => m.HP, new { htmlAttributes = new { @type = "text", @id = "hitPoint" } })
+                    <label for="hitPoint">HP</label>
+                </div>
+            </div>
+
+        </div>
+    </li>
+
+    <!--Speeds -->
+    <li>
+        <div class="collapsible-header teal darken-3 white-text" id="collap_body_spd" onclick="collapseAll();">
+            Speeds
+        </div>
+        <div class="collapsible-body grey lighten-5">
+            <div class="row">
+                <div class="col s4">
+                    <label>
+                        Speeds (@Model.race):
+                        <br />
+                        @for (int i = 0; i < Model.presetSpeeds.Count; i++)
+                        {
+                            <text>
+                                @Model.presetSpeeds[i].TypeSpeed @Model.presetSpeeds[i].Speedft ft.
+                            </text>
+                            <br />
+                        }
+                    </label>
+                </div>
+                <div class="input-field col s8">
+                    <select multiple="multiple" id="speedsMultiple">
+                        @foreach (Dnd_App.Models.Enum.TypeSpeed speed in Enum.GetValues(typeof(Dnd_App.Models.Enum.TypeSpeed)))
+                        {
+                            if (!@Model.presetSpeeds.Any(m => m.TypeSpeed == speed))
+                            {
+                                <option value="@((int)speed)">@speed.ToString() </option>
+                            }
+                            else
+                            {
+                                <option value="" disabled>@speed.ToString() </option>
+                            }
+                        }
+                    </select>
+                    <label>Select multiple speeds</label>
+                </div>
+                <div id="_pcSpeeds"></div>
+            </div>
+        </div>
+    </li>
+
+
+    <!--Ability Scores -->
+    <li>
+        <div class="collapsible-header teal darken-3 white-text" id="collap_body_abs" onclick="collapseAll();">
+            Ability Scores
+        </div>
+        <div class="collapsible-body grey lighten-5">
+            <div class="row">
+
+                @for (int i = 0; i < Model.abilitiesScores.Count; i++)
+                {
+                    <div class="input-field col s4">
+                        @Html.HiddenFor(m => m.abilitiesScores[i].Name)
+                        @Html.HiddenFor(m => m.abilitiesScores[i].ShortName)
+                        @Html.TextBoxFor(m => m.abilitiesScores[i].Value, new { @type = "text", @id = @Model.abilitiesScores[i].ShortName })
+                        @Html.HiddenFor(m => m.abilitiesScores[i].ModValue)
+                        <label>@Model.abilitiesScores[i].Name</label>
+                    </div>
+                }
+                <div class="col s6">
+                    <label>
+                        Bonus Abilities (@Model.race):
+                        <br />
+                        @for (int i = 0; i < Model.abilitiesScores.Count; i++)
+                        {
+                            if (@Model.abilitiesScores[i].Bonus > 0)
+                            {
+                                <text>
+                                    @Model.abilitiesScores[i].Name +@Model.abilitiesScores[i].Bonus
+                                </text>
+                                <br />
+                            }
+                        }
+                    </label>
+                </div>
+            </div>
+        </div>
+    </li>
+
+    <!--Saving Throws -->
+    <li>
+        <div class="collapsible-header teal darken-3 white-text" id="collap_body_stw" onclick="collapseAll();">
+            Saving throws
+        </div>
+        <div class="collapsible-body grey lighten-5">
+            <div class="row">
+                @for (int i = 0; i < Model.abilitiesScores.Count; i++)
+                {
+                    <div class="input-field col s6">
+                        @if (Model.abilitiesScores[i].SavingThrow && Model.presetSavingThrows.Any(m => m.ModName == Model.abilitiesScores[i].ShortName))
+                        {
+                            <p>
+                                <input disabled="disabled" checked="checked" class="checkbox" data-val="true"
+                                       id="ST@(Model.abilitiesScores[i].ShortName)" Name="ST@(Model.abilitiesScores[i].ShortName)"
+                                       type="checkbox" value="true">
+                                <label for="ST@(Model.abilitiesScores[i].ShortName)">@Model.abilitiesScores[i].Name</label>
+                            </p>
+                        }
+                        else if (Model.abilitiesScores[i].SavingThrow && !Model.presetSavingThrows.Any(m => m.ModName == Model.abilitiesScores[i].ShortName))
+                        {
+                            <p>
+                                <input checked="checked" class="checkbox" data-val="true"
+                                       id="ST@(Model.abilitiesScores[i].ShortName)" Name="ST@(Model.abilitiesScores[i].ShortName)"
+                                       type="checkbox" value="true">
+                                <label for="ST@(Model.abilitiesScores[i].ShortName)">@Model.abilitiesScores[i].Name</label>
+                            </p>
+                        }
+                        else
+                        {
+                            <p>
+                                <input class="checkbox" data-val="false"
+                                       id="ST@(Model.abilitiesScores[i].ShortName)" Name="ST@(Model.abilitiesScores[i].ShortName)"
+                                       type="checkbox" value="false">
+                                <label for="ST@(Model.abilitiesScores[i].ShortName)">@Model.abilitiesScores[i].Name</label>
+                            </p>
+
+                        }
+                    </div>
+
+                }
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <label>
+                        Saving Throws (@Model._class):
+                        <br />
+                        @for (int i = 0; i < Model.presetSavingThrows.Count; i++)
+                        {
+                            <text>
+                                @Model.presetSavingThrows[i].ModName
+
+                            </text>
+                            <br />
+                        }
+                    </label>
+                </div>
+
+            </div>
+        </div>
+    </li>
+
+    <!--Skills -->
+    <li>
+        <div class="collapsible-header teal darken-3 white-text" id="collap_body_skl" onclick="collapseAll();">Skills</div>
+        <div class="collapsible-body grey lighten-5">
+            <div class="row">
+                <div class="input-field col s12">
+                    @{ var skills = new Dnd_App.Models.Characters.Skill().ListViewSkills(); }
+                    <select multiple="multiple" id="skillsMultiple">
+                        @for (int i = 0; i < skills.Count; i++)
+                        {
+                            if (!@Model.presetSkills.Any(m => m.SkillName == (Dnd_App.Models.Enum.SkillName)i))
+                            {
+                                <option value="@(i)">@skills[i].ToString() </option>
+                            }
+                            else
+                            {
+                                <option value="" disabled>@skills[i].ToString() </option>
+                            }
+
+
+                        }
+                    </select>
+                    <label>Select multiple skills</label>
+                </div>
+                <div id="_pcSkills2"></div>
+                <div id="_pcSkills"></div>
+
+                <div class="col s12">
+                    <label>
+                        Skills (@Model.race):
+                        <br />
+                        @for (int i = 0; i < Model.presetSkills.Count; i++)
+                        {
+
+                            <text>
+                                @Model.presetSkills[i].SkillName
+                            </text>
+                            <br />
+                        }
+                    </label>
+                </div>
+            </div>
+        </div>
+    </li>
+
+    <!--Conditions  (Vulnerabilities, resistances, immunities) -->
+    <li>
+        <div class="collapsible-header teal darken-3 white-text" id="collap_body_vri" onclick="collapseAll();">
+            Conditions
+        </div>
+        <div class="collapsible-body grey lighten-5">
+            <div class="row">
+                <div class="input-field col s6">
+                    <select multiple="multiple" id="vulnerabilitiesMultiple">
+                        @foreach (Dnd_App.Models.Enum.TypeDamage vul in Enum.GetValues(typeof(Dnd_App.Models.Enum.TypeDamage)))
+                        {
+                            if (!@Model.presetVulnerabilities.Any(m => m.TypeDamage == vul))
+                            {
+                                <option value="@((int)vul)">@vul.ToString() </option>
+                            }
+                            else
+                            {
+                                <option value="" disabled>@vul.ToString() </option>
+                            }
+
+                        }
+                    </select>
+                    <label>Select multiple damage vulnerabilities</label>
+                </div>
+                <div class="input-field col s6">
+                    <select multiple="multiple" id="resistancesMultiple">
+                        @foreach (Dnd_App.Models.Enum.TypeDamage res in Enum.GetValues(typeof(Dnd_App.Models.Enum.TypeDamage)))
+                        {
+                            if (!@Model.presetResistances.Any(m => m.TypeDamage == res))
+                            {
+                                <option value="@((int)res)">@res.ToString() </option>
+                            }
+                            else
+                            {
+                                <option value="" disabled>@res.ToString() </option>
+                            }
+                        }
+                    </select>
+                    <label>Select multiple damage resistances</label>
+                </div>
+                <div class="input-field col s6">
+                    <select multiple="multiple" id="immunitiesDmgMultiple">
+                        @foreach (Dnd_App.Models.Enum.TypeDamage imm in Enum.GetValues(typeof(Dnd_App.Models.Enum.TypeDamage)))
+                        {
+                            if (!@Model.presetImmunitiesDamage.Any(m => m.TypeDamage == imm))
+                            {
+                                <option value="@((int)imm)">@imm.ToString() </option>
+                            }
+                            else
+                            {
+                                <option value="" disabled>@imm.ToString() </option>
+                            }
+
+                        }
+                    </select>
+                    <label>Select multiple damage immunities</label>
+                </div>
+                <div class="input-field col s6">
+                    <select multiple="multiple" id="immunitiesCndMultiple">
+                        @foreach (Dnd_App.Models.Enum.TypeCondition imm in Enum.GetValues(typeof(Dnd_App.Models.Enum.TypeCondition)))
+                        {
+                            if (!@Model.presetImmunitiesCondition.Any(m => m.TypeCondition == imm))
+                            {
+                                <option value="@((int)imm)">@imm.ToString() </option>
+                            }
+                            else
+                            {
+                                <option value="" disabled>@imm.ToString() </option>
+                            }
+
+                        }
+                    </select>
+                    <label>Select multiple condition immunities</label>
+                </div>
+                <div class="col s12">
+                    <label>
+                        Conditions (@Model.race):
+                        <br />
+                        @for (int i = 0; i < Model.presetImmunitiesCondition.Count; i++)
+                        {
+                            <text>
+                                Condition immunity: @Model.presetImmunitiesCondition[i].TypeCondition
+                            </text>
+                            <br />
+                        }
+                        @for (int i = 0; i < Model.presetImmunitiesDamage.Count; i++)
+                        {
+                            <text>
+                                Damage immunity : @Model.presetImmunitiesDamage[i].TypeDamage
+                            </text>
+                            <br />
+                        }
+                        @for (int i = 0; i < Model.presetResistances.Count; i++)
+                        {
+                            <text>
+                                Damage resistance: @Model.presetResistances[i].TypeDamage
+                            </text>
+                            <br />
+                        }
+                        @for (int i = 0; i < Model.presetVulnerabilities.Count; i++)
+                        {
+                            <text>
+                                Damage vulnerability: @Model.presetVulnerabilities[i].TypeDamage
+                            </text>
+                            <br />
+                        }
+                    </label>
+                </div>
+            </div>
+        </div>
+    </li>
+
+
+    <!--Senses -->
+    <li>
+        <div class="collapsible-header teal darken-3 white-text" id="collap_body_sen" onclick="collapseAll();">Senses</div>
+        <div class="collapsible-body grey lighten-5">
+            <div class="row">
+                <div class="input-field col s12">
+                    <select multiple="multiple" id="sensesMultiple">
+                        @foreach (Dnd_App.Models.Enum.TypeSense sense in Enum.GetValues(typeof(Dnd_App.Models.Enum.TypeSense)))
+                        {
+                            if (!@Model.presetSenses.Any(m => m.TypeSense == sense))
+                            {
+                                <option value="@((int)sense)">@sense.ToString() </option>
+                            }
+                            else
+                            {
+                                <option value="" disabled>@sense.ToString() </option>
+                            }
+
+                        }
+                    </select>
+                    <label>Select multiple senses</label>
+                </div>
+                <div id="_pcSenses"></div>
+                <div class="col s12">
+                    <label>
+                        Senses (@Model.race):
+                        <br />
+                        @for (int i = 0; i < Model.presetSenses.Count; i++)
+                        {
+
+                            <text>
+                                @Model.presetSenses[i].TypeSense: @Model.presetSenses[i].range ft.
+                            </text>
+                            <br />
+                        }
+                    </label>
+                </div>
+
+            </div>
+        </div>
+    </li>
+
+    <!--Languages -->
+    <li>
+        <div class="collapsible-header teal darken-3 white-text" id="collap_body_lan" onclick="collapseAll();">
+            Languages
+        </div>
+        <div class="collapsible-body grey lighten-5">
+            <div class="row">
+                <div class="input-field col s6">
+                    <select multiple="multiple" id="languagesSpeakMultiple">
+                        @foreach (Dnd_App.Models.Enum.LanguageName lan in Enum.GetValues(typeof(Dnd_App.Models.Enum.LanguageName)))
+                        {
+                            if (!@Model.presetLanguagesSpeak.Any(m => m.LanguageName == lan))
+                            {
+                                <option value="@((int)lan)">@lan.ToString() </option>
+                            }
+                            else
+                            {
+                                <option value="" disabled>@lan.ToString() </option>
+                            }
+                        }
+                    </select>
+                    <label>Select multiple language speak</label>
+                </div>
+                <label>
+                    Languages (@Model.race):
+                    <br />
+                    @for (int i = 0; i < Model.presetLanguagesSpeak.Count; i++)
+                    {
+
+                        <text>
+                            @Model.presetLanguagesSpeak[i].LanguageName
+                        </text>
+                        <br />
+                    }
+                </label>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s6">
+                    <select multiple="multiple" id="languagesUnderstandMultiple">
+                        @foreach (Dnd_App.Models.Enum.LanguageName lan in Enum.GetValues(typeof(Dnd_App.Models.Enum.LanguageName)))
+                        {
+                            if (!@Model.presetLanguagesSpeak.Any(m => m.LanguageName == lan))
+                            {
+                                <option value="@((int)lan)">@lan.ToString() </option>
+                            }
+                            else
+                            {
+                                <option value="" disabled>@lan.ToString() </option>
+                            }
+                        }
+                    </select>
+                    <label>Select multiple language understand</label>
+                </div>
+
+                @*<div class="input-field col s6">
+                        @Html.EditorFor(model => model.telepathy, new { htmlAttributes = new { @type = "text", @id = "telepathy" } })
+                        <label for="telepathy">Telepathy</label>
+                    </div>*@
+
+
+
+            </div>
+        </div>
+    </li>
+
+
+    <!--Special Traits -->
+    <li>
+        <div class="collapsible-header teal darken-3 white-text" id="collap_body_spt" onclick="collapseAll();">Special Traits</div>
+        <div class="collapsible-body grey lighten-5">
+            <div class="row">
+                <div id="_npcSpecialTraits"></div>
+                <center>
+                    <a onclick="addSpecialTraits();" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+                </center>
+            </div>
+        </div>
+    </li>
+
+    <!--Actions -->
+    <li>
+        <div class="collapsible-header teal darken-3 white-text" id="collap_body_act" onclick="collapseAll();">Actions</div>
+        <div class="collapsible-body grey lighten-5">
+            <div class="row">
+                <div id="_npcActions"></div>
+                <center>
+                    <a onclick="addAction(1);" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+                </center>
+            </div>
+        </div>
+    </li>
+
+</ul>
+
+
+
+<script src="~/Scripts/materialize/loadform.js"></script>
+
+
+<script>
+        function collapseAll() {
+            $("#basic_head").removeClass(function () {
+                return "active";
+            });
+            $("#basic_collap").collapsible({ accordion: true });
+            $("#basic_collap").collapsible({ accordion: false });
+        }
+</script>
+<script>
+            function collapseAll_create() {
+                $("#collap_body_acl").removeClass(function () {
+                    return "active";
+                });
+                $("#collap_body_htp").removeClass(function () {
+                    return "active";
+                });
+                $("#collap_body_spd").removeClass(function () {
+                    return "active";
+                });
+                $("#collap_body_abs").removeClass(function () {
+                    return "active";
+                });
+                $("#collap_body_stw").removeClass(function () {
+                    return "active";
+                });
+                $("#collap_body_skl").removeClass(function () {
+                    return "active";
+                });
+                $("#collap_body_vri").removeClass(function () {
+                    return "active";
+                });
+                $("#collap_body_sen").removeClass(function () {
+                    return "active";
+                });
+                $("#collap_body_lan").removeClass(function () {
+                    return "active";
+                });
+                $("#collap_body_spt").removeClass(function () {
+                    return "active";
+                });
+                $("#collap_body_act").removeClass(function () {
+                    return "active";
+                });
+                $("#collap_create").collapsible({ accordion: true });
+                $("#collap_create").collapsible({ accordion: false });
+            }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+
+    <!--updateName-->
+    <script>
+               $(document).ready(
+                    function updateName2() {
+                        $("#name").focusout(function (event) {
+
+                            var name = $("#name").val();
+
+                            if (name == "") {
+                                alert('Name can not be empty');
+                                Materialize.toast('The name was changed to "name pc"', 3000);
+                                name = "name pc";
+                                $("#name").val("name pc");
+                            }
+
+
+
+
+                            $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("UpdateName")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ 'newName': name, 'TempID':@Model.TempID }),
+                                success: function (data)
+                                {
+                                    reloadpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error size")
+                                    alert(errMsg);
+                                }
+                            });
+
+                        });
+                    }
+                );
+    </script>
+
+
+    <!--changeRace-->
+    <script>
+               $(document).ready(
+                   function changeRace() {
+                       $("#race").change(function (event) {
+                           var val = $('#race').val();
+
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_changeRace")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ 'race': val, 'TempID':@Model.TempID }),
+                                success: function (data)
+                                {
+                                    reloadCreate();
+                                    reloadpcView();
+
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error size")
+                                    alert(errMsg);
+                                }
+                            });
+
+
+                       });
+
+                   }
+               );
+    </script>
+
+
+
+
+    <!--changeBackground-->
+    <script>
+               $(document).ready(
+                   function changeBackground() {
+                       $("#background").change(function (event) {
+                           var val = $('#background').val();
+                           console.log(val);
+
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_changeBackgroud")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ 'background': val, 'TempID':@Model.TempID }),
+                                success: function (data)
+                                {
+                                    reloadCreate();
+                                    reloadpcView();
+
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error size")
+                                    alert(errMsg);
+                                }
+                            });
+
+
+                       });
+
+                   }
+               );
+    </script>
+
+    <!--changeClass-->
+    <script>
+               $(document).ready(
+                   function changeClass() {
+                       $("#class").change(function (event) {
+                           var val = $('#class').val();
+                           console.log(val);
+
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_changeClass")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ '_class': val, 'TempID':@Model.TempID }),
+                                success: function (data)
+                                {
+                                    reloadCreate();
+                                    reloadpcView();
+
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error size")
+                                    alert(errMsg);
+                                }
+                            });
+
+
+                       });
+
+                   }
+               );
+    </script>
+
+
+    <!--updateAlignmentMorality-->
+    <script>
+               $(document).ready(
+                   function updateAlignmentMorality() {
+                       $("#alignmentMorality").change(function (event) {
+                           var val = $('#alignmentMorality').val();
+                           console.log(val);
+
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_updateAlignmentMorality")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ 'val': val, 'TempID':@Model.TempID }),
+                                success: function (data)
+                                {
+                                    reloadpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error size")
+                                    alert(errMsg);
+                                }
+                            });
+
+
+                       });
+
+                   }
+               );
+    </script>
+
+    <!--updateAlignmentAttitude-->
+    <script>
+               $(document).ready(
+                   function updateAlignmentMorality() {
+                       $("#alignmentAttitude").change(function (event) {
+                           var val = $('#alignmentAttitude').val();
+                           console.log(val);
+
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_updateAlignmentAttitude")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ 'val': val, 'TempID':@Model.TempID }),
+                                success: function (data)
+                                {
+                                    reloadpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error size")
+                                    alert(errMsg);
+                                }
+                            });
+
+
+                       });
+
+                   }
+               );
+    </script>
+
+    <!--updateChallenge-->
+    <script>
+               $(document).ready(
+                   function updateChallenge() {
+                       $("#chrating").change(function (event) {
+                           var val = $('#chrating').val();
+                           console.log(val);
+
+
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_updateLevel")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ 'val': val , 'TempID':@Model.TempID}),
+                                success: function (data)
+                                {
+                                    reloadpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error challenge")
+                                    alert(errMsg);
+                                }
+                            });
+                       });
+                   }
+               );
+    </script>
+
+
+
+
+
+
+    <!--updatehitPoint-->
+    <script>
+               $(document).ready(
+                   function updatehitPoint() {
+                       $("#hitPoint").focusout(function (event) {
+
+                           var val = $("#hitPoint").val();
+
+
+                           if (isNaN(val)) {
+                               Alertoast('Hit Point value must be a number', 'Hit Point value was changed to 0');
+                               hd = "0";
+                               $("#hitPoint").val("0");
+                           }
+
+                           if (val == "") {
+                               Alertoast('Hit Point value can not be empty', 'Hit Point value was changed to 0');
+                               hd = "0";
+                               $("#hitPoint").val("0");
+                           }
+
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_updateHP")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ 'hp': val, 'TempID':@Model.TempID }),
+                                success: function (data)
+                                {
+                                    reloadpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error size")
+                                    alert(errMsg);
+                                }
+                            });
+
+
+                        });
+                    }
+                );
+
+
+    </script>
+
+
+
+    <!--updatebonusarmor-->
+    <script>
+               $(document).ready(
+                    function updatebonusarmor() {
+                        $("#armorBonus").focusout(function (event) {
+
+                            var val = $("#armorBonus").val();
+
+                            if (isNaN(val)) {
+                                Alertoast('Armor bonus value must be a number', 'Armor bonus value was changed to 0');
+                                hd = "0";
+                                $("#armorBonus").val("0");
+                            }
+
+                            if (val == "") {
+                                Alertoast('Armor bonus value can not be empty', 'Armor bonus value was changed to 0');
+                                hd = "0";
+                                $("#armorBonus").val("0");
+                            }
+
+
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_updateBonusArmor")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ 'bonus': val, 'TempID':@Model.TempID }),
+                                success: function (data)
+                                {
+                                    reloadpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error size")
+                                    alert(errMsg);
+                                }
+                            });
+
+
+                        });
+                    }
+                );
+
+
+    </script>
+
+
+
+    <!--changeAS-->
+    <script>
+               $(document).ready(
+                   function changeAS() {
+                       $("#Str").change(function (event) {
+                           var str = $('#Str').val();
+                           recalculateAS("Str", str);
+                       });
+                       $("#Dex").change(function (event) {
+                           var str = $('#Dex').val();
+                           recalculateAS("Dex", str);
+                       });
+                       $("#Con").change(function (event) {
+                           var str = $('#Con').val();
+                           recalculateAS("Con", str);
+                       });
+                       $("#Int").change(function (event) {
+                           var str = $('#Int').val();
+                           recalculateAS("Int", str);
+                       });
+                       $("#Wis").change(function (event) {
+                           var str = $('#Wis').val();
+                           recalculateAS("Wis", str);
+                       });
+                       $("#Cha").change(function (event) {
+                           var str = $('#Cha').val();
+                           recalculateAS("Cha", str);
+                       });
+                   }
+
+               );
+    </script>
+
+    <!--recalculateAS-->
+    <script>
+               function recalculateAS(mod, value) {
+
+                   if (isNaN(value)) {
+                       Alertoast('Ability Score: ' + mod + ' value must be a number', 'Ability Score: ' + mod + ' value was changed to 10');
+                       value = "10";
+                       $("#" + mod).val("10");
+                   }
+
+                   if (value == "") {
+                       Alertoast('Ability Score: ' + mod + ' value can not be empty', 'Ability Score: ' + mod + ' value was changed to 10');
+                       value = "10";
+                       $("#" + mod).val("10");
+                   }
+
+                   if (value < 1) {
+                       Alertoast('Ability Score: ' + mod + ' value can not be < 1', 'Ability Score: ' + mod + ' value was changed to 1');
+                       value = "1";
+                       $("#" + mod).val("1");
+                   }
+
+                   if (value > 30) {
+                       Alertoast('Ability Score: ' + mod + ' value can not be > 30', 'Ability Score: ' + mod + ' value was changed to 30');
+                       value = "30";
+                       $("#" + mod).val("30");
+                   }
+
+
+                   $.ajax({
+                                   type: "POST",
+                                   cache: false,
+                                    url: "@Url.Action("RecalculateAS")",
+                                    dataType: "html",
+                                    contentType: "application/json; charset=utf-8",
+                                    data: JSON.stringify({ '_mod': mod, '_value': value, 'TempID':@Model.TempID}),
+                                    success: function (data)
+                                    {
+
+                                        reloadpcView();
+                                    },
+                                    failure: function (errMsg) {
+                                        console.log("error ?")
+                                        alert(errMsg);
+                                    }
+                                });
+
+               }
+    </script>
+
+
+    <!--SavingThrowUpdate-->
+    <script>
+               $(document).ready(
+                   function SavingThrowUpdate() {
+                       $("#STStr").change(function (event) {
+                           var STWis = $('#STStr').is(":checked");
+                           UpdateSavingThrow(STWis, "Str")
+                       });
+                       $("#STDex").change(function (event) {
+                           var STWis = $('#STDex').is(":checked");
+                           UpdateSavingThrow(STWis, "Dex")
+                       });
+                       $("#STCon").change(function (event) {
+                           var STWis = $('#STCon').is(":checked");
+                           UpdateSavingThrow(STWis, "Con")
+                       });
+                       $("#STInt").change(function (event) {
+                           var STWis = $('#STInt').is(":checked");
+                           UpdateSavingThrow(STWis, "Int")
+                       });
+                       $("#STWis").change(function (event) {
+                           var STWis = $('#STWis').is(":checked");
+                           UpdateSavingThrow(STWis, "Wis")
+                       });
+                       $("#STCha").change(function (event) {
+                           var STWis = $('#STCha').is(":checked");
+                           UpdateSavingThrow(STWis, "Cha")
+                       });
+                   }
+               );
+    </script>
+
+    <!--UpdateSavingThrow-->
+    <script>
+               function UpdateSavingThrow(check, mod) {
+
+
+                    $.ajax({
+                                   type: "POST",
+                                   cache: false,
+                                    url: "@Url.Action("_UpdateSavingThrow")",
+                                    dataType: "html",
+                                    contentType: "application/json; charset=utf-8",
+                                    data: JSON.stringify({ '_mod': mod, '_check': check, 'TempID':@Model.TempID}),
+                                    success: function (data)
+                                    {
+
+                                        reloadpcView();
+                                    },
+                                    failure: function (errMsg) {
+                                        console.log("error ?")
+                                        alert(errMsg);
+                                    }
+                                });
+
+               }
+    </script>
+
+
+
+
+
+
+
+    <!--loadSpeeds on vulnerabilities-->
+    <script>
+            $(document).ready(
+                function loadVRI() {
+
+
+                    var listVUL =  @Html.Raw(@Json.Encode(Model.vulnerabilities));
+                    var listRES =  @Html.Raw(@Json.Encode(Model.resistances));
+                    var listIMMDMG =  @Html.Raw(@Json.Encode(Model.immunitiesDamage));
+                    var listIMMCND =  @Html.Raw(@Json.Encode(Model.immunitiesCondition));
+
+
+                    for (var i = 0; i < listVUL.length; i++) {
+                        $("select#vulnerabilitiesMultiple > option[value=" + listVUL[i].damage + "]").prop("selected", true);
+                    }
+                    $('#vulnerabilitiesMultiple').material_select('destroy');
+                    $('#vulnerabilitiesMultiple').material_select();
+
+                    for (var i = 0; i < listRES.length; i++) {
+                        $("select#resistancesMultiple > option[value=" + listRES[i].damage + "]").prop("selected", true);
+                    }
+                    $('#resistancesMultiple').material_select('destroy');
+                    $('#resistancesMultiple').material_select();
+
+                    for (var i = 0; i < listIMMDMG.length; i++) {
+                        $("select#immunitiesDmgMultiple > option[value=" + listIMMDMG[i].damage + "]").prop("selected", true);
+                    }
+                    $('#immunitiesDmgMultiple').material_select('destroy');
+                    $('#immunitiesDmgMultiple').material_select();
+
+                    for (var i = 0; i < listIMMCND.length; i++) {
+                        $("select#immunitiesCndMultiple > option[value=" + listIMMCND[i].damage + "]").prop("selected", true);
+                    }
+                    $('#immunitiesCndMultiple').material_select('destroy');
+                    $('#immunitiesCndMultiple').material_select();
+
+                    //addSpeed(xlist);
+            }
+        );
+    </script>
+
+
+    <!--loadSpeeds on load-->
+    <script>
+            $(document).ready(
+                function loadSpeeds() {
+
+
+                    var list =  @Html.Raw(@Json.Encode(Model.speeds));
+
+
+                    var xlist = [];
+
+                    console.log($("select#speedsMultiple"));
+
+
+                    for (var i = 0; i < list.length; i++) {
+                        xlist.push(list[i].typeSpeed);
+                        console.log($("select#speedsMultiple > option[value=" + list[i].typeSpeed + "]"));
+
+                        $("select#speedsMultiple > option[value=" + list[i].typeSpeed + "]").prop("selected", true);
+                    }
+
+                $('#speedsMultiple').material_select('destroy');
+                $('#speedsMultiple').material_select();
+
+                addSpeed(xlist);
+            }
+        );
+    </script>
+
+    <!--addSpeed-->
+    <script>
+
+                    function addSpeed(listSpeed) {
+
+                        console.log(listSpeed);
+                        var list =  @Html.Raw(@Json.Encode(Model.speeds));
+
+                        $.ajax({
+                            type: "POST",
+                            cache: false,
+                            url: "@Url.Action("_AddSpeed")",
+                            dataType: "html",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify({ 'list': listSpeed, 'TempID':@Model.TempID }),
+                            success: function (data)
+                            {
+                                var _npcSpeeds = $("#_pcSpeeds");
+                                _npcSpeeds.html(data);
+                                reloadpcView();
+                            },
+                            failure: function (errMsg) {
+                                console.log("error ?")
+                                alert(errMsg);
+                            }
+                    });
+        }
+    </script>
+
+    <!--selectedSpeed-->
+    <script>
+                    $(document).ready(
+                        function selectedSpeed() {
+                            $("#speedsMultiple").change(function (event) {
+
+                                var selectedValues = $('#speedsMultiple').val();
+                                console.log("select speeds: " + selectedValues);
+
+                                addSpeed(selectedValues);
+
+                            });
+                        }
+                    );
+    </script>
+
+    <!--updateSpeed-->
+    <script>
+                   function updateSpeed(_type, _value) {
+
+                $.ajax({
+                    type: "POST",
+                    cache: false,
+                    url: "@Url.Action("_UpdateSpeed")",
+                    dataType: "html",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({ '_type': _type, '_value': _value, 'TempID':@Model.TempID }),
+                    success: function (data)
+                    {
+                        reloadpcView();
+                    },
+                    failure: function (errMsg) {
+                        console.log("error size")
+                        alert(errMsg);
+                    }
+                });
+            }
+    </script>
+
+
+    <!--updateSkill dd-->
+    <script>
+                   function updateSkill(name, value) {
+
+                $.ajax({
+                    type: "POST",
+                    cache: false,
+                    url: "@Url.Action("_updateSkill")",
+                    dataType: "html",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({ 'name': name, 'value': value, 'TempID':@Model.TempID }),
+                    success: function (data)
+                    {
+                        reloadpcView();
+                    },
+                    failure: function (errMsg) {
+                        console.log("error size")
+                        alert(errMsg);
+                    }
+                });
+            }
+    </script>
+
+
+
+
+
+    <!--selectedSenses-->
+    <script>
+                $(document).ready(
+                    function selectedSenses() {
+                        $("#sensesMultiple").change(function (event) {
+
+                            var selectedValues = $('#sensesMultiple').val();
+                            console.log("select senses: " + selectedValues);
+
+                            $.ajax({
+                                type: "POST",
+                                cache: false,
+                                url: "@Url.Action("_addSenses")",
+                            dataType: "html",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify({ 'list': selectedValues, 'TempID':@Model.TempID }),
+                            success: function (data)
+                            {
+                                var _npcSenses = $("#_pcSenses");
+                                _npcSenses.html(data);
+                                reloadpcView();
+                            },
+                            failure: function (errMsg) {
+                                console.log("error ?")
+                                alert(errMsg);
+                            }
+                        });
+
+                        });
+                    }
+                );
+    </script>
+
+    <!--loadSenses on load-->
+    <script>
+            $(document).ready(
+                function loadSenses() {
+
+
+                    var list =  @Html.Raw(@Json.Encode(Model.senses));
+
+                    console.log(list);
+
+                    var xlist = [];
+
+                    for (var i = 0; i < list.length; i++) {
+                        xlist.push(list[i].type);
+                        $("select#sensesMultiple > option[value=" + list[i].type + "]").prop("selected", true);
+                    }
+
+                    $('#sensesMultiple').material_select('destroy');
+                    $('#sensesMultiple').material_select();
+
+                    $.ajax({
+                                type: "POST",
+                                cache: false,
+                            url: "@Url.Action("_addSenses")",
+                            dataType: "html",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify({ 'list': xlist, 'TempID':@Model.TempID }),
+                            success: function (data)
+                            {
+                                var _npcSenses = $("#_pcSenses");
+                                _npcSenses.html(data);
+                                reloadpcView();
+                            },
+                            failure: function (errMsg) {
+                                console.log("error ?")
+                                alert(errMsg);
+                            }
+                        });
+            }
+        );
+    </script>
+
+    <!--updateSense-->
+    <script>
+
+            function updateSense(_type, _value) {
+
+                $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_UpdateSenses")",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ '_type': _type, '_value': _value, 'TempID':@Model.TempID}),
+                                success: function (data)
+                                {
+                                    reloadpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error sense")
+                                    alert(errMsg);
+                                }
+                            });
+            }
+    </script>
+
+
+
+
+
+    <!--loadSkills on load-->
+    <script>
+                    $(document).ready(
+                        function loadSkills1() {
+
+
+                            var list =  @Html.Raw(@Json.Encode(Model.skills));
+
+                    console.log(list);
+
+                    var xlist = [];
+
+                    for (var i = 0; i < list.length; i++) {
+                        xlist.push(list[i].nameSkill);
+                        $("select#skillsMultiple > option[value=" + list[i].nameSkill + "]").prop("selected", true);
+                    }
+
+                    //$("select#skillsMultiple > optgroup > option[value=" +  + "]").prop("selected", true);
+
+                    console.log(xlist);
+                    $('#skillsMultiple').material_select('destroy');
+                    $('#skillsMultiple').material_select();
+
+                    $.ajax({
+                                 type: "POST",
+                                 cache: false,
+                                    url: "@Url.Action("_addSkills")",
+                                    dataType: "html",
+                                    contentType: "application/json; charset=utf-8",
+                                    data: JSON.stringify({ 'list': xlist, 'TempID':@Model.TempID }),
+                                    success: function (data)
+                                    {
+                                        var _npcSkills = $("#_pcSkills");
+                                        _npcSkills.html(data);
+                                        reloadpcView();
+                                    },
+                                    failure: function (errMsg) {
+                                        console.log("error ?")
+                                        alert(errMsg);
+                                    }
+                                });
+            }
+        );
+    </script>
+
+
+    <!--loadSkills2 on load-->
+    <script>
+                    $(document).ready(
+                        function loadSkills2() {
+
+                    $.ajax({
+                                 type: "POST",
+                                 cache: false,
+                                    url: "@Url.Action("_addpresetSkills")",
+                                    dataType: "html",
+                                    contentType: "application/json; charset=utf-8",
+                                    data: JSON.stringify({'TempID':@Model.TempID }),
+                                    success: function (data)
+                                    {
+                                        var _npcSkills = $("#_pcSkills2");
+                                        _npcSkills.html(data);
+                                        reloadpcView();
+                                    },
+                                    failure: function (errMsg) {
+                                        console.log("error ?")
+                                        alert(errMsg);
+                                    }
+                                });
+            }
+        );
+    </script>
+
+
+    <!--selectedSkills-->
+    <script>
+                $(document).ready(
+                    function selectedSpeed() {
+                        $("#skillsMultiple").change(function (event) {
+
+                            var selectedValues = $('#skillsMultiple').val();
+                            console.log("select skills: " + selectedValues);
+
+                            $.ajax({
+                                type: "POST",
+                                cache: false,
+                                url: "@Url.Action("_addSkills")",
+                                    dataType: "html",
+                                    contentType: "application/json; charset=utf-8",
+                                    data: JSON.stringify({ 'list': selectedValues, 'TempID':@Model.TempID }),
+                                    success: function (data)
+                                    {
+                                        var _npcSkills = $("#_pcSkills");
+                                        _npcSkills.html(data);
+                                        reloadpcView();
+                                    },
+                                    failure: function (errMsg) {
+                                        console.log("error ?")
+                                        alert(errMsg);
+                                    }
+                                });
+
+                        });
+                    }
+                );
+    </script>
+
+
+
+
+    <!--selectedresistancess-->
+    <script>
+                $(document).ready(
+                    function selectedVulnerabilities() {
+                        $("#resistancesMultiple").change(function (event) {
+
+                            var selectedValues = $('#resistancesMultiple').val();
+
+                            $.ajax({
+                                type: "POST",
+                                cache: false,
+                                url: "@Url.Action("_addResistances")",
+                                    dataType: "html",
+                                    contentType: "application/json; charset=utf-8",
+                                    data: JSON.stringify({ 'list': selectedValues, 'TempID':@Model.TempID }),
+                                    success: function (data)
+                                    {
+                                        console.log("success ?");
+                                        reloadpcView();
+                                    },
+                                    failure: function (errMsg) {
+                                        console.log("error ?")
+                                        alert(errMsg);
+                                    }
+                                });
+
+                            });
+                        }
+                    );
+    </script>
+
+    <!--selectedimmunitiesDmgMultiple ee-->
+    <script>
+                    $(document).ready(
+                        function selectedVulnerabilities() {
+                            $("#immunitiesDmgMultiple").change(function (event) {
+
+                                var selectedValues = $('#immunitiesDmgMultiple').val();
+
+                                $.ajax({
+                                    type: "POST",
+                                    cache: false,
+                                    url: "@Url.Action("_addImmunitiesDMG")",
+                                    dataType: "html",
+                                    contentType: "application/json; charset=utf-8",
+                                    data: JSON.stringify({ 'list': selectedValues, 'TempID':@Model.TempID }),
+                                    success: function (data)
+                                    {
+                                        console.log("success ?");
+                                        reloadpcView();
+                                    },
+                                    failure: function (errMsg) {
+                                        console.log("error ?")
+                                        alert(errMsg);
+                                    }
+                                });
+
+                                });
+                            }
+                        );
+    </script>
+
+    <!--selectedimmunitiesCndMultiple-->
+    <script>
+                        $(document).ready(
+                            function selectedVulnerabilities() {
+                                $("#immunitiesCndMultiple").change(function (event) {
+
+                                    var selectedValues = $('#immunitiesCndMultiple').val();
+
+                                    $.ajax({
+                                        type: "POST",
+                                        cache: false,
+                                        url: "@Url.Action("_addImmunitiesCND")",
+                                            dataType: "html",
+                                            contentType: "application/json; charset=utf-8",
+                                            data: JSON.stringify({ 'list': selectedValues, 'TempID':@Model.TempID }),
+                                            success: function (data)
+                                            {
+                                                console.log("success ?");
+                                                reloadpcView();
+                                            },
+                                            failure: function (errMsg) {
+                                                console.log("error ?")
+                                                alert(errMsg);
+                                            }
+                                        });
+                                    });
+                                }
+                            );
+    </script>
+
+    <!--selectedvulnerabilities-->
+    <script>
+                        $(document).ready(
+                            function selectedVulnerabilities() {
+                                $("#vulnerabilitiesMultiple").change(function (event) {
+
+                                    var selectedValues = $('#vulnerabilitiesMultiple').val();
+
+                                    $.ajax({
+                                        type: "POST",
+                                        cache: false,
+                                        url: "@Url.Action("_addVulnerabilities")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ 'list': selectedValues, 'TempID':@Model.TempID }),
+                                success: function (data)
+                                {
+                                    console.log("success ?");
+                                    reloadpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error ?")
+                                    alert(errMsg);
+                                }
+                            });
+                        });
+                    }
+                );
+    </script>
+
+    <!--selectedLanSpeak-->
+    <script>
+                $(document).ready(
+                    function selectedLanSpeak() {
+                        $("#languagesSpeakMultiple").change(function (event) {
+
+                            var selectedValues = $('#languagesSpeakMultiple').val();
+
+                            $.ajax({
+                                type: "POST",
+                                cache: false,
+                                url: "@Url.Action("_addLanguagesSpeak")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ 'list': selectedValues, 'TempID':@Model.TempID }),
+                                success: function (data)
+                                {
+                                    console.log("success ?");
+                                    reloadpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error ?")
+                                    alert(errMsg);
+                                }
+                            });
+                        });
+                    }
+                );
+    </script>
+
+
+    <!--selectedLanUnderstand-->
+    <script>
+                $(document).ready(
+                    function selectedLanUnderstand() {
+                        $("#languagesUnderstandMultiple").change(function (event) {
+
+                            var selectedValues = $('#languagesUnderstandMultiple').val();
+
+                            $.ajax({
+                                type: "POST",
+                                cache: false,
+                                url: "@Url.Action("_addLanguagesUnderstand")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ 'list': selectedValues, 'TempID':@Model.TempID }),
+                                success: function (data)
+                                {
+                                    console.log("success ?");
+                                    reloadpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error ?")
+                                    alert(errMsg);
+                                }
+                            });
+                        });
+                    }
+                );
+    </script>
+
+
+
+    <!--language on load-->
+    <script>
+            $(document).ready(
+                function loadlanguage() {
+
+
+                    var lanSpeak =  @Html.Raw(@Json.Encode(Model.languagesSpeak));
+                    var lanUnder =  @Html.Raw(@Json.Encode(Model.languagesUndersatand));
+
+
+
+                    for (var i = 0; i < lanSpeak.length; i++) {
+                        $("select#languagesSpeakMultiple > option[value=" + lanSpeak[i].name + "]").prop("selected", true);
+                    }
+
+                    $('#languagesSpeakMultiple').material_select('destroy');
+                    $('#languagesSpeakMultiple').material_select();
+
+
+                    for (var i = 0; i < lanUnder.length; i++) {
+
+                        $("select#languagesUnderstandMultiple > option[value=" + lanUnder[i].name + "]").prop("selected", true);
+                    }
+                    $('#languagesUnderstandMultiple').material_select('destroy');
+                    $('#languagesUnderstandMultiple').material_select();
+
+            }
+        );
+    </script>
+
+
+
+
+
+
+
+
+
+
+    <!--addSpecialTraits-->
+    <script>
+
+            function addSpecialTraits() {
+
+                $.ajax({
+                    type: "POST",
+                    cache: false,
+                    url: "@Url.Action("_addSpecialTrait")",
+                            dataType: "html",
+                            data: JSON.stringify({'TempID':@Model.TempID}),
+                            contentType: "application/json; charset=utf-8",
+                            success: function (data)
+                            {
+                                SpecialTraits();
+                                reloadpcView();
+                            },
+                            failure: function (errMsg) {
+                                console.log("error ?")
+                                alert(errMsg);
+                            }
+                        });
+            }
+    </script>
+
+    <!--editTextSpecialTrait-->
+    <script>
+
+                function editTextSpecialtrait(text, value) {
+                               $.ajax({
+                                   type: "POST",
+                                   cache: false,
+                                    url: "@Url.Action("_editTextSpecialTraits")",
+                                    dataType: "html",
+                                    contentType: "application/json; charset=utf-8",
+                                    data: JSON.stringify({'name': value, 'text': text, 'TempID':@Model.TempID}),
+                                    success: function (data)
+                                    {
+                                        reloadpcView();
+                                    },
+                                    failure: function (errMsg) {
+                                        console.log("error ?")
+                                        alert(errMsg);
+                                    }
+                                });
+                    }
+    </script>
+
+    <!--SpecialTraits-->
+    <script>
+            function SpecialTraits() {
+
+                $.ajax({
+                    type: "POST",
+                    cache: false,
+                    url: "@Url.Action("_PartialSpecialTraits")",
+                                    dataType: "html",
+                                    data: JSON.stringify({'TempID':@Model.TempID}),
+                                    contentType: "application/json; charset=utf-8",
+                                    success: function (data)
+                                    {
+                                        var _npcSenses = $("#_npcSpecialTraits");
+                                        _npcSenses.html(data);
+                                    },
+                                    failure: function (errMsg) {
+                                        console.log("error ?")
+                                        alert(errMsg);
+                                    }
+                                });
+                }
+    </script>
+
+    <!--editNameSpecialtrait-->
+    <script>
+
+                function editNameSpecialtrait(preName, name) {
+                                   $.ajax({
+                                       type: "POST",
+                                       cache: false,
+                                        url: "@Url.Action("_editNameSpecialTraits")",
+                                        dataType: "html",
+                                        contentType: "application/json; charset=utf-8",
+                                        data: JSON.stringify({'preName': preName, 'name': name, 'TempID':@Model.TempID}),
+                                        success: function (data)
+                                        {
+                                            SpecialTraits();
+                                            reloadpcView();
+                                        },
+                                        failure: function (errMsg) {
+                                            console.log("error ?")
+                                            alert(errMsg);
+                                        }
+                                    });
+                        }
+    </script>
+
+    <!--deleteSpecialTraits-->
+    <script>
+
+                function deleteSpecialTraits(name) {
+
+
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_deleteSpecialTraits")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({'name': name, 'TempID':@Model.TempID}),
+                                success: function (data)
+                                {
+                                    SpecialTraits();
+                                    reloadpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error ?")
+                                    alert(errMsg);
+                                }
+                    });
+
+                }
+    </script>
+
+
+
+
+
+
+
+
+
+
+    <!--Actions-->
+    <script>
+            function Actions() {
+
+                $.ajax({
+                    type: "POST",
+                    cache: false,
+                    url: "@Url.Action("_PartialAction")",
+                                dataType: "html",
+                                data: JSON.stringify({'TempID':@Model.TempID}),
+                                contentType: "application/json; charset=utf-8",
+                                success: function (data)
+                                {
+                                    var _npcSenses = $("#_npcActions");
+                                    _npcSenses.html(data);
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error ?")
+                                    alert(errMsg);
+                                }
+                            });
+                }
+    </script>
+
+    <!--addAction-->
+    <script>
+
+            function addAction(typeAction) {
+                console.log(typeAction);
+
+                   $.ajax({
+                       type: "POST",
+                       cache: false,
+                        url: "@Url.Action("_addAction")",
+                        dataType: "html",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({'TempID':@Model.TempID}),
+                        success: function (data)
+                        {
+                            Actions();
+                            reloadpcView();
+                        },
+                        failure: function (errMsg) {
+                            console.log("error ?")
+                            alert(errMsg);
+                        }
+                    });
+        }
+    </script>
+
+    <!--deleteAction-->
+    <script>
+
+                function deleteAction(typeAction,name) {
+                       $.ajax({
+                           type: "POST",
+                           cache: false,
+                            url: "@Url.Action("_deleteAction")",
+                            dataType: "html",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify({'name': name, 'TempID':@Model.TempID}),
+                            success: function (data)
+                            {
+                                Actions();
+                                reloadpcView();
+                            },
+                            failure: function (errMsg) {
+                                console.log("error ?")
+                                alert(errMsg);
+                            }
+                        });
+            }
+    </script>
+
+
+    <!--editTextAction-->
+    <script>
+
+                function editTextAction(type, text, value) {
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_editTextAction")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ 'name': value, 'text': text, 'TempID':@Model.TempID}),
+                                success: function (data)
+                                {
+                                    reloadpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error ?")
+                                    alert(errMsg);
+                                }
+                            });
+                }
+    </script>
+
+    <!--editlimiteAction-->
+    <script>
+
+                function editLimiteAction(type, name, limite) {
+                    console.log("type" + type + " "+ name +" "+ limite)
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_editLimiteAction")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ 'name': name, 'value': limite, 'TempID':@Model.TempID}),
+                                success: function (data)
+                                {
+                                    reloadpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error ?")
+                                    alert(errMsg);
+                                }
+                            });
+                }
+    </script>
+
+    <!--editTypeAction-->
+    <script>
+
+                function editTypeAction(type, name, value) {
+                    //console.log("type" + type + " "+ name +" "+ limite)
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_editTypeAction")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ 'name': name, 'value': value, 'TempID':@Model.TempID}),
+                                success: function (data)
+                                {
+                                    reloadpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error ?")
+                                    alert(errMsg);
+                                }
+                            });
+                }
+    </script>
+
+    <!--editBonusAttckAction-->
+    <script>
+
+                function editBonusAttckAction(type, name, value) {
+                    //console.log("type" + type + " "+ name +" "+ limite)
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_editBonusAttckAction")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ 'name': name, 'value': value, 'TempID':@Model.TempID}),
+                                success: function (data)
+                                {
+                                    reloadpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error ?")
+                                    alert(errMsg);
+                                }
+                            });
+                }
+    </script>
+
+
+    <!--editRangeAction-->
+    <script>
+
+                function editRangeAction(type, name, value) {
+                    //console.log("type" + type + " "+ name +" "+ limite)
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_editRangeAction")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ 'name': name, 'value': value, 'TempID':@Model.TempID}),
+                                success: function (data)
+                                {
+                                    reloadpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error ?")
+                                    alert(errMsg);
+                                }
+                            });
+                }
+    </script>
+
+
+    <!--editMinAction-->
+    <script>
+
+                function editMinAction(type, name, value) {
+                    //console.log("type" + type + " "+ name +" "+ limite)
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_editMinAction")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ 'name': name, 'value': value, 'TempID':@Model.TempID}),
+                                success: function (data)
+                                {
+                                    reloadpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error ?")
+                                    alert(errMsg);
+                                }
+                            });
+                }
+    </script>
+
+
+    <!--editMaxAction-->
+    <script>
+
+                function editMaxAction(type, name, value) {
+                    //console.log("type" + type + " "+ name +" "+ limite)
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_editMaxAction")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ 'name': name, 'value': value, 'TempID':@Model.TempID}),
+                                success: function (data)
+                                {
+                                    reloadpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error ?")
+                                    alert(errMsg);
+                                }
+                            });
+                }
+    </script>
+
+
+    <!--editTargetAction-->
+    <script>
+
+                function editTargetAction(type, name, value) {
+                    //console.log("type" + type + " "+ name +" "+ limite)
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_editTargetAction")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ 'name': name, 'value': value, 'TempID':@Model.TempID}),
+                                success: function (data)
+                                {
+                                    reloadpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error ?")
+                                    alert(errMsg);
+                                }
+                            });
+                }
+    </script>
+
+    <!--editAbilityAction-->
+    <script>
+
+                function editAbilityAction(type, name, value) {
+                    //console.log("type" + type + " "+ name +" "+ limite)
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_editAbilityAction")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({  'name': name, 'value': value, 'TempID':@Model.TempID}),
+                                success: function (data)
+                                {
+                                    reloadpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error ?")
+                                    alert(errMsg);
+                                }
+                            });
+                }
+    </script>
+
+
+    <!--editHitDieAction-->
+    <script>
+
+                function editHitDieAction(type, name, value) {
+                    //console.log("type" + type + " "+ name +" "+ limite)
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_editHitDieAction")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({  'name': name, 'value': value, 'TempID':@Model.TempID}),
+                                success: function (data)
+                                {
+                                    reloadpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error ?")
+                                    alert(errMsg);
+                                }
+                            });
+                }
+    </script>
+
+
+    <!--editBonusDamageAction-->
+    <script>
+
+                function editBonusDamageAction(type, name, value) {
+                        //console.log("type" + type + " "+ name +" "+ limite)
+                               $.ajax({
+                                   type: "POST",
+                                   cache: false,
+                                    url: "@Url.Action("_editBonusDamageAction")",
+                                    dataType: "html",
+                                    contentType: "application/json; charset=utf-8",
+                                    data: JSON.stringify({ 'name': name, 'value': value, 'TempID':@Model.TempID}),
+                                    success: function (data)
+                                    {
+                                        reloadpcView();
+                                    },
+                                    failure: function (errMsg) {
+                                        console.log("error ?")
+                                        alert(errMsg);
+                                    }
+                                });
+                    }
+    </script>
+
+
+    <!--editDieAction-->
+    <script>
+
+                function editDieAction(type, name, value) {
+                    //console.log("type" + type + " "+ name +" "+ limite)
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_editDieAction")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({  'name': name, 'value': value, 'TempID':@Model.TempID}),
+                                success: function (data)
+                                {
+                                    reloadpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error ?")
+                                    alert(errMsg);
+                                }
+                            });
+                }
+    </script>
+
+    <!--editTypeDamageAction-->
+    <script>
+
+                function editTypeDamageAction(type, name, value) {
+                    //console.log("type" + type + " "+ name +" "+ limite)
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_editTypeDamageAction")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({  'name': name, 'value': value, 'TempID':@Model.TempID}),
+                                success: function (data)
+                                {
+                                    reloadpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error ?")
+                                    alert(errMsg);
+                                }
+                            });
+                }
+    </script>
+
+
+    <!--editNameAction-->
+    <script>
+
+                function editNameAction(type, preName, name) {
+                               $.ajax({
+                                   type: "POST",
+                                   cache: false,
+                                    url: "@Url.Action("_editNameAction")",
+                                    dataType: "html",
+                                    contentType: "application/json; charset=utf-8",
+                                    data: JSON.stringify({ 'preName': preName, 'name': name, 'TempID':@Model.TempID}),
+                                    success: function (data)
+                                    {
+                                        Actions();
+                                        reloadpcView();
+                                    },
+                                    failure: function (errMsg) {
+                                        console.log("error ?")
+                                        alert(errMsg);
+                                    }
+                                });
+                    }
+    </script>
+
+
+    <!--Alert dd-->
+    <script>
+                function Alertoast(a, t) {
+                    alert(a);
+                    Materialize.toast(t, 3000);
+
+                }
+    </script>
+
+
+
+
+
+
+
+
+*@
+
+
+
+
+@*<script src="~/Scripts/reloadForm.js"></script>*@
+
+
+@*<script src="~/Content/js/materialize.min.js"></script>*@

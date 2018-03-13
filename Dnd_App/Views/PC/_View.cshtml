@@ -1,0 +1,651 @@
+﻿@model Dnd_App.Models.Characters.PC
+
+@{
+    //LOGIC
+
+    #region ARMOR
+
+    var TextArmor = " ";
+    TextArmor += Model.armorClass.Total + " (";
+    if (Model.armorClass.Shield)
+    {
+        TextArmor += @Dnd_App.Utils.Helpers.Description(Model.armorClass.Name) + ", shield)";
+    }
+    else
+    {
+        TextArmor += @Dnd_App.Utils.Helpers.Description(Model.armorClass.Name) + ")";
+    }
+
+    #endregion
+
+    #region HITPOINTS
+
+    var TextHP = " ";
+    TextHP += Model.hitPoint.HitPointsAVG + " ";
+    TextHP += "(" + Model.hitPoint.Die + "" + Model.hitPoint.TypeDie;
+    if (Model.hitPoint.BonusMultiplied > 0)
+    {
+        TextHP += " + " + Model.hitPoint.BonusMultiplied + ")";
+    }
+    else if (Model.hitPoint.BonusMultiplied < 0)
+    {
+        TextHP += Model.hitPoint.BonusMultiplied + ")";
+    }
+    else
+    {
+        TextHP += ")";
+    }
+
+    #endregion
+
+    #region SPEEDS
+
+    var TextSpeeds = " ";
+
+    var Speeds = new List<Dnd_App.Models.Characters.Speed>();
+
+    Speeds = Model.presetSpeeds.Concat(Model.speeds).ToList();
+
+    for (int i = 0; i < Speeds.Count; i++)
+    {
+        if (Speeds[i].TypeSpeed != Dnd_App.Models.Enum.TypeSpeed.Base)
+        {
+            TextSpeeds += Speeds[i].TypeSpeed + " " + Speeds[i].Speedft + "ft.";
+        }
+        else
+        {
+            TextSpeeds += Speeds[i].Speedft + "ft.";
+        }
+        if (i != Speeds.Count - 1)
+        {
+            TextSpeeds += ", ";
+        }
+    }
+
+    #endregion
+
+    #region ST
+
+    var TextST = "";
+
+    var ST = new List<Dnd_App.Models.Characters.SavingThrow>();
+    ST = Model.presetSavingThrows.Concat(Model.savingThrows).ToList();
+
+    if (ST != null && ST.Count > 0)
+    {
+
+        for (int i = 0; i < ST.Count; i++)
+        {
+            TextST += ST[i].ModName;
+            if (ST[i].Value >= 0)
+            {
+                TextST += " +" + ST[i].Value;
+            }
+            else
+            {
+                TextST += ST[i].Value;
+            }
+            if (i != ST.Count - 1)
+            {
+                TextST += ", ";
+            }
+
+        }
+    }
+
+
+    #endregion
+
+    #region SKILLS
+
+    var TextSkills = " ";
+
+    var Skills = new List<Dnd_App.Models.Characters.Skill>();
+    Skills = Model.presetSkills.Concat(Model.skills).ToList();
+
+    if (Skills.Count > 0)
+    {
+        for (int i = 0; i < Skills.Count; i++)
+        {
+            TextSkills += Dnd_App.Utils.Helpers.Description(Skills[i].SkillName);
+            if (Skills[i].Total > 0)
+            {
+                TextSkills += " +" + Skills[i].Total;
+            }
+            else
+            {
+                TextSkills += " " + Skills[i].Total;
+            }
+            if (i != Skills.Count - 1)
+            {
+                TextSkills += ", ";
+            }
+        }
+    }
+    #endregion
+
+    #region VUL RES COND
+
+    var TextVUL = "";
+    var Vulnerabilities = new List<Dnd_App.Models.Characters.Damage>();
+    Vulnerabilities = Model.vulnerabilities.Concat(Model.presetVulnerabilities).ToList();
+
+    if (Vulnerabilities.Count > 0)
+    {
+        for (int i = 0; i < Vulnerabilities.Count; i++)
+        {
+            TextVUL += Vulnerabilities[i].TypeDamage;
+            if (i != Vulnerabilities.Count - 1)
+            {
+                TextVUL += ", ";
+            }
+        }
+    }
+
+    var TextRES = "";
+    var Resistances = new List<Dnd_App.Models.Characters.Damage>();
+    Resistances = Model.resistances.Concat(Model.resistances).ToList();
+
+
+    if (Resistances.Count > 0)
+    {
+        for (int i = 0; i < Resistances.Count; i++)
+        {
+            TextRES += Resistances[i].TypeDamage;
+            if (i != Resistances.Count - 1)
+            {
+                TextRES += ", ";
+            }
+        }
+    }
+
+    var TextIMMD = "";
+    var ImmunitiesDamage = new List<Dnd_App.Models.Characters.Damage>();
+    ImmunitiesDamage = Model.immunitiesDamage.Concat(Model.presetImmunitiesDamage).ToList();
+
+    if (ImmunitiesDamage.Count > 0)
+    {
+        for (int i = 0; i < ImmunitiesDamage.Count; i++)
+        {
+            TextIMMD += ImmunitiesDamage[i].TypeDamage;
+            if (i != ImmunitiesDamage.Count - 1)
+            {
+                TextIMMD += ", ";
+            }
+        }
+    }
+
+    var TextIMMC = "";
+    var ImmunitiesCondition = new List<Dnd_App.Models.Characters.Condition>();
+    ImmunitiesCondition = Model.immunitiesCondition.Concat(Model.presetImmunitiesCondition).ToList();
+
+
+    if (ImmunitiesCondition.Count > 0)
+    {
+        for (int i = 0; i < ImmunitiesCondition.Count; i++)
+        {
+            TextIMMC += ImmunitiesCondition[i].TypeCondition;
+            if (i != ImmunitiesCondition.Count - 1)
+            {
+                TextIMMC += ", ";
+            }
+        }
+    }
+
+
+    #endregion
+
+    #region Senses
+
+    var TextSenses = "";
+    var Senses = new List<Dnd_App.Models.Characters.Sense>();
+    Senses = Model.presetSenses.Concat(Model.senses).ToList();
+
+    for (int i = 0; i < Senses.Count; i++)
+    {
+        TextSenses += Dnd_App.Utils.Helpers.Description(Senses[i].TypeSense) + " ";
+        if (Senses[i].TypeSense != Dnd_App.Models.Enum.TypeSense.passivePerception)
+        {
+            TextSenses += Senses[i].range + " ft.";
+        }
+        else
+        {
+            TextSenses += Senses[i].range;
+        }
+        if (i != Senses.Count - 1)
+        {
+            TextSenses += ", ";
+        }
+    }
+    #endregion
+
+    #region LANGUAGES
+
+    var TextLAN = "";
+    var LanguagesSpeak = new List<Dnd_App.Models.Characters.Language>();
+    LanguagesSpeak = Model.presetLanguagesSpeak.Concat(Model.languagesSpeak).ToList();
+
+    var LanguagesUndersatand = new List<Dnd_App.Models.Characters.Language>();
+    LanguagesUndersatand = Model.presetLanguagesUndersatand.Concat(Model.languagesUndersatand).ToList();
+
+
+    if (LanguagesSpeak.Count == 0 && LanguagesUndersatand.Count == 0 && Model.telepathy <= 0)
+    {
+        TextLAN += "-";
+    }
+    else
+    {
+        if (Model.telepathy > 0)
+        {
+            TextLAN += " telepathy " + Model.telepathy + " ft.";
+            if (LanguagesSpeak.Count != 0 || LanguagesUndersatand.Count != 0)
+            {
+                TextLAN += ", ";
+            }
+        }
+        for (int i = 0; i < LanguagesSpeak.Count; i++)
+        {
+
+            TextLAN += Dnd_App.Utils.Helpers.Description(LanguagesSpeak[i].LanguageName);
+            if (i != LanguagesSpeak.Count - 1)
+            {
+                TextLAN += ", ";
+            }
+        }
+        if (LanguagesSpeak.Count > 0 && LanguagesUndersatand.Count > 0)
+        {
+            TextLAN += ", ";
+        }
+        if (LanguagesUndersatand.Count > 0)
+        {
+            TextLAN += " understands ";
+            for (int i = 0; i < LanguagesUndersatand.Count; i++)
+            {
+                TextLAN += Dnd_App.Utils.Helpers.Description(LanguagesUndersatand[i].LanguageName);
+                if (i != LanguagesUndersatand.Count - 1)
+                {
+                    TextLAN += ", ";
+                }
+
+            }
+            TextLAN += " but can't speak";
+        }
+    }
+
+    #endregion
+
+    #region ACTIONS
+
+    var Actions = new List<Dnd_App.Models.Characters.Action>();
+    Actions = Model.presetActions.Concat(Model.actions).ToList();
+
+    List<String> TextActions = new List<string>();
+
+    for (int i = 0; i < Actions.Count; i++)
+    {
+        var TextAction = "";
+
+        if (Actions[i].Limited != null && Actions[i].Limited != "")
+        {
+            TextAction += "(" + Actions[i].Limited + ") ";
+        }
+
+        TextAction += Dnd_App.Utils.Helpers.Description(Actions[i].TypeAction) + ": +" + Actions[i].TotalBonusAttack + " to hit, ";
+
+        if (Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeAttack
+            || Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeWeaponAttack
+            || Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeorRangedAttack
+            || Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeorRangedWeaponAttack)
+        {
+            TextAction += " reach " + Actions[i].Range + "ft.";
+        }
+
+        if (Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.RangeAttack
+            || Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.RangeWeaponAttack
+            || Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeorRangedAttack
+            || Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeorRangedWeaponAttack)
+        {
+            TextAction += "range " + Actions[i].Min / Actions[i].Max + " ft.";
+        }
+
+        TextAction += ", ";
+
+        TextAction += Actions[i].Target + ".";
+
+        var bonus = Actions[i].BonusDamage + Actions[i].AbilityDamage;
+        if (bonus < 0)
+        {
+            TextAction += "Hit: " + Actions[i].Damage + " (" + Actions[i].HitDie + " " + Actions[i].Die + " " + bonus + ") ";
+        }
+        else
+        {
+            TextAction += "Hit: " + Actions[i].Damage + " (" + Actions[i].HitDie + " " + Actions[i].Die + " + " + bonus + ") ";
+        }
+        TextAction += Actions[i].TypeDamage + " damage. ";
+        TextAction += Actions[i].Description;
+
+        TextActions.Add(TextAction);
+    }
+
+    #endregion
+
+}
+
+
+
+<div id="_NpcView" class="statblock card-panel  blue lighten-2 black-text">
+
+    <h4>@Model.name</h4>
+    <div class="font-italic">
+        <span id="sizeUpdate"> @Model.size.TypeSize,</span>
+        <span> (@Dnd_App.Utils.Helpers.Description(Model.race)),</span>
+        @if (Model.alignmentAttitude == Dnd_App.Models.Enum.TypeAlignAttitude.none && Model.alignmentMorality == Dnd_App.Models.Enum.TypeAlignMorality.none)
+        {
+            <span>unaligned</span>
+        }
+        else if (Model.alignmentAttitude == Dnd_App.Models.Enum.TypeAlignAttitude.none && Model.alignmentMorality != Dnd_App.Models.Enum.TypeAlignMorality.none)
+        {
+            <span id="moralityUpdate">@Model.alignmentMorality</span>
+        }
+        else if (Model.alignmentAttitude != Dnd_App.Models.Enum.TypeAlignAttitude.none && Model.alignmentMorality == Dnd_App.Models.Enum.TypeAlignMorality.none)
+        {
+            <span id="attitudeUpdate">@Model.alignmentAttitude</span>
+        }
+        else if (Model.alignmentAttitude == Dnd_App.Models.Enum.TypeAlignAttitude.neutral && Model.alignmentMorality == Dnd_App.Models.Enum.TypeAlignMorality.neutral)
+        {
+            <span id="attitudeUpdate">@Model.alignmentAttitude</span>
+        }
+        else
+        {
+            <span id="attitudeUpdate">@Model.alignmentAttitude</span>
+            <span id="moralityUpdate">@Model.alignmentMorality</span>
+        }
+    </div>
+    
+    <hr />
+
+    <div id="_ArmorClass">
+        <span class="font-bold">Armor class</span><span>@TextArmor</span>
+    </div>
+    
+    <div id="_Hitpoints">
+        <span class="font-bold">Hit points</span><span>@TextHP</span>
+    </div>
+
+    <div id="_Speeds">
+        <span class="font-bold">Speed</span><span>@TextSpeeds</span>
+    </div>
+
+    <hr />
+
+    <div id="_AbilityScores">
+        <div class="row">
+            @foreach (var item in Model.abilitiesScores)
+            {
+                <div class="col s2 center">
+                    <span class="font-bold">@item.ShortName</span>
+                    <br />
+                    <span>@item.Value</span>
+                    @if (item.ModValue >= 0)
+                {
+                        <span>(+@item.ModValue)</span>
+                    }
+                    else
+                    {
+                        <span>(@item.ModValue)</span>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="_SavingThrows">
+        @if (ST != null && ST.Count > 0)
+        {
+            <span class="font-bold">Saving Throws </span> <span>@TextST</span>
+            <br />
+        }
+    </div>
+
+
+    <div class="_Skills">
+        <!-- Skill-->
+        @if (Skills.Count > 0)
+        {
+            <span class="font-bold">Skills </span><span>@TextSkills</span>
+            <br />
+        }
+    </div>
+
+    <div class="_VulResCond">
+        @if (Vulnerabilities.Count > 0)
+        {
+            <span class="font-bold">Damage Vulnerabilities </span> <span>@TextVUL</span>
+            <br />
+        }
+
+        <!-- Damage Resistances-->
+        @if (Resistances.Count > 0)
+        {
+            <span class="font-bold">Damage Resistances </span> <span>@TextRES</span>
+            <br />
+        }
+
+        <!-- Damage Immunities-->
+        @if (ImmunitiesDamage.Count > 0)
+        {
+            <span class="font-bold"> Damage Immunities </span> <span>@TextIMMD</span>
+            <br />
+        }
+
+        <!-- Condition Immunities-->
+        @if (ImmunitiesCondition.Count > 0)
+        {
+            <span class="font-bold"> Condition Immunities </span> <span>@TextIMMC</span>
+
+            <br />
+        }
+    </div>
+
+    <div class="_Senses">
+        <!-- Senses-->
+        @if (Senses.Count > 0)
+        {
+            <span class="font-bold">Senses </span><span>@TextSenses</span>
+            <br />
+        }
+    </div>
+
+    <div class="_Languages">
+        <span class="font-bold">Languages </span><span>@TextLAN</span>
+        <br />
+    </div>
+
+    <hr />
+
+    <div class="SpecialTraits">
+        @for (int i = 0; i < Model.presetSpecialTraits.Count; i++)
+        {
+            <span><strong><i>@Model.presetSpecialTraits[i].Name.</i></strong> @Model.presetSpecialTraits[i].Description</span>
+            if (i != Model.presetSpecialTraits.Count - 1)
+            {
+                <br />
+                <br />
+            }
+        }
+        @if (Model.specialTraits.Count > 0)
+        {
+            <br />
+            <br />
+        }
+
+
+        @for (int i = 0; i < Model.specialTraits.Count; i++)
+        {
+            <span><strong><i>@Model.specialTraits[i].Name.</i></strong> @Model.specialTraits[i].Description</span>
+            if (i != Model.specialTraits.Count - 1)
+            {
+                <br />
+                <br />
+            }
+        }
+    </div>
+
+    <div class="_Actions">
+        @if (Actions.Count > 0)
+        {
+            <h5>Actions</h5>
+            <hr />
+            for (int i = 0; i < Actions.Count; i++)
+            {
+                <span class="font-bold font-italic">@Actions[i].Name.</span> <span>@TextActions[i]</span>
+                if (i != Actions.Count - 1)
+                {
+                    <br />
+                    <br />
+                }
+            }
+        }
+    </div>
+
+    
+@*
+        
+
+        
+
+        
+
+       
+
+        @if (Model.presetActions.Count > 0 || Model.actions.Count > 0)
+        {
+            <br />
+            <h5>Actions</h5>
+            <hr />
+        }
+
+
+        @if (Model.presetActions.Count > 0)
+        {
+
+
+
+
+            for (int i = 0; i < Model.presetActions.Count; i++)
+            {
+                <span><strong><i>@Model.presetActions[i].name.</i></strong> </span>
+
+                if (Model.presetActions[i].limited != null && Model.presetActions[i].limited != "")
+                {
+                    <span> (@Model.presetActions[i].limited) </span>
+                }
+
+                <span>@Dnd_App.Models.Helpers.ReflectionHelpers.Description(Model.presetActions[i].typeAction): +@Model.presetActions[i].totalBonusAttack to hit,</span>
+
+                if (Model.presetActions[i].typeAction == Dnd_App.Models.TypeAction.MeleeAttack
+                    || Model.presetActions[i].typeAction == Dnd_App.Models.TypeAction.MeleeWeaponAttack
+                    || Model.presetActions[i].typeAction == Dnd_App.Models.TypeAction.MeleeorRangedAttack
+                    || Model.presetActions[i].typeAction == Dnd_App.Models.TypeAction.MeleeorRangedWeaponAttack)
+                {
+                    <span>reach @Model.presetActions[i].range ft.</span>
+                }
+
+                if (Model.presetActions[i].typeAction == Dnd_App.Models.TypeAction.RangeAttack
+                    || Model.presetActions[i].typeAction == Dnd_App.Models.TypeAction.RangeWeaponAttack
+                    || Model.presetActions[i].typeAction == Dnd_App.Models.TypeAction.MeleeorRangedAttack
+                    || Model.presetActions[i].typeAction == Dnd_App.Models.TypeAction.MeleeorRangedWeaponAttack)
+                {
+                    <span>range @Model.presetActions[i].min/@Model.presetActions[i].max ft.</span>
+                }
+
+                <text>,</text>
+
+                <span>@Model.presetActions[i].target.</span>
+                var bonus = Model.presetActions[i].bonusDamage + Model.presetActions[i].abilityDamage;
+                if (bonus < 0)
+                {
+                    <span>Hit: @Model.presetActions[i].damage (@Model.presetActions[i].hitDie@Model.presetActions[i].die@bonus)</span>
+                }
+                else
+                {
+                    <span>Hit: @Model.presetActions[i].damage (@Model.presetActions[i].hitDie@Model.presetActions[i].die+@bonus)</span>
+                }
+                <span>@Model.presetActions[i].typeDamage damage.</span>
+
+                <span>@Model.presetActions[i].description</span>
+
+                if (i != Model.presetActions.Count - 1)
+                {
+                    <br />
+                    <br />
+                }
+            }
+        }
+
+
+
+        @if (Model.actions.Count > 0)
+        {
+            <br />
+            <br />
+
+            for (int i = 0; i < Model.actions.Count; i++)
+            {
+                <span><strong><i>@Model.actions[i].name</i>.</strong> </span>
+
+                if (Model.actions[i].limited != null && Model.actions[i].limited != "")
+                {
+                    <span> (@Model.actions[i].limited) </span>
+                }
+
+                <span>@Dnd_App.Models.Helpers.ReflectionHelpers.Description(Model.actions[i].typeAction): +@Model.actions[i].totalBonusAttack to hit,</span>
+
+                if (Model.actions[i].typeAction == Dnd_App.Models.TypeAction.MeleeAttack
+                    || Model.actions[i].typeAction == Dnd_App.Models.TypeAction.MeleeWeaponAttack
+                    || Model.actions[i].typeAction == Dnd_App.Models.TypeAction.MeleeorRangedAttack
+                    || Model.actions[i].typeAction == Dnd_App.Models.TypeAction.MeleeorRangedWeaponAttack)
+                {
+                    <span>reach @Model.actions[i].range ft.</span>
+                }
+
+                if (Model.actions[i].typeAction == Dnd_App.Models.TypeAction.RangeAttack
+                    || Model.actions[i].typeAction == Dnd_App.Models.TypeAction.RangeWeaponAttack
+                    || Model.actions[i].typeAction == Dnd_App.Models.TypeAction.MeleeorRangedAttack
+                    || Model.actions[i].typeAction == Dnd_App.Models.TypeAction.MeleeorRangedWeaponAttack)
+                {
+                    <span>range @Model.actions[i].min/@Model.actions[i].max ft.</span>
+                }
+
+                <text>,</text>
+
+                <span>@Model.actions[i].target.</span>
+                var bonus = Model.actions[i].bonusDamage + Model.actions[i].abilityDamage;
+                if (bonus < 0)
+                {
+                    <span>Hit: @Model.actions[i].damage (@Model.actions[i].hitDie@Model.actions[i].die@bonus)</span>
+                }
+                else
+                {
+                    <span>Hit: @Model.actions[i].damage (@Model.actions[i].hitDie@Model.actions[i].die+@bonus)</span>
+                }
+                <span>@Model.actions[i].typeDamage damage.</span>
+
+                <span>@Model.actions[i].description</span>
+
+                if (i != Model.actions.Count - 1)
+                {
+                    <br />
+                    <br />
+                }
+            }
+        }
+
+
+    </div>
+
+
+*@
+</div>

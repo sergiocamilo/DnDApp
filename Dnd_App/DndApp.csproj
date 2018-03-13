@@ -282,6 +282,9 @@
     <Content Include="Views\NPC\_PartialReaction.cshtml" />
     <Content Include="Views\NPC\_PartialLegendaryAction.cshtml" />
     <Content Include="Views\PC\_AllPC.cshtml" />
+    <Content Include="Views\PC\New.cshtml" />
+    <Content Include="Views\PC\_Create.cshtml" />
+    <Content Include="Views\PC\_View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

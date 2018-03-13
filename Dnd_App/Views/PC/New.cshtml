@@ -1,0 +1,219 @@
+﻿@model Dnd_App.Models.Characters.PC
+
+@{
+    ViewBag.Title = "New PC";
+}
+
+<main>
+    @Html.Partial("_Nav2")
+    <div class="row row-new-character">
+
+        <div class="col s6 col-new-character">
+
+
+            <ul id="basic_collap" class="collapsible" data-collapsible="accordion" style="margin-bottom: 0px;">
+                <!--Basic Info -->
+                <li>
+                    <div id="basic_head" class="collapsible-header active teal darken-3 white-text " onclick="collapseAll_create();">Basic info</div>
+                    <div class="collapsible-body grey lighten-5">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @type = "text" } })
+                                <label for="name">Name</label>
+                            </div>
+
+                            <div class="input-field col s6">
+                                @Html.EnumDropDownListFor(m => m.race, new { @class = "form-control", @id = "race" })
+                                <label for="race">Race</label>
+                            </div>
+                            <div class="input-field col s6">
+                                @Html.EnumDropDownListFor(m => m._class, new { @class = "form-control", @id = "class" })
+                                <label for="class">Class</label>
+                            </div>
+                            <div class="input-field col s6">
+                                @Html.EnumDropDownListFor(m => m.background, new { @class = "form-control", @id = "background" })
+                                <label for="background">Background</label>
+                            </div>
+
+                            <div class="input-field col s6">
+                                <select id="alignmentAttitude">
+                                    @foreach (Dnd_App.Models.Enum.TypeAlignAttitude att in Enum.GetValues(typeof(Dnd_App.Models.Enum.TypeAlignAttitude)))
+                                    {
+                                        if (!att.Equals(Dnd_App.Models.Enum.TypeAlignAttitude.none))
+                                        {
+                                            <option value="@((int)att)">@att.ToString() </option>
+                                        }
+                                    }
+                                </select>
+                                <label for="alignmentAttitude">Alingment attitude</label>
+
+                            </div>
+                            <div class="input-field col s6">
+                                <select id="alignmentMorality">
+                                    @foreach (Dnd_App.Models.Enum.TypeAlignMorality mor in Enum.GetValues(typeof(Dnd_App.Models.Enum.TypeAlignMorality)))
+                                    {
+                                        if (!mor.Equals(Dnd_App.Models.Enum.TypeAlignMorality.none))
+                                        {
+                                            <option value="@((int)mor)">@mor.ToString() </option>
+                                        }
+                                    }
+                                </select>
+                                <label for="alignmentMorality">Alignment morality</label>
+                            </div>
+                            <div class="col s12 input-field">
+                                <select id="chrating">
+                                    @foreach (var level in Model.level.LevelList())
+                                    {
+                                        <option value="@(level.XP)"> @level.Value level - Experience @level.XP XP - Proficiency +@level.ProficiencyBonus </option>
+
+                                    }
+                                </select>
+                                <label for="chrating">Level</label>
+                            </div>
+
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <div id="_pcCreate"></div>
+
+        </div>
+
+        <div class="col s6 col-new-character">
+            <div class="npcview z-depth-3" id="_pcInfo"></div>
+        </div>
+    </div>
+
+</main>
+
+
+
+    @section Scripts{
+
+<script src="~/Scripts/materialize/initform.js"></script>
+<script src="~/Scripts/materialize/loadform.js"></script>
+
+        <!--loadcreate on load-->
+        <script>
+            $(document).ready(
+                function loadCreate() {
+                    reloadCreate();
+                }
+            );
+        </script>
+
+        <!--alignmentAttitude on load-->
+        <script>
+            $(document).ready(
+                function loadalignmentAttitude() {
+                    var al = @Convert.ToInt32(Model.alignmentAttitude);
+
+
+                    $("select#alignmentAttitude > option[value=" + al + "]").prop("selected", true);
+                    $('#alignmentAttitude').material_select('destroy');
+                    $('#alignmentAttitude').material_select();
+               }
+           );
+        </script>
+
+        <!--alignmentmor on load-->
+        <script>
+                $(document).ready(
+                    function loadalignmentMorality() {
+                        var al = @Convert.ToInt32(Model.alignmentMorality);
+
+                        console.log("we",al);
+
+                        $("select#alignmentMorality > option[value=" + al + "]").prop("selected", true);
+                        $('#alignmentMorality').material_select('destroy');
+                        $('#alignmentMorality').material_select();
+                }
+            );
+        </script>
+
+        <!--Challenge on load-->
+        <script>
+            $(document).ready(
+                function loadChallenge() {
+                    var xp =  @Model.level.XP;
+
+                    $("select#chrating > option[value=" + xp + "]").prop("selected", true);
+                    $('#chrating').material_select('destroy');
+                    $('#chrating').material_select();
+            }
+        );
+        </script>
+
+        <!--reloadcreate-->
+        <script>
+            function reloadCreate() {
+               
+                    $.ajax({
+                        
+                        type: "GET",
+                        cache: false,
+                        url: "@Url.Action("_Create")",
+                        dataType: "html",
+                        data: { 'TempID': @Model.TempID },
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data)
+                        {
+                            var _view = $("#_pcCreate");
+                            _view.replaceWith(data);
+
+                        },
+                        failure: function (errMsg) {
+                            console.log("error ?");
+                            alert(errMsg);
+                        }
+                    });
+            }
+
+        </script>
+
+
+
+        <!--loadpcview on load-->
+        <script>
+                $(document).ready(
+                    function loadPCView() {
+                        reloadpcView();
+                    }
+                );
+        </script>
+
+
+        <!--reloadNpcView-->
+        <script>
+        function reloadpcView() {
+
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("_View")",
+                dataType: "html",
+                    cache: false,
+                    data: { 'TempID': @Model.TempID },
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data)
+                    {
+                        var _view = $("#_pcInfo");
+                        _view.html(data);
+                    },
+                    failure: function (errMsg) {
+                        console.log("error ?")
+                        alert(errMsg);
+                    }
+                });
+
+            }
+        </script>
+
+       
+
+    }
+
+
+
+
+
