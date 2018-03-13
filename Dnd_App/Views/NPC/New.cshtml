@@ -1,9 +1,11 @@
 ﻿@model Dnd_App.Models.Characters.NPC
 
 @{
-    ViewBag.Title = "New";
+    ViewBag.Title = "New NPC";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var U = Dnd_App.Utils.Session.CurrentSession();
+    ViewBag.Character = "NPC";
+    ViewBag.TempID = Model.TempID;
 }
 
 <main>

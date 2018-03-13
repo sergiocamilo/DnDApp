@@ -4,11 +4,12 @@
 
 <nav class="z-depth-0 grey darken-4">
     <div class="nav-wrapper">
-        <a class="brand-logo bar-logo left" id="logo">DnDApp</a>
-        <div class="col s6 bar-breadcrumb">
-            <a href="#!" class="light breadcrumb white-text">MY NPCs</a>
-            <a class="light breadcrumb white-text">New</a>
-            <a href="#!" class="right bar-user light white-text"><i class="fa fa-user-o fa-fw"></i> @U.UserName</a>
-        </div>
+        <a href="#" class="brand-logo bar-logo left" id="logo">DnDApp</a>
+        <ul id="nav-mobile" class="right hide-on-small-only">
+            <li>Actions:</li>
+            <li><a href="@Url.Action("Panel","User")"  class="waves-effect waves-light btn red">Back</a></li>
+            <li><a href="@Url.Action("Save",ViewBag.Character,new { id= ViewBag.TempID })"  class="waves-effect waves-light btn blue">Save</a></li>
+            <li><a href="#!" class="right bar-user light white-text"><i class="fa fa-user-o fa-fw"></i> @U.UserName</a></li>
+        </ul>
     </div>
 </nav>
