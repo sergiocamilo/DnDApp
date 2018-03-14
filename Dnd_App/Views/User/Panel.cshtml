@@ -12,16 +12,7 @@
 @Html.Partial("_sidenav")
 
 <main>
-    <div class="navbar-fixed">
-        <nav class="z-depth-0 grey darken-4">
-            <div class="nav-wrapper">
-                <div class="col s6">
-                    <a href="#!" class="light white-text">Panel</a>
-                    <a href="#!" class="light white-text"><i class="fa fa-user-o fa-fw"></i> @U.UserName</a>
-                </div>
-            </div>
-        </nav>
-    </div>
+    
     <div id="_CurrentView">
         <div class="row">
             <div class="col s2 l2 offset-l5">
@@ -153,8 +144,8 @@
         });
     </script>
 
-    @*<script>
-        function LoadView(id) {
+    <script>
+        function LoadNPCModalView(id) {
 
             $.ajax({
                 type: "GET",
@@ -176,7 +167,7 @@
                 }
             });
         }
-    </script>*@
+    </script>
 
 }
 
