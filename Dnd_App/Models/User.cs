@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Dnd_App.Models.Enum;
+using Dnd_App.Models.Characters;
 
 namespace Dnd_App.Models
 {
@@ -17,8 +18,8 @@ namespace Dnd_App.Models
         public string Token { get; set; }
 
         //Colections
-        //public Dictionary<int, NPC> Npcs { get; set; }
-        //public Dictionary<int, NPC> PCs { get; set; }
+        public Dictionary<int, NPC> Npcs { get; set; }
+        public Dictionary<int, NPC> PCs { get; set; }
 
         public Boolean LogIn()
         {
