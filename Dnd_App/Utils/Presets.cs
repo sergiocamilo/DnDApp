@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Dnd_App.Models.Characters;
 using Dnd_App.Models.Enum;
+using Dnd_App.Models.Combat;
 
 namespace Dnd_App.Utils
 {
@@ -530,6 +531,13 @@ namespace Dnd_App.Utils
         #endregion
 
 
+        public Combat GenerateEmptyCombat()
+        {
+            var Empty = new Combat();
+            Empty.NPCs = new List<NPCCombat>();
+            Empty.PCs = new List<PCCombat>();
+            return Empty;
+        }
 
 
 

@@ -1,0 +1,166 @@
+﻿@model Dnd_App.Models.Combat.Combat
+
+@{
+    ViewBag.Title = "New NPC";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var U = Dnd_App.Utils.Session.CurrentSession();
+}
+
+<main>
+    <nav class="z-depth-0 grey darken-4">
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo bar-logo left" id="logo">DnDApp</a>
+            <ul id="nav-mobile" class="right hide-on-small-only">
+                <li>Actions:</li>
+                <li><a href="@Url.Action("Generate","Combat",new { id= Model.TempID })" class="waves-effect waves-light btn blue">Generate</a></li>
+                <li><a href="#!" class="right bar-user light white-text"><i class="fa fa-user-o fa-fw"></i> @U.UserName</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="row row-new-character">
+
+        <div class="col s6 col-new-character">
+            <div class="npcview z-depth-3" id="_CombatCreate">
+                <ul id="tabs-swipe-demo" class="tabs">
+                    <li class="tab col s4"><a class="active" href="#tab-basicinfo">Basic Info</a></li>
+                    <li class="tab col s4"><a href="#tab-addnpc">Add NPCs</a></li>
+                    <li class="tab col s4"><a class="active" href="#tab-addpc">Add PCs</a></li>
+                </ul>
+
+                <div id="tab-basicinfo">
+                    <div class="card-panel">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @type = "text" } })
+                                <label for="name">Name</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <select multiple="multiple" id="speedsMultiple">
+                                    <option value="1">Hola</option>
+                                    <option value="1">Hola</option>
+                                    <option value="1">Hola</option>
+                                </select>
+                                <label>Select participants</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-addnpc">
+                    
+                </div>
+
+                <div id="tab-addpc">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="col s6 col-new-character">
+            <div class="npcview z-depth-3" id="_CombatInfo"></div>
+        </div>
+    </div>
+
+</main>
+
+@section scripts{
+
+    <script src="~/Scripts/materialize/initform.js"></script>
+
+    <script>
+        $(document).ready(
+            function loadCombatView() {
+                reloadCombatView();
+            }
+        );
+    </script>
+
+    <script>
+        function reloadCombatView() {
+
+            $.ajax({
+                type: "GET",
+                cache: false,
+                url: "@Url.Action("_View","Combat")",
+                data: { 'TempID': @Model.TempID },
+                contentType: "application/json; charset=utf-8",
+                    success: function (data)
+                    {
+
+                        var _npcSpeeds = $("#_CombatInfo");
+                        _npcSpeeds.html(data);
+                    },
+                    failure: function (errMsg) {
+                        console.log("error ?")
+                        alert(errMsg);
+                    }
+                });
+
+            }
+    </script>
+
+    <script>
+            $(document).ready(
+                function loadAddnpcView() {
+                    reloadAddnpcView();
+                }
+            );
+    </script>
+
+    <script>
+            function reloadAddnpcView() {
+
+                $.ajax({
+                    type: "GET",
+                    cache: false,
+                    url: "@Url.Action("_AddNPC","Combat")",
+                    data: { 'TempID': @Model.TempID },
+                    contentType: "application/json; charset=utf-8",
+                        success: function (data)
+                        {
+
+                            var _npcSpeeds = $("#tab-addnpc");
+                            _npcSpeeds.html(data);
+                        },
+                        failure: function (errMsg) {
+                            console.log("error ?")
+                            alert(errMsg);
+                        }
+                    });
+
+                }
+    </script>
+
+    <script>
+            $(document).ready(
+                function loadAddpcView() {
+                    reloadAddpcView();
+                }
+            );
+    </script>
+
+    <script>
+            function reloadAddpcView() {
+
+                $.ajax({
+                    type: "GET",
+                    cache: false,
+                    url: "@Url.Action("_AddPC","Combat")",
+                    data: { 'TempID': @Model.TempID },
+                    contentType: "application/json; charset=utf-8",
+                        success: function (data)
+                        {
+
+                            var _npcSpeeds = $("#tab-addpc");
+                            _npcSpeeds.html(data);
+                        },
+                        failure: function (errMsg) {
+                            console.log("error ?")
+                            alert(errMsg);
+                        }
+                    });
+
+                }
+    </script>
+}

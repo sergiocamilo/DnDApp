@@ -112,6 +112,27 @@
             }
     </script>
 
+    <script>
+            function LoadCombats() {
+
+                $.ajax({
+                    type: "GET",
+                    cache: false,
+                    url: "@Url.Action("_AllCombats", "Combat")",
+                    dataType: "html",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data)
+                    {
+                        var _CurrentView = $("#_CurrentView");
+                        _CurrentView.html(data);
+                    },
+                    failure: function (errMsg) {
+                        alert(errMsg);
+                    }
+                });
+            }
+    </script>
+
 
 
 

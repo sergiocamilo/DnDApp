@@ -13,9 +13,12 @@ namespace Dnd_App.Models.Combat
         [Key]
         public long Id { set; get; }
         public long TempID { set; get; }
+        public String Name { set; get; }
 
         public List<PCCombat> PCs { set; get; }
         public List<NPCCombat> NPCs { set; get; }
+        public List<User> Participants { set; get; }
+
 
 
         public void AddNPC(NPC NPC, long IdUser)
@@ -72,8 +75,5 @@ namespace Dnd_App.Models.Combat
             
         }
 
-
-
     }
-}
 }

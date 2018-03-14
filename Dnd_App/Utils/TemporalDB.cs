@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Dnd_App.Models.Characters;
 using Dnd_App.Models.Enum;
+using Dnd_App.Models.Combat;
 
 namespace Dnd_App.Utils
 {
@@ -15,8 +16,10 @@ namespace Dnd_App.Utils
 
         public Dictionary<long, NPC> NPCInstances { get; set; }
         public Dictionary<long, PC> PCInstances { get; set; }
+        public Dictionary<long, Combat> CombatInstances { get; set; }
         public long NPCInstancesIndex;
         public long PCInstancesIndex;
+        public long CombatInstancesIndex;
 
         public NPC Deva{ get; }
 
@@ -42,6 +45,8 @@ namespace Dnd_App.Utils
             PCInstances = new Dictionary<long, PC>();
             PCInstancesIndex = 1;
 
+            CombatInstances = new Dictionary<long, Combat>();
+            CombatInstancesIndex = 1;
 
         }
 
@@ -226,6 +231,26 @@ namespace Dnd_App.Utils
         public PC SelectPC(long TempID)
         {
             return PCInstances[TempID];
+        }
+
+        #endregion
+
+
+        #region Combat methods
+
+        public void InsertCombat(Combat NewCombat)
+        {
+            lock (new { })
+            {
+                NewCombat.TempID = CombatInstancesIndex;
+                CombatInstances.Add(CombatInstancesIndex, NewCombat);
+                CombatInstancesIndex++;
+            }
+        }
+
+        public Combat SelectCombat(long TempID)
+        {
+            return CombatInstances[TempID];
         }
 
         #endregion

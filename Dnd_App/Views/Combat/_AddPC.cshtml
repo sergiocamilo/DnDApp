@@ -1,0 +1,65 @@
+﻿<div class="card-panel">
+    <div class="row">
+        <div class="col s12">
+            <div class="row">
+                @foreach (var item in Dnd_App.Utils.TemporalDB.Instance.NPCInstances)
+                {
+                    <div class="col m12">
+                        <!-- Basic Card -->
+                        <div class="card green-to-green z-depth-2">
+                            <div id="charcard-content" class="card-content white-text">
+                                <div class="row">
+                                    <div class="col s6">
+                                        <h5>@item.Value.Name</h5>
+                                    </div>
+                                    <div class="col s6">
+                                        <div class="chip right">Player: Jane Doe</div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col s4">
+                                        Armor Class: @item.Value.ArmorClass.Total
+                                    </div>
+                                    <div class="col s4">
+                                        Hit Points: @item.Value.HitPoint.HitPointsAVG
+                                    </div>
+                                    <div class="col s4">
+                                        Initiative: @Model.CalculateInitiativeNPC(item.Value)
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    @foreach (var ascore in item.Value.AbilitiesScores)
+                                    {
+                                        <div class="col s4">
+                                            @if (@ascore.ModValue >= 0)
+                                            {
+                                                <p>@ascore.ShortName : @ascore.Value (+@ascore.ModValue)</p>
+                                            }
+                                            else
+                                            {
+                                                <p>@ascore.ShortName : @ascore.Value (@ascore.ModValue)</p>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                                <hr />
+                                <div class="row center">
+                                    <div class="col s6">
+                                        <a href="" class="btn-flat white-text">Preview</a>
+                                    </div>
+                                    <div class="col s6">
+                                        <a href="" class="btn-flat white-text">Add</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
