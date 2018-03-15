@@ -230,6 +230,7 @@
     <Compile Include="Utils\FilterCombat.cs" />
     <Compile Include="Utils\Helpers.cs" />
     <Compile Include="Utils\Presets.cs" />
+    <Compile Include="Utils\Services.cs" />
     <Compile Include="Utils\TemporalDB.cs" />
     <Compile Include="Utils\Security.cs" />
     <Compile Include="Utils\Session.cs" />
@@ -343,6 +344,8 @@
     <Content Include="Views\Combat\_View.cshtml" />
     <Content Include="Views\Combat\_AddNPC.cshtml" />
     <Content Include="Views\Combat\_AddPC.cshtml" />
+    <Content Include="Views\User\Validate.cshtml" />
+    <Content Include="Views\User\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

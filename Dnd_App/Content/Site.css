@@ -145,3 +145,12 @@
     padding-top: 0px;
     padding-bottom: 0px;
 }
+
+.login-panel {
+    margin-top: 15px;
+    margin-bottom: 150px;
+}
+
+.login-row {
+    margin-bottom: 0px;
+}

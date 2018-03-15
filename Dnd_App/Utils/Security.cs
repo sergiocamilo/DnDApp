@@ -19,5 +19,16 @@ namespace Dnd_App.Utils
         {
             return BCrypt.Net.BCrypt.Verify(Password,DBPass);
         }
+
+        //genera token
+        public static string GenerateToken()
+        {
+            Random random = new Random();
+            const string chars = "bcdfghjklmnpqrstvwxyz0123456789";
+            return new string(Enumerable.Repeat(chars, 5)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+
     }
 }

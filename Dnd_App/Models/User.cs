@@ -32,11 +32,19 @@ namespace Dnd_App.Models
                     String pass = DB.User.Where(u => u.username == UserNameIn).First().password;
                     if (pass != null)
                     {
-                        return Utils.Security.CheckPassBCrypt(PassIn, pass);
+                        if (Utils.Security.CheckPassBCrypt(PassIn, pass) &&
+                            DB.User.Where(u => u.username == UserNameIn).First().isActive)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false; //pass incorrecta o usuario no activo
+                        }
                     }
                     else
                     {
-                        return false;
+                        return false; //no es usuario
                     }
                 }
             }
@@ -58,13 +66,14 @@ namespace Dnd_App.Models
                         username = this.UserName,
                         email = this.Email,
                         password = Utils.Security.EncryptPassBCrypt(Pass),
-                        role = 1,
+                        role = (int) Role.User,
                         isActive = false,
-                        token = "default_token"
+                        token = Utils.Security.GenerateToken()
                     };
-
                     DB.User.Add(UserEntity);
+                    Utils.Services.SendTokenEmail(UserEntity.email,UserEntity.token);
                     DB.SaveChanges();
+
                     return true;
                 }
             }
@@ -110,6 +119,61 @@ namespace Dnd_App.Models
             return true;
         }
         #endregion
-        
+
+        public Boolean VerifyUser()
+        {
+            try
+            {
+                using (var DB = new DnDAppDBEntities())
+                {
+                    int CountUsername = DB.User.Where(u => u.username == this.UserName).Count();
+                    int CountEmail = DB.User.Where(u => u.email == this.Email).Count();
+
+                    if ((CountEmail+ CountUsername) == 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+        }
+
+        public Boolean Validate()
+        {
+            try
+            {
+                using (var DB = new DnDAppDBEntities())
+                {
+                    var UserValidate = DB.User.Where(u => u.username == this.UserName).First();
+                    if (UserValidate.token == this.Token)
+                    {
+                        UserValidate.isActive = true;
+                        DB.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+        }
+
+
+
+
     }
 }

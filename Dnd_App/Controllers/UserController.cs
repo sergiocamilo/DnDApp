@@ -22,7 +22,6 @@ namespace Dnd_App.Controllers
         [HttpGet]
         public ActionResult _Dashboard()
         {
-            
             return PartialView();
         }
 
@@ -38,27 +37,42 @@ namespace Dnd_App.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Register(String Username, String Email, String Password, String RPassword)
-        //{
-        //    var newUser = new Models.User();
-        //    newUser.UserName = Username;
-        //    newUser.Email = Email;
-        //    newUser.Password = Password;
-        //    newUser.Role = Models.Enum.Role.User;
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(String Username, String Email, String Password, String RPassword)
+        {
+            var newUser = new Models.User();
+            newUser.UserName = Username;
+            newUser.Email = Email;
+            newUser.Role = Models.Enum.Role.User;
 
-        //    if (newUser.VerifyUser(RPassword))
-        //    {
-        //        if (newUser.RegistryUser())
-        //        {
-        //            //Mostrar que se creo
-        //            return RedirectToAction("Panel");
-        //        }
-        //    }
-        //    //mostrar error
-        //    return RedirectToAction("Register");
-        //}
+            try
+            {
+                if (newUser.VerifyUser())
+                {
+                    if (newUser.Create(Password))
+                    {
+                        TempData["Message"] = "User created successfully";
+                        return RedirectToAction("Validate");
+                    }
+                    else
+                    {
+                        TempData["Message"] = "Error in Database";
+                        return RedirectToAction("Register");
+                    }
+                }
+                else
+                {
+                    TempData["Message"] = "User is already registered";
+                    return RedirectToAction("Register");
+                }
+            }
+            catch (Exception)
+            {
+                TempData["Message"] = "User is already registered";
+                return RedirectToAction("Register");
+            }
+        }
 
         [HttpGet]
         public ActionResult Login()
@@ -92,8 +106,58 @@ namespace Dnd_App.Controllers
         public ActionResult LogOut()
         {
             Utils.Session.LogOut();
-            return RedirectToAction("Login");
+            return RedirectToAction("Index","Home");
         }
+
+
+        [HttpGet]
+        public ActionResult Validate()
+        {
+            if (Utils.Session.IsLogged())
+            {
+                return RedirectToAction("Panel");
+            }
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Validate(String Username, String Password, String Token)
+        {
+            Models.User user = new Models.User();
+            user.UserName = Username;
+            user.Token = Token;
+
+
+            if (user.LogIn(Username, Password))
+            {
+                if (user.Validate())
+                {
+                    Utils.Session.LogIn(user);
+                    return RedirectToAction("Panel");
+                }
+                else
+                {
+                    return RedirectToAction("Validate");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
+
+        //[HttpGet]
+        //public ActionResult ChangePassword()
+        //{
+        //    if (Utils.Session.IsLogged())
+        //    {
+        //        return RedirectToAction("Panel");
+        //    }
+        //    return View();
+        //}
+
+
         #endregion
 
     }

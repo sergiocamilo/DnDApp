@@ -4,52 +4,74 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
-    <div class="col s4 offset-s4 card-panel white darken-4">
-        @using (Html.BeginForm("Register", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            @Html.AntiForgeryToken()
-            <div class="row">
-                <div class="input-field col s12 center">
-                    <h5 id="logo" class="black-text">Register</h5>
+<main class="fire">
+    <div class="row login-row">
+        <div class="col s4 offset-s4 card-panel white darken-4 login-panel">
+            @using (Html.BeginForm("Register", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="input-field col s12 center">
+                        <h5 id="logo" class="black-text">Register</h5>
+                    </div>
                 </div>
-            </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        @Html.TextBox("Username", null, new { @id = "username", @type = "text", @required = "", @aria_required = "true", @minlength = "5", @class = "validate" })
+                        <label for="username" class="center-align" data-success="Valid!">Username</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        @Html.TextBox("Email", null, new { @id = "Email", @type = "email", @class = "validate", @required = "", @aria_required = "true" })
+                        <label for="username" class="center-align" data-error="email needed" data-success="Valid!">Email</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        @Html.TextBox("Password", null, new { @id = "Password", @type = "password", @class = "validate", @minlength = "8", @required = "" })
+                        <label for="Password" data-error="Please enter a name of length minum 8 characters">Password</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        @Html.TextBox("RPassword", null, new { @id = "RPassword", @type = "password", @class = "validate", @required = "" })
+                        <label for="RPassword" data-error="Please enter the same password again" data-success="Valid!">Repeat Password</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <button type="submit" class="btn waves-effect waves-light col s12 yellow darken-2">Register</button>
+                    </div>
+                </div>
+            }
+            <hr />
             <div class="row">
                 <div class="input-field col s12">
-                    @Html.TextBox("Username", null, new { @id = "username", @type = "text" })
-                    <label for="username" class="center-align">Username</label>
+                    <a href="@Url.Action("Login","User")" class="btn waves-effect waves-light col s12 blue darken-2">Login</a>
                 </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    @Html.TextBox("Email", null, new { @id = "Email", @type = "email" })
-                    <label for="username" class="center-align">Email</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    @Html.TextBox("Password", null, new { @id = "Password", @type = "password" })
-                    <label for="Password">Password</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    @Html.TextBox("RPassword", null, new { @id = "RPassword", @type = "password" })
-                    <label for="RPassword">Repeat Password</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    <button type="submit" class="btn waves-effect waves-light col s12 yellow darken-2">Register</button>
-                </div>
-            </div>
-        }
-        <hr />
-        <div class="row">
-            <div class="input-field col s12">
-                <a href="index.html" class="btn waves-effect waves-light col s12 blue darken-2">Login</a>
             </div>
         </div>
     </div>
-</div>
+</main>
 
+@section scripts{
+    
+    <script>
+        var password = document.getElementById('Password'),
+            confirm_password = document.getElementById('RPassword');
+
+        function validatePassword() {
+            if (password.value !== confirm_password.value) {
+                confirm_password.setCustomValidity("Passwords Don't Match");
+            } else {
+                confirm_password.setCustomValidity('');
+            }
+        }
+        password.oninput = validatePassword;
+        confirm_password.oninput = validatePassword;
+</script>
+    
+    
+    }
+    
