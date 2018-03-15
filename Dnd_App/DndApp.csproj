@@ -52,6 +52,12 @@
     <Reference Include="EasyHttp, Version=1.6.58.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\EasyHttp.1.6.58.0\lib\net40\EasyHttp.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="JsonFx, Version=2.0.1209.2802, Culture=neutral, PublicKeyToken=315052dd637f8a52, processorArchitecture=MSIL">
       <HintPath>..\packages\JsonFx.2.0.1209.2802\lib\net40\JsonFx.dll</HintPath>
     </Reference>
@@ -62,6 +68,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -159,6 +167,24 @@
     <Compile Include="Controllers\NPCController.cs" />
     <Compile Include="Controllers\PCController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Entitites\Dnd_APPModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Dnd_APPModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\Dnd_APPModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\Dnd_APPModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Dnd_APPModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\User.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -218,7 +244,24 @@
     <Content Include="Content\materialize.min.css" />
     <Content Include="Content\Panel.css" />
     <Content Include="Content\tingle.css" />
+    <Content Include="Entitites\Dnd_APPModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Dnd_APPModel.edmx</DependentUpon>
+      <LastGenOutput>Dnd_APPModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Entitites\Dnd_APPModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Dnd_APPModel.edmx</DependentUpon>
+      <LastGenOutput>Dnd_APPModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\app.js" />
+    <EntityDeploy Include="Entitites\Dnd_APPModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Dnd_APPModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Entitites\Dnd_APPModel.edmx.diagram">
+      <DependentUpon>Dnd_APPModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.2.1-vsdoc.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
@@ -308,6 +351,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -9,7 +9,7 @@ namespace Dnd_App.Utils
     {
         
         //genera el hash
-        public static string EncriptarPassBCrypt(String password)
+        public static string EncryptPassBCrypt(String password)
         {
             return BCrypt.Net.BCrypt.HashPassword(password);
         }
