@@ -15,8 +15,42 @@
     </div>
 </div>
 
+
 <div class="row">
-    <div class="col s12 m4">
-        
-    </div>
+
+    @foreach (var item in Dnd_App.Utils.TemporalDB.Instance.PCInstances)
+    {
+        <div class="col s12 m4">
+            <!-- Basic Card -->
+            <div class="card green-to-green z-depth-2">
+                <div id="charcard-content" class="card-content white-text">
+                    <span class="card-title">@item.Value.name</span>
+                    <hr />
+                    <p>Armor Class: @item.Value.armorClass.Total </p>
+                    <p>Hit Points: @item.Value.hitPoint.HitPointsAVG </p>
+                    <hr />
+                    <div class="row">
+                        @foreach (var ascore in item.Value.abilitiesScores)
+                        {
+                            <div class="col s6">
+                                @if (@ascore.ModValue >= 0)
+                                {
+                                    <p>@ascore.ShortName : @ascore.Value (+@ascore.ModValue)</p>
+                                }
+                                else
+                                {
+                                    <p>@ascore.ShortName : @ascore.Value (@ascore.ModValue)</p>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div id="charcard-action" class="card-action center">
+                    <a class="white-text" href="#">Edit</a>
+                    <a class="white-text" href="javascript:LoadPCModalView(@item.Value.TempID);">View</a>
+                    <a class="white-text" href="#">Delete</a>
+                </div>
+            </div>
+        </div>
+    }
 </div>
