@@ -37,9 +37,10 @@
                             </div>
                             <div class="input-field col s12">
                                 <select multiple="multiple" id="speedsMultiple">
-                                    <option value="1">Hola</option>
-                                    <option value="1">Hola</option>
-                                    <option value="1">Hola</option>
+                                    @foreach (var u in Dnd_App.Utils.ViewHelpers.AllUsernames())
+                                    {
+                                        <option value="@u.UserName">@u.UserName</option>
+                                    }
                                 </select>
                                 <label>Select participants</label>
                             </div>

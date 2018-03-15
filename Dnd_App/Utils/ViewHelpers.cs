@@ -10,7 +10,7 @@ namespace Dnd_App.Utils
     public class ViewHelpers
     {
         
-        public List<Models.User> AllUsernames()
+        public static List<Models.User> AllUsernames()
         {
             var UsernamesList = new List<Models.User>();
             try
