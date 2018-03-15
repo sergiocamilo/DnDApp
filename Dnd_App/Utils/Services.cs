@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -9,8 +10,8 @@ namespace Dnd_App.Utils
 {
     public class Services
     {
-        public static String EMAIL = "dndapp.noreply@gmail.com";
-        public static String PASS = "";
+        public static String EMAIL = ConfigurationManager.AppSettings["email"].ToString();
+        public static String PASS = ConfigurationManager.AppSettings["passwordemail"].ToString();
 
         public static void SendTokenEmail(String Email, String Token)
         {
