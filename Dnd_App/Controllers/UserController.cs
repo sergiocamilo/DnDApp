@@ -38,27 +38,27 @@ namespace Dnd_App.Controllers
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Register(String Username, String Email, String Password, String RPassword)
-        {
-            var newUser = new Models.User();
-            newUser.UserName = Username;
-            newUser.Email = Email;
-            newUser.Password = Password;
-            newUser.Role = Models.Enum.Role.User;
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Register(String Username, String Email, String Password, String RPassword)
+        //{
+        //    var newUser = new Models.User();
+        //    newUser.UserName = Username;
+        //    newUser.Email = Email;
+        //    newUser.Password = Password;
+        //    newUser.Role = Models.Enum.Role.User;
 
-            if (newUser.VerifyUser(RPassword))
-            {
-                if (newUser.RegistryUser())
-                {
-                    //Mostrar que se creo
-                    return RedirectToAction("Panel");
-                }
-            }
-            //mostrar error
-            return RedirectToAction("Register");
-        }
+        //    if (newUser.VerifyUser(RPassword))
+        //    {
+        //        if (newUser.RegistryUser())
+        //        {
+        //            //Mostrar que se creo
+        //            return RedirectToAction("Panel");
+        //        }
+        //    }
+        //    //mostrar error
+        //    return RedirectToAction("Register");
+        //}
 
         [HttpGet]
         public ActionResult Login()
@@ -76,9 +76,8 @@ namespace Dnd_App.Controllers
         {
             Models.User user = new Models.User();
             user.UserName = Username;
-            user.Password = Password;
 
-            if (user.LogIn())
+            if (user.LogIn(Username,Password))
             {
                 Utils.Session.LogIn(user);
                 return RedirectToAction("Panel");

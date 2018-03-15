@@ -12,7 +12,6 @@ namespace Dnd_App.Utils
     public class TemporalDB
     {
         private static TemporalDB instance;
-        public Models.User User;
 
         public Dictionary<long, NPC> NPCInstances { get; set; }
         public Dictionary<long, PC> PCInstances { get; set; }
@@ -25,14 +24,6 @@ namespace Dnd_App.Utils
 
         private TemporalDB()
         {
-            User = new Models.User()
-            {
-                Id = 1,
-                UserName = "sergio",
-                Password = "123",
-                Role = Role.Admin
-            };
-            
 
             Deva = new NPC();
             Deva = GenerateDEVA();
