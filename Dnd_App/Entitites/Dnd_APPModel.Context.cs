@@ -26,5 +26,30 @@ namespace Dnd_App.Entitites
         }
     
         public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<AbilityScore> AbilityScore { get; set; }
+        public virtual DbSet<Action> Action { get; set; }
+        public virtual DbSet<Armor> Armor { get; set; }
+        public virtual DbSet<Challenge> Challenge { get; set; }
+        public virtual DbSet<Condition> Condition { get; set; }
+        public virtual DbSet<Damage> Damage { get; set; }
+        public virtual DbSet<HitPoint> HitPoint { get; set; }
+        public virtual DbSet<Language> Language { get; set; }
+        public virtual DbSet<NPC> NPC { get; set; }
+        public virtual DbSet<NPC_AbilityScore> NPC_AbilityScore { get; set; }
+        public virtual DbSet<NPC_Action> NPC_Action { get; set; }
+        public virtual DbSet<NPC_Condition> NPC_Condition { get; set; }
+        public virtual DbSet<NPC_Damage> NPC_Damage { get; set; }
+        public virtual DbSet<NPC_Language> NPC_Language { get; set; }
+        public virtual DbSet<NPC_SavingThrow> NPC_SavingThrow { get; set; }
+        public virtual DbSet<NPC_Sense> NPC_Sense { get; set; }
+        public virtual DbSet<NPC_Skill> NPC_Skill { get; set; }
+        public virtual DbSet<NPC_SpecialTrait> NPC_SpecialTrait { get; set; }
+        public virtual DbSet<NPC_Speed> NPC_Speed { get; set; }
+        public virtual DbSet<SavingThrow> SavingThrow { get; set; }
+        public virtual DbSet<Sense> Sense { get; set; }
+        public virtual DbSet<Size> Size { get; set; }
+        public virtual DbSet<Skill> Skill { get; set; }
+        public virtual DbSet<SpecialTrait> SpecialTrait { get; set; }
+        public virtual DbSet<Speed> Speed { get; set; }
     }
 }

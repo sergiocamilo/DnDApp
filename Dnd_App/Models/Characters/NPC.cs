@@ -1,4 +1,5 @@
-﻿using Dnd_App.Models.Enum;
+﻿using Dnd_App.Entitites;
+using Dnd_App.Models.Enum;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -251,6 +252,8 @@ namespace Dnd_App.Models.Characters
 
         #endregion
 
+
+        
 
 
 
