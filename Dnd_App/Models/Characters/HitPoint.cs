@@ -15,7 +15,7 @@ namespace Dnd_App.Models.Characters
         public int Id { set; get; }
         public int HitPointsAVG { set; get; }
         public int Die { set; get; }
-        public TypeHitDie TypeHitDie { set; get; }
+        //public TypeHitDie TypeHitDie { set; get; }
         public int BonusCon { set; get; }
         public TypeDie TypeDie { set; get; }
         public int BonusMultiplied { set; get; }

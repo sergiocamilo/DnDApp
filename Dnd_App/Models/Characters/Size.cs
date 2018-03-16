@@ -15,7 +15,7 @@ namespace Dnd_App.Models.Characters
         public int Id { set; get; }
         public TypeSize TypeSize { set; get; }
         public int Space { set; get; }
-        public TypeHitDie TypeHitDie { set; get; }
+        //public TypeHitDie TypeHitDie { set; get; }
 
         public Size(){}
     }
