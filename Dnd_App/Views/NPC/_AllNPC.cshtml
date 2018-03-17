@@ -19,20 +19,21 @@
 
 
 <div class="row">
-
-    @foreach (var item in Dnd_App.Utils.TemporalDB.Instance.NPCInstances)
+    @if (U.LoadNPCs())
     {
-        <div class="col s12 m4">
-            <!-- Basic Card -->
-            <div class="card orange-to-orangeblack z-depth-2">
-                <div id="charcard-content" class="card-content white-text">
-                    <span class="card-title">@item.Value.Name</span>
-                    <hr />
-                    <p>Armor Class: @item.Value.ArmorClass.Total </p>
-                    <p>Hit Points: @item.Value.HitPoint.HitPointsAVG </p>
-                    <hr />
-                    <div class="row">
-                        @foreach (var ascore in item.Value.AbilitiesScores)
+        foreach (var item in U.Npcs)
+        {
+            <div class="col s12 m4">
+                <!-- Basic Card -->
+                <div class="card orange-to-orangeblack z-depth-2">
+                    <div id="charcard-content" class="card-content white-text">
+                        <span class="card-title">@item.Name</span>
+                        <hr />
+                        <p>Armor Class: @item.ArmorClass.Total </p>
+                        <p>Hit Points: @item.HitPoint.HitPointsAVG </p>
+                        <hr />
+                        <div class="row">
+                            @foreach (var ascore in item.AbilitiesScores)
                             {
                                 <div class="col s6">
                                     @if (@ascore.ModValue >= 0)
@@ -44,17 +45,20 @@
                                         <p>@ascore.ShortName : @ascore.Value (@ascore.ModValue)</p>
                                     }
                                 </div>
-                         }
+                            }
+                        </div>
+                    </div>
+                    <div id="charcard-action" class="card-action center">
+                        <a class="white-text" href="#">Edit</a>
+                        <a class="white-text" href="javascript:LoadNPCModalView(@item.Id);">View</a>
+                        <a class="white-text" href="#">Delete</a>
                     </div>
                 </div>
-                <div id="charcard-action" class="card-action center">
-                    <a class="white-text" href="#">Edit</a>
-                    <a class="white-text" href="javascript:LoadNPCModalView(@item.Value.TempID);">View</a>
-                    <a class="white-text" href="#">Delete</a>
-                </div>
             </div>
-        </div>
+        }
     }
+
+    
 </div>
 
 

@@ -47,6 +47,28 @@ namespace Dnd_App.Controllers
         }
 
 
+        [HttpGet]
+        public ActionResult Save(long TempID)
+        {
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            var U = Dnd_App.Utils.Session.CurrentSession();
+            Npc.Create();
+            U.AddNPC(Npc.Id);
+            Utils.TemporalDB.Instance.RemoveNPC(TempID);
+
+            return RedirectToAction("Panel","User");
+        }
+
+        [HttpGet]
+        public ActionResult _ViewFromDB(long id)
+        {
+            Utils.Presets Preset = new Utils.Presets();
+            var NPC = Preset.initVoidNPC();
+            NPC.Id = (int) id;
+            NPC.Select();
+            return PartialView("_View",NPC);
+        }
+        
 
         #region Callbacks --> Basic Info
 

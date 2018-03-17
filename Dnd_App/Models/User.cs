@@ -20,8 +20,7 @@ namespace Dnd_App.Models
         public string Token { get; set; }
 
         //Colections
-        public Dictionary<int, Models.Characters.NPC> Npcs { get; set; }
-        public Dictionary<int, PC> PCs { get; set; }
+        public List<Models.Characters.NPC> Npcs { get; set; }
 
         public Boolean LogIn(String UserNameIn, String PassIn)
         {
@@ -92,6 +91,7 @@ namespace Dnd_App.Models
                     var UserEntity = DB.User.Where(u => u.username == this.UserName).First();
                     if (UserEntity != null)
                     {
+                        this.Id = UserEntity.id;
                         this.UserName = UserEntity.username;
                         this.Role = (Role) UserEntity.role;
                         this.Email = UserEntity.email;
@@ -172,6 +172,50 @@ namespace Dnd_App.Models
 
         }
 
+        public Boolean LoadNPCs()
+        {
+            this.Npcs = new List<Characters.NPC>();
+            try
+            {
+                Utils.Presets Preset = new Utils.Presets();
+                
+                using (var DB = new DnDAppDBEntities())
+                {
+                    var NPCIds = DB.User_NPC.Where(u => u.User_id == this.Id).Select(n => n.NPC_id).ToList();
+                    foreach (var _id in NPCIds)
+                    {
+                        var npc = Preset.initVoidNPC();
+                        npc.Id = _id;
+                        npc.Select();
+                        this.Npcs.Add(npc);
+                    }
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+        }
+
+        public Boolean AddNPC(int NPCID)
+        {
+            try
+            {
+                using (var DB = new DnDAppDBEntities())
+                {
+                    DB.User_NPC.Add(new User_NPC() { User_id =(int)this.Id, NPC_id = NPCID });
+                    DB.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+        }
 
 
 

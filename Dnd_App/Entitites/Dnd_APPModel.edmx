@@ -256,6 +256,14 @@
           <Property Name="isActive" Type="bit" Nullable="false" />
           <Property Name="token" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
+        <EntityType Name="User_NPC">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NPC_id" Type="int" Nullable="false" />
+          <Property Name="User_id" Type="int" Nullable="false" />
+        </EntityType>
         <Association Name="FK_dbo_NPC_dbo_Armor_armorClass_id">
           <End Role="Armor" Type="Self.Armor" Multiplicity="0..1" />
           <End Role="NPC" Type="Self.NPC" Multiplicity="*" />
@@ -584,6 +592,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_User_NPC_NPC">
+          <End Role="NPC" Type="Self.NPC" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="User_NPC" Type="Self.User_NPC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NPC">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="User_NPC">
+              <PropertyRef Name="NPC_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_NPC_User">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="User_NPC" Type="Self.User_NPC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="User_NPC">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="DnDAppDBModelStoreContainer">
           <EntitySet Name="AbilityScore" EntityType="Self.AbilityScore" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Action" EntityType="Self.Action" Schema="dbo" store:Type="Tables" />
@@ -611,6 +647,7 @@
           <EntitySet Name="SpecialTrait" EntityType="Self.SpecialTrait" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Speed" EntityType="Self.Speed" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_NPC" EntityType="Self.User_NPC" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_NPC_dbo_Armor_armorClass_id" Association="Self.FK_dbo_NPC_dbo_Armor_armorClass_id">
             <End Role="Armor" EntitySet="Armor" />
             <End Role="NPC" EntitySet="NPC" />
@@ -707,6 +744,14 @@
             <End Role="Speed" EntitySet="Speed" />
             <End Role="NPC_Speed" EntitySet="NPC_Speed" />
           </AssociationSet>
+          <AssociationSet Name="FK_User_NPC_NPC" Association="Self.FK_User_NPC_NPC">
+            <End Role="NPC" EntitySet="NPC" />
+            <End Role="User_NPC" EntitySet="User_NPC" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_NPC_User" Association="Self.FK_User_NPC_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="User_NPC" EntitySet="User_NPC" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -723,6 +768,7 @@
           <Property Name="role" Type="Int32" Nullable="false" />
           <Property Name="isActive" Type="Boolean" Nullable="false" />
           <Property Name="token" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="User_NPC" Relationship="DnDAppDBModel.FK_User_NPC_User" FromRole="User" ToRole="User_NPC" />
         </EntityType>
         <EntityContainer Name="DnDAppDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="User" EntityType="Self.User" />
@@ -846,6 +892,15 @@
           <AssociationSet Name="FK_NPC_Speed_Speed" Association="DnDAppDBModel.FK_NPC_Speed_Speed">
             <End Role="Speed" EntitySet="Speed" />
             <End Role="NPC_Speed" EntitySet="NPC_Speed" />
+          </AssociationSet>
+          <EntitySet Name="User_NPC" EntityType="DnDAppDBModel.User_NPC" />
+          <AssociationSet Name="FK_User_NPC_NPC" Association="DnDAppDBModel.FK_User_NPC_NPC">
+            <End Role="NPC" EntitySet="NPC" />
+            <End Role="User_NPC" EntitySet="User_NPC" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_NPC_User" Association="DnDAppDBModel.FK_User_NPC_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="User_NPC" EntitySet="User_NPC" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AbilityScore">
@@ -978,6 +1033,7 @@
           <NavigationProperty Name="NPC_Skill" Relationship="DnDAppDBModel.FK_NPC_Skill_NPC" FromRole="NPC" ToRole="NPC_Skill" />
           <NavigationProperty Name="NPC_SpecialTrait" Relationship="DnDAppDBModel.FK_NPC_SpecialTrait_NPC" FromRole="NPC" ToRole="NPC_SpecialTrait" />
           <NavigationProperty Name="NPC_Speed" Relationship="DnDAppDBModel.FK_NPC_Speed_NPC" FromRole="NPC" ToRole="NPC_Speed" />
+          <NavigationProperty Name="User_NPC" Relationship="DnDAppDBModel.FK_User_NPC_NPC" FromRole="NPC" ToRole="User_NPC" />
         </EntityType>
         <EntityType Name="NPC_AbilityScore">
           <Key>
@@ -1463,6 +1519,44 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="User_NPC">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NPC_id" Type="Int32" Nullable="false" />
+          <Property Name="User_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="NPC" Relationship="DnDAppDBModel.FK_User_NPC_NPC" FromRole="User_NPC" ToRole="NPC" />
+          <NavigationProperty Name="User" Relationship="DnDAppDBModel.FK_User_NPC_User" FromRole="User_NPC" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_User_NPC_NPC">
+          <End Type="DnDAppDBModel.NPC" Role="NPC" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DnDAppDBModel.User_NPC" Role="User_NPC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NPC">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="User_NPC">
+              <PropertyRef Name="NPC_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_NPC_User">
+          <End Type="DnDAppDBModel.User" Role="User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DnDAppDBModel.User_NPC" Role="User_NPC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="User_NPC">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1742,6 +1836,15 @@
               <MappingFragment StoreEntitySet="Speed">
                 <ScalarProperty Name="speedft" ColumnName="speedft" />
                 <ScalarProperty Name="typeSpeed" ColumnName="typeSpeed" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_NPC">
+            <EntityTypeMapping TypeName="DnDAppDBModel.User_NPC">
+              <MappingFragment StoreEntitySet="User_NPC">
+                <ScalarProperty Name="User_id" ColumnName="User_id" />
+                <ScalarProperty Name="NPC_id" ColumnName="NPC_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -51,5 +51,6 @@ namespace Dnd_App.Entitites
         public virtual DbSet<Skill> Skill { get; set; }
         public virtual DbSet<SpecialTrait> SpecialTrait { get; set; }
         public virtual DbSet<Speed> Speed { get; set; }
+        public virtual DbSet<User_NPC> User_NPC { get; set; }
     }
 }

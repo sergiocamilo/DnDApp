@@ -8,7 +8,7 @@
         <ul id="nav-mobile" class="right hide-on-small-only">
             <li>Actions:</li>
             <li><a href="@Url.Action("Panel","User")"  class="waves-effect waves-light btn red">Back</a></li>
-            <li><a href="@Url.Action("Save",ViewBag.Character,new { id= ViewBag.TempID })"  class="waves-effect waves-light btn blue">Save</a></li>
+            <li><a href="@Url.Action("Save",ViewBag.Character,new { TempID = (long) ViewBag.TempID })"  class="waves-effect waves-light btn blue">Save</a></li>
             <li><a href="#!" class="right bar-user light white-text"><i class="fa fa-user-o fa-fw"></i> @U.UserName</a></li>
         </ul>
     </div>

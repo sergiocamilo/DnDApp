@@ -201,9 +201,17 @@ namespace Dnd_App.Utils
             return NPCInstances[TempID];
         }
 
+        public void RemoveNPC(long id)
+        {
+            lock (new { })
+            {
+                NPCInstances.Remove(id);
+            }
+        }
+
 
         #endregion
-        
+
 
         #region PC methods
 

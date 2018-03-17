@@ -171,8 +171,8 @@
             $.ajax({
                 type: "GET",
                 cache: false,
-                data: { 'TempID': id },
-                url: '@Url.Action("_View", "NPC")',
+                data: { 'id': id },
+                url: '@Url.Action("_ViewFromDB", "NPC")',
                 dataType: "html",
                 contentType: "application/json; charset=utf-8",
                 success: function (data)

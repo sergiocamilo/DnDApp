@@ -14,6 +14,12 @@ namespace Dnd_App.Entitites
     
     public partial class User
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public User()
+        {
+            this.User_NPC = new HashSet<User_NPC>();
+        }
+    
         public int id { get; set; }
         public string username { get; set; }
         public string email { get; set; }
@@ -21,5 +27,8 @@ namespace Dnd_App.Entitites
         public int role { get; set; }
         public bool isActive { get; set; }
         public string token { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<User_NPC> User_NPC { get; set; }
     }
 }

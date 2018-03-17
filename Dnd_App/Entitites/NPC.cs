@@ -27,6 +27,7 @@ namespace Dnd_App.Entitites
             this.NPC_Skill = new HashSet<NPC_Skill>();
             this.NPC_SpecialTrait = new HashSet<NPC_SpecialTrait>();
             this.NPC_Speed = new HashSet<NPC_Speed>();
+            this.User_NPC = new HashSet<User_NPC>();
         }
     
         public int id { get; set; }
@@ -65,5 +66,7 @@ namespace Dnd_App.Entitites
         public virtual ICollection<NPC_SpecialTrait> NPC_SpecialTrait { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NPC_Speed> NPC_Speed { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<User_NPC> User_NPC { get; set; }
     }
 }

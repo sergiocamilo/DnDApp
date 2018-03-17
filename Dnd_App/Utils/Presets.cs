@@ -107,9 +107,7 @@ namespace Dnd_App.Utils
             Empty.ImmunitiesCondition = new List<Condition>();
             Empty.Senses = new List<Sense>();
             Empty.LanguagesSpeak = new List<Language>();
-            Empty.LanguagesSpeak.Add(new Language());
             Empty.LanguagesUndersatand = new List<Language>();
-            Empty.LanguagesUndersatand.Add(new Language());
             Empty.Telepathy = 0;
             Empty.Challenge = new Challenge();
             Empty.SpecialTraits = new List<SpecialTrait>();
