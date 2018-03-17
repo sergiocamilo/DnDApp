@@ -378,22 +378,98 @@ namespace Dnd_App.Models.Characters
             }
         }
 
-        //public Boolean Select()
-        //{
-        //    try
-        //    {
-        //        using (var DB = new DnDAppDBEntities())
-        //        {
-        //            var x = DB.NPC.Where(npc => npc.id == 1).First();
-        //            var y = Mapper.Map<Models.Characters.Size>(x.Size);
-        //            return true;
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return false;
-        //    }
-        //}
+        public Boolean Select()
+        {
+            try
+            {
+                using (var DB = new DnDAppDBEntities())
+                {
+                    var NPCEntity = DB.NPC.Where(npc => npc.id == this.Id).First();
+
+                    this.Id = NPCEntity.id;
+                    this.Name = NPCEntity.name;
+                    this.Size = Mapper.Map<Size>(NPCEntity.Size);
+                    this.AlignmentAttitude = (Enum.TypeAlignAttitude) NPCEntity.alignmentAttitude;
+                    this.AlignmentMorality = (Enum.TypeAlignMorality) NPCEntity.alignmentMorality;
+                    this.TypeCreature = (Enum.TypeCreature) NPCEntity.typecreature;
+                    this.Tag = NPCEntity.tag;
+                    this.ArmorClass = Mapper.Map<Armor>(NPCEntity.Armor);
+                    this.HitPoint = Mapper.Map<HitPoint>(NPCEntity.HitPoint);
+                    this.Challenge = Mapper.Map<Challenge>(NPCEntity.Challenge);
+                    this.Telepathy = NPCEntity.telepathy;
+
+                    foreach (var s in NPCEntity.NPC_Speed)
+                    {
+                        this.Speeds.Add(Mapper.Map<Speed>(s.Speed));
+                    }
+
+                    foreach (var AS in NPCEntity.NPC_AbilityScore)
+                    {
+                        this.AbilitiesScores.Add(Mapper.Map<AbilityScore>(AS.AbilityScore));
+                    }
+
+                    foreach (var s in NPCEntity.NPC_SavingThrow)
+                    {
+                        this.SavingThrows.Add(Mapper.Map<SavingThrow>(s.SavingThrow));
+                    }
+
+                    foreach (var s in NPCEntity.NPC_Skill)
+                    {
+                        this.Skills.Add(Mapper.Map<Skill>(s.Skill));
+                    }
+
+                    foreach (var s in NPCEntity.NPC_Damage)
+                    {
+                        if((Enum._Damage) s.Damage.damage1 == Enum._Damage.Vul)
+                            this.Vulnerabilities.Add(Mapper.Map<Damage>(s.Damage));
+                        if ((Enum._Damage)s.Damage.damage1 == Enum._Damage.Res)
+                            this.Resistances.Add(Mapper.Map<Damage>(s.Damage));
+                        if ((Enum._Damage)s.Damage.damage1 == Enum._Damage.Imm)
+                            this.ImmunitiesDamage.Add(Mapper.Map<Damage>(s.Damage));
+
+                    }
+
+                    foreach (var s in NPCEntity.NPC_Condition)
+                    {
+                        this.ImmunitiesCondition.Add(Mapper.Map<Condition>(s.Condition));
+                    }
+
+                    foreach (var s in NPCEntity.NPC_Sense)
+                    {
+                        this.Senses.Add(Mapper.Map<Sense>(s.Sense));
+                    }
+
+                    foreach (var s in NPCEntity.NPC_Language)
+                    {
+                        if ((Enum._Language)s.Language.typeLanguage == Enum._Language.speak)
+                            this.LanguagesSpeak.Add(Mapper.Map<Language>(s.Language));
+                        if ((Enum._Language)s.Language.typeLanguage == Enum._Language.understand)
+                            this.LanguagesUndersatand.Add(Mapper.Map<Language>(s.Language));
+                    }
+
+                    foreach (var s in NPCEntity.NPC_SavingThrow)
+                    {
+                        this.SavingThrows.Add(Mapper.Map<SavingThrow>(s.SavingThrow));
+                    }
+
+                    foreach (var s in NPCEntity.NPC_Action)
+                    {
+                        if ((Enum._Action)s.Action.Actiontype == Enum._Action.Action)
+                            this.Actions.Add(Mapper.Map<Action>(s.Action));
+                        if ((Enum._Action)s.Action.Actiontype == Enum._Action.reaction)
+                            this.Reactions.Add(Mapper.Map<Action>(s.Action));
+                        if ((Enum._Action)s.Action.Actiontype == Enum._Action.laction)
+                            this.LegendaryActions.Add(Mapper.Map<Action>(s.Action));
+                    }
+
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
 
 
     }
