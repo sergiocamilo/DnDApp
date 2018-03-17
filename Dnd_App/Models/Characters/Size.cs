@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using Dnd_App.Models.Enum;
+using AutoMapper;
 
 namespace Dnd_App.Models.Characters
 {
@@ -18,5 +19,11 @@ namespace Dnd_App.Models.Characters
         //public TypeHitDie TypeHitDie { set; get; }
 
         public Size(){}
+
+        public Entitites.Size ToEntity()
+        {
+            return Mapper.Map<Models.Characters.Size, Entitites.Size>(this);
+        }
+
     }
 }

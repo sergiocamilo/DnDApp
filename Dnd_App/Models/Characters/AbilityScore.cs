@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -25,6 +26,11 @@ namespace Dnd_App.Models.Characters
 
         public AbilityScore()
         {
+        }
+
+        public Entitites.AbilityScore ToEntity()
+        {
+            return Mapper.Map<Entitites.AbilityScore>(this);
         }
     }
 }

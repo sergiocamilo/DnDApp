@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using Dnd_App.Models.Enum;
+using AutoMapper;
 
 namespace Dnd_App.Models.Characters
 {
@@ -39,5 +40,11 @@ namespace Dnd_App.Models.Characters
         public TypeDamage TypeDamage { set; get; }
 
         public String Description { set; get; }
+
+
+        public Entitites.Action ToEntity()
+        {
+            return Mapper.Map<Entitites.Action>(this);
+        }
     }
 }

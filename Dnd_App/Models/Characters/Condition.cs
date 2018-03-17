@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using Dnd_App.Models.Enum;
+using AutoMapper;
 
 namespace Dnd_App.Models.Characters
 {
@@ -32,6 +33,11 @@ namespace Dnd_App.Models.Characters
                 return 0;
             }
             return obj.TypeCondition.GetHashCode();
+        }
+
+        public Entitites.Condition ToEntity()
+        {
+            return Mapper.Map<Entitites.Condition>(this);
         }
     }
 }

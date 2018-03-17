@@ -18,6 +18,9 @@ namespace Dnd_App.Controllers
         [HttpGet]
         public ActionResult _AllNPC()
         {
+            var NPC = new Models.Characters.NPC();
+            NPC.Select();
+            Utils.TemporalDB.Instance.InsertNPC(NPC);
             return PartialView();
         }
 

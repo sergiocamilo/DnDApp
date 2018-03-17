@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -14,5 +15,11 @@ namespace Dnd_App.Models.Characters
         public int Id { set; get; }
         public String Name { set; get; }
         public String Description { set; get; }
+
+
+        public Entitites.SpecialTrait ToEntity()
+        {
+            return Mapper.Map<Entitites.SpecialTrait>(this);
+        }
     }
 }

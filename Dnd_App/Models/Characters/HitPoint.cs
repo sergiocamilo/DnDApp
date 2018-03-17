@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using Dnd_App.Models.Enum;
+using AutoMapper;
 
 namespace Dnd_App.Models.Characters
 {
@@ -32,5 +33,13 @@ namespace Dnd_App.Models.Characters
             this.HitPointsAVG = ((int)dieTypedie) + BonusMultiplied;
 
         }
+
+
+        public Entitites.HitPoint ToEntity()
+        {
+            return Mapper.Map<Entitites.HitPoint>(this);
+        }
+
+
     }
 }

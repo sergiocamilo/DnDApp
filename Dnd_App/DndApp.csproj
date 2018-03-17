@@ -46,6 +46,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.2.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.2.2\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="BCrypt.Net-Next, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\BCrypt.Net-Next.2.1.2\lib\net452\BCrypt.Net-Next.dll</HintPath>
     </Reference>
@@ -167,6 +170,24 @@
     <Compile Include="Controllers\NPCController.cs" />
     <Compile Include="Controllers\PCController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Entitites\AbilityScore.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\Action.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\Armor.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\Challenge.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\Condition.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\Damage.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entitites\Dnd_APPModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -181,6 +202,63 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Dnd_APPModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\HitPoint.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\Language.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\NPC.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\NPC_AbilityScore.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\NPC_Action.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\NPC_Condition.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\NPC_Damage.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\NPC_Language.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\NPC_SavingThrow.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\NPC_Sense.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\NPC_Skill.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\NPC_SpecialTrait.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\NPC_Speed.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\SavingThrow.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\Sense.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\Size.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\Skill.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\SpecialTrait.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\Speed.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entitites\User.cs">
       <DependentUpon>Dnd_APPModel.tt</DependentUpon>
@@ -224,9 +302,13 @@
     <Compile Include="Models\Enum\TypeSense.cs" />
     <Compile Include="Models\Enum\TypeSize.cs" />
     <Compile Include="Models\Enum\TypeSpeed.cs" />
+    <Compile Include="Models\Enum\_Action.cs" />
     <Compile Include="Models\Enum\_Class.cs" />
+    <Compile Include="Models\Enum\_Damage.cs" />
+    <Compile Include="Models\Enum\_Language.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="App_Start\AutoMapperConfiguration.cs" />
     <Compile Include="Utils\FilterCombat.cs" />
     <Compile Include="Utils\Helpers.cs" />
     <Compile Include="Utils\Presets.cs" />

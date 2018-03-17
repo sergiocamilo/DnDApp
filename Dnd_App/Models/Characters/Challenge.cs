@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -104,6 +105,10 @@ namespace Dnd_App.Models.Characters
         }
 
 
+        public Entitites.Challenge ToEntity()
+        {
+            return Mapper.Map<Entitites.Challenge>(this);
+        }
 
     }
 }

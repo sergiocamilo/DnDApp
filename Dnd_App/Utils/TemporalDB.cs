@@ -62,7 +62,7 @@ namespace Dnd_App.Utils
 
             NPC DEVA = new NPC();
 
-            DEVA.Name = "DEVA";
+            DEVA.Name = "DEVA test";
             DEVA.Tag = "";
             DEVA.Size = new Size() { TypeSize = TypeSize.Medium, Space = 10 };
             DEVA.TypeCreature = TypeCreature.Celestial;
@@ -182,6 +182,9 @@ namespace Dnd_App.Utils
 
             DEVA.LegendaryActions = new List<Models.Characters.Action>();
             DEVA.Reactions = new List<Models.Characters.Action>();
+
+            DEVA.Create();
+
 
             return DEVA;
 

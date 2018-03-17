@@ -20,7 +20,7 @@ namespace Dnd_App.Models
         public string Token { get; set; }
 
         //Colections
-        public Dictionary<int, NPC> Npcs { get; set; }
+        public Dictionary<int, Models.Characters.NPC> Npcs { get; set; }
         public Dictionary<int, PC> PCs { get; set; }
 
         public Boolean LogIn(String UserNameIn, String PassIn)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -35,6 +36,11 @@ namespace Dnd_App.Models.Characters
                 return 0;
             }
             return obj.ModName.GetHashCode();
+        }
+
+        public Entitites.SavingThrow ToEntity()
+        {
+            return Mapper.Map<Entitites.SavingThrow>(this);
         }
     }
 }
