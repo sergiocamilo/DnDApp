@@ -369,6 +369,8 @@ namespace Dnd_App.Models.Characters
                     DB.NPC.Add(NPCEntity);
                     DB.SaveChanges();
 
+                    this.Id = NPCEntity.id;
+
                     return true;
                 }
             }
@@ -471,6 +473,162 @@ namespace Dnd_App.Models.Characters
             }
         }
 
+        public int Update()
+        {
+            #region Bug
+            //try
+            //{
+            //    using (var DB = new DnDAppDBEntities())
+            //    {
 
+            //        var NPCEntityOld = DB.NPC.Where(npc => npc.id == this.Id).First();
+            //        DB.NPC.Remove(NPCEntityOld);
+            //        var x = DB.SaveChanges();
+            //        var NPCEntity = new Entitites.NPC()
+            //        {
+            //            id = Id,
+            //            name = Name,
+            //            Size = Size.ToEntity(),
+            //            typecreature = (int)TypeCreature,
+            //            tag = Tag,
+            //            alignmentAttitude = (int)AlignmentAttitude,
+            //            alignmentMorality = (int)AlignmentMorality,
+            //            Armor = ArmorClass.ToEntity(),
+            //            HitPoint = HitPoint.ToEntity(),
+            //            telepathy = Telepathy,
+            //            Challenge = Challenge.ToEntity()
+            //        };
+
+            //        foreach (var s in this.Speeds)
+            //        {
+            //            DB.NPC_Speed.Add(new NPC_Speed() { NPC = NPCEntity, Speed = s.ToEntity() });
+            //        }
+
+            //        foreach (var AS in this.AbilitiesScores)
+            //        {
+            //            DB.NPC_AbilityScore.Add(new NPC_AbilityScore() { NPC = NPCEntity, AbilityScore = AS.ToEntity() });
+            //        }
+
+            //        foreach (var s in this.SavingThrows)
+            //        {
+            //            DB.NPC_SavingThrow.Add(new NPC_SavingThrow() { NPC = NPCEntity, SavingThrow = s.ToEntity() });
+            //        }
+
+            //        foreach (var s in this.Skills)
+            //        {
+            //            DB.NPC_Skill.Add(new NPC_Skill() { NPC = NPCEntity, Skill = s.ToEntity() });
+            //        }
+
+            //        foreach (var s in this.Vulnerabilities)
+            //        {
+            //            var v = s.ToEntity();
+            //            v.damage1 = (int)Enum._Damage.Vul;
+            //            DB.NPC_Damage.Add(new NPC_Damage() { NPC = NPCEntity, Damage = v });
+            //        }
+
+            //        foreach (var s in this.Resistances)
+            //        {
+            //            var v = s.ToEntity();
+            //            v.damage1 = (int)Enum._Damage.Res;
+            //            DB.NPC_Damage.Add(new NPC_Damage() { NPC = NPCEntity, Damage = v });
+            //        }
+
+            //        foreach (var s in this.ImmunitiesDamage)
+            //        {
+            //            var v = s.ToEntity();
+            //            v.damage1 = (int)Enum._Damage.Imm;
+            //            DB.NPC_Damage.Add(new NPC_Damage() { NPC = NPCEntity, Damage = v });
+            //        }
+
+            //        foreach (var s in this.ImmunitiesCondition)
+            //        {
+            //            var v = s.ToEntity();
+            //            DB.NPC_Condition.Add(new NPC_Condition() { NPC = NPCEntity, Condition = v });
+            //        }
+
+            //        foreach (var s in this.Senses)
+            //        {
+            //            DB.NPC_Sense.Add(new NPC_Sense() { NPC = NPCEntity, Sense = s.ToEntity() });
+            //        }
+
+            //        foreach (var s in this.LanguagesSpeak)
+            //        {
+            //            var v = s.ToEntity();
+            //            v.typeLanguage = (int)Enum._Language.speak;
+            //            DB.NPC_Language.Add(new NPC_Language() { NPC = NPCEntity, Language = v });
+            //        }
+
+            //        foreach (var s in this.LanguagesUndersatand)
+            //        {
+            //            var v = s.ToEntity();
+            //            v.typeLanguage = (int)Enum._Language.understand;
+            //            DB.NPC_Language.Add(new NPC_Language() { NPC = NPCEntity, Language = v });
+            //        }
+
+            //        foreach (var s in this.SpecialTraits)
+            //        {
+            //            DB.NPC_SpecialTrait.Add(new NPC_SpecialTrait() { NPC = NPCEntity, SpecialTrait = s.ToEntity() });
+            //        }
+
+            //        foreach (var s in this.Actions)
+            //        {
+            //            var v = s.ToEntity();
+            //            v.Actiontype = (int)Enum._Action.Action;
+            //            DB.NPC_Action.Add(new NPC_Action() { NPC = NPCEntity, Action = v });
+            //        }
+
+            //        foreach (var s in this.Reactions)
+            //        {
+            //            var v = s.ToEntity();
+            //            v.Actiontype = (int)Enum._Action.reaction;
+            //            DB.NPC_Action.Add(new NPC_Action() { NPC = NPCEntity, Action = v });
+            //        }
+
+            //        foreach (var s in this.LegendaryActions)
+            //        {
+            //            var v = s.ToEntity();
+            //            v.Actiontype = (int)Enum._Action.laction;
+            //            DB.NPC_Action.Add(new NPC_Action() { NPC = NPCEntity, Action = v });
+            //        }
+
+
+            //        DB.NPC.Add(NPCEntity);
+            //        x = DB.SaveChanges();
+
+
+
+            //        return true;
+            //    }
+            //}
+            //catch (Exception e)
+            //{
+            //    return false;
+            //}
+            #endregion
+            this.Delete();
+            this.Id = 0;
+            this.Create();
+            return this.Id;
+            //Actualizar referencias
+
+        }
+
+        public Boolean Delete()
+        {
+            try
+            {
+                using (var DB = new DnDAppDBEntities())
+                {
+                    var NPCEntityOld = DB.NPC.Where(npc => npc.id == this.Id).First();
+                    DB.NPC.Remove(NPCEntityOld);
+                    DB.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

@@ -84,6 +84,44 @@ namespace Dnd_App.Utils
         }
 
 
+        public NPC initVoidNPC()
+        {
+
+            NPC Empty = new NPC();
+
+            Empty.Name = "";
+            Empty.Tag = "";
+            Empty.Size = new Size();
+            Empty.TypeCreature = TypeCreature.Aberration;
+            Empty.AlignmentMorality = TypeAlignMorality.none;
+            Empty.AlignmentAttitude = TypeAlignAttitude.none;
+            Empty.ArmorClass = new Armor();
+            Empty.HitPoint = new HitPoint();
+            Empty.Speeds = new List<Speed>();
+            Empty.AbilitiesScores = new List<AbilityScore>();
+            Empty.SavingThrows = new List<SavingThrow>();
+            Empty.Skills = new List<Skill>();
+            Empty.Vulnerabilities = new List<Damage>();
+            Empty.ImmunitiesDamage = new List<Damage>();
+            Empty.Resistances = new List<Damage>();
+            Empty.ImmunitiesCondition = new List<Condition>();
+            Empty.Senses = new List<Sense>();
+            Empty.LanguagesSpeak = new List<Language>();
+            Empty.LanguagesSpeak.Add(new Language());
+            Empty.LanguagesUndersatand = new List<Language>();
+            Empty.LanguagesUndersatand.Add(new Language());
+            Empty.Telepathy = 0;
+            Empty.Challenge = new Challenge();
+            Empty.SpecialTraits = new List<SpecialTrait>();
+            Empty.Actions = new List<Models.Characters.Action>();
+            Empty.LegendaryActions = new List<Models.Characters.Action>();
+            Empty.Reactions = new List<Models.Characters.Action>();
+
+            return Empty;
+        }
+        
+
+
         #region PC templates
 
         public PC GenerateEmptyPC()

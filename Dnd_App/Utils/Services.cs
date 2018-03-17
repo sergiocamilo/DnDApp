@@ -26,8 +26,8 @@ namespace Dnd_App.Utils
 
             MailMessage mm = new MailMessage(EMAIL,
                 Email,
-                "Your token is:",
-                "Token: "+Token
+                "Your token is:" + Token,
+                "Go to: /Validate"
                 );
             mm.BodyEncoding = UTF8Encoding.UTF8;
             mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;

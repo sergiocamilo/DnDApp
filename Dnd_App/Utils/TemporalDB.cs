@@ -183,12 +183,7 @@ namespace Dnd_App.Utils
             DEVA.LegendaryActions = new List<Models.Characters.Action>();
             DEVA.Reactions = new List<Models.Characters.Action>();
 
-            DEVA.Create();
-
-
             return DEVA;
-
-
         }
 
         public void InsertNPC(NPC NewNPC)

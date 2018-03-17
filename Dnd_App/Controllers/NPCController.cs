@@ -28,7 +28,6 @@ namespace Dnd_App.Controllers
             Utils.Presets Preset = new Utils.Presets();
             var NPC = Preset.GenerateEmptyNPC();
             Utils.TemporalDB.Instance.InsertNPC(NPC);
-
             return View(NPC);
         }
 
