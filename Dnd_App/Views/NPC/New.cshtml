@@ -27,6 +27,51 @@
 
 @section scripts{
 
+
+      <script>
+
+          function Back() {
+
+                var Ok = confirm('Are you sure you want to leave?');
+                if (Ok) {
+                    window.location.href = '@Url.Action("Panel", "User")';
+                }
+         }
+
+
+
+    </script>
+
+    <script>
+        function Save() {
+
+            var Ok = confirm('Are you sure want to save the changes?');
+            if (Ok) {
+
+                $.ajax({
+                type: "POST",
+                cache: false,
+                dataType: "html",
+                data: JSON.stringify({ 'TempID': @Model.TempID }),
+                url: "@Url.Action("Save","NPC")",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    window.location.href = '@Url.Action("Panel", "User")';
+                    },
+                failure: function (errMsg) {
+
+                    }
+                });
+
+            }
+         }
+    </script>
+            
+
+
+
+
+
     <script>
         function UpdateToast(data) {
             console.log(data);

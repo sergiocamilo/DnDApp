@@ -47,7 +47,7 @@ namespace Dnd_App.Controllers
         }
 
 
-        [HttpGet]
+        [HttpPost]
         public ActionResult Save(long TempID)
         {
             var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
@@ -56,7 +56,7 @@ namespace Dnd_App.Controllers
             U.AddNPC(Npc.Id);
             Utils.TemporalDB.Instance.RemoveNPC(TempID);
 
-            return RedirectToAction("Panel","User");
+            return View("Panel","User");
         }
 
         [HttpGet]
