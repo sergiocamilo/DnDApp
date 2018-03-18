@@ -609,6 +609,7 @@ namespace Dnd_App.Models.Characters
             this.Id = 0;
             this.Create();
             return this.Id;
+
             //Actualizar referencias
 
         }

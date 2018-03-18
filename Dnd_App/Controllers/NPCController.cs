@@ -52,14 +52,35 @@ namespace Dnd_App.Controllers
         {
             var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
             var U = Dnd_App.Utils.Session.CurrentSession();
-            Npc.Create();
-            U.AddNPC(Npc.Id);
+            
+
+            if (Npc.Id == 0)//new npc
+            {
+                Npc.Create();
+                U.AddNPC(Npc.Id);
+            }
+            else
+            {
+                var newid = Npc.Update();
+                U.AddNPC(newid);
+            }
             Utils.TemporalDB.Instance.RemoveNPC(TempID);
 
             return Json(new
             {
                 message = "Succesful"
             });
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            Utils.Presets Preset = new Utils.Presets();
+            var NPC = Preset.initVoidNPC();
+            NPC.Id = (int)id;
+            NPC.Select();
+            Utils.TemporalDB.Instance.InsertNPC(NPC);
+            return View("New",NPC);
         }
 
         [HttpGet]

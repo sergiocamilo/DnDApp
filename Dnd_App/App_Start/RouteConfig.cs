@@ -13,30 +13,42 @@ namespace Dnd_App
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            
+
             routes.MapRoute(
                 name: "Panel",
-                url: "Panel",
-                defaults: new { controller = "User", action = "Panel"}
+                url: "panel",
+                defaults: new { controller = "User", action = "Panel" }
             );
-            
+
             routes.MapRoute(
                 name: "Login",
-                url: "Login",
+                url: "login",
                 defaults: new { controller = "User", action = "Login" }
             );
 
             routes.MapRoute(
                 name: "Register",
-                url: "Register",
+                url: "register",
                 defaults: new { controller = "User", action = "Register" }
             );
 
             routes.MapRoute(
                name: "Validate",
-               url: "Validate",
+               url: "validate",
                defaults: new { controller = "User", action = "Validate" }
            );
+
+            routes.MapRoute(
+                name: "NewNPC",
+                url: "newNPC",
+                defaults: new { controller = "NPC", action = "New"}
+            );
+
+            routes.MapRoute(
+                name: "NewPC",
+                url: "newPC",
+                defaults: new { controller = "PC", action = "New" }
+            );
 
             routes.MapRoute(
                 name: "Default",
