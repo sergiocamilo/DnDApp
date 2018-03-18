@@ -1,6 +1,14 @@
-﻿<div class="card-panel">
+﻿@{
+    
+    var U = Dnd_App.Utils.Session.CurrentSession();
+    U.Npcs = new List<Dnd_App.Models.Characters.NPC>();
+    U.LoadNPCs();
+}
+
+
+<div class="card-panel">
     <div class="row">
-        @foreach (var item in Dnd_App.Utils.TemporalDB.Instance.NPCInstances)
+        @foreach (var item in U.Npcs)
         {
             <div class="col m12">
                 <!-- Basic Card -->
@@ -8,25 +16,25 @@
                     <div id="charcard-content" class="card-content white-text">
                         <div class="row">
                             <div class="col s12">
-                                <h5>@item.Value.Name</h5>
+                                <h5>@item.Name</h5>
                             </div>
 
                         </div>
                         <hr />
                         <div class="row">
                             <div class="col s4">
-                                Armor Class: @item.Value.ArmorClass.Total
+                                Armor Class: @item.ArmorClass.Total
                             </div>
                             <div class="col s4">
-                                Hit Points: @item.Value.HitPoint.HitPointsAVG
+                                Hit Points: @item.HitPoint.HitPointsAVG
                             </div>
                             <div class="col s4">
-                                Initiative: @Model.CalculateInitiativeNPC(item.Value)
+                                Initiative: @Model.CalculateInitiativeNPC(item)
                             </div>
                         </div>
                         <hr />
                         <div class="row">
-                            @foreach (var ascore in item.Value.AbilitiesScores)
+                            @foreach (var ascore in item.AbilitiesScores)
                             {
                                 <div class="col s4">
                                     @if (@ascore.ModValue >= 0)

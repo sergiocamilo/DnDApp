@@ -9,31 +9,30 @@
     <link type="text/css" rel="stylesheet" href="~/Content/tingle.css" media="screen,projection" />
 }
 
+<div class="preloader-background">
+    <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div>
+            <div class="gap-patch">
+                <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @Html.Partial("_sidenav")
+
+
+
 
 <main>
     
     <div id="_CurrentView">
-        <div class="row">
-            <div class="col s2 l2 offset-l5">
-                <br />
-                <br />
-                <br />
-                <br />
-                <div class="preloader-wrapper big active center-align">
-                    <div class="spinner-layer spinner-blue-only">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div><div class="gap-patch">
-                            <div class="circle"></div>
-                        </div><div class="circle-clipper right">
-                            <div class="circle"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
     </div>
 </main>
 
@@ -41,6 +40,24 @@
 
 
 @section scripts{
+    
+    <script src="~/Scripts/tingle.js"></script>
+
+    <script>
+        function preloaderin() {
+            $('.preloader-background').fadeIn('fast');
+            $('.preloader-wrapper').fadeIn('fast');
+        }
+    </script>
+
+<script>
+        function preloaderout() {
+            $('.preloader-background').fadeOut('fast');
+            $('.preloader-wrapper').fadeOut();
+        }
+</script>
+
+
     <script>
         $(document).ready(
             function init() {
@@ -50,8 +67,9 @@
     </script>
 
     <script>
+        preloader();
         function LoadDashboard() {
-
+            preloaderin();
             $.ajax({
                 type: "GET",
                 cache: false,
@@ -62,6 +80,7 @@
                 {
                     var _CurrentView = $("#_CurrentView");
                     _CurrentView.html(data);
+                    preloaderout();
                 },
                 failure: function (errMsg) {
                     alert(errMsg);
@@ -72,7 +91,7 @@
 
     <script>
         function LoadNPCs() {
-
+            preloaderin();
             $.ajax({
                 type: "GET",
                 cache: false,
@@ -83,6 +102,7 @@
                 {
                     var _CurrentView = $("#_CurrentView");
                     _CurrentView.html(data);
+                    preloaderout();
                 },
                 failure: function (errMsg) {
                     alert(errMsg);
@@ -93,7 +113,7 @@
 
     <script>
             function LoadPCs() {
-
+                preloaderin();
                 $.ajax({
                     type: "GET",
                     cache: false,
@@ -104,6 +124,7 @@
                     {
                         var _CurrentView = $("#_CurrentView");
                         _CurrentView.html(data);
+                        preloaderout();
                     },
                     failure: function (errMsg) {
                         alert(errMsg);
@@ -113,8 +134,9 @@
     </script>
 
     <script>
+            
             function LoadCombats() {
-
+                preloaderin();
                 $.ajax({
                     type: "GET",
                     cache: false,
@@ -125,6 +147,7 @@
                     {
                         var _CurrentView = $("#_CurrentView");
                         _CurrentView.html(data);
+                        preloaderout();
                     },
                     failure: function (errMsg) {
                         alert(errMsg);
@@ -132,15 +155,6 @@
                 });
             }
     </script>
-
-
-
-
-
-
-
-
-    <script src="~/Scripts/tingle.js"></script>
 
     <script>
 
