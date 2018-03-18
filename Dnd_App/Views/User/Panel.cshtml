@@ -160,7 +160,7 @@
                 // here's goes some logic
                 // e.g. save content before closing the modal
                 return true; // close the modal
-                return false; // nothing happens
+                
             }
         });
     </script>
@@ -189,6 +189,50 @@
             });
         }
     </script>
+
+    <script>
+        function DeleteNPC(id) {
+            $.confirm({
+                title: 'Are you sure?',
+               // content: 'NPC: ',
+                type: 'black',
+                buttons: {
+                    ok: {
+                        text: "ok!",
+                        btnClass: 'btn',
+                        keys: ['enter'],
+                        action: function () {
+                            $.ajax({
+                                type: "POST",
+                                cache: false,
+                                data: JSON.stringify({ 'id': id }),
+                                url: '@Url.Action("Delete", "NPC")',
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                success: function ()
+                                {
+                                    LoadNPCs();
+                                    $.alert({
+                                        title: 'Success!',
+                                        content: 'the NPC was eliminated!',
+                                    });
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error ?")
+                                    alert(errMsg);
+                                }
+                            });
+                        }
+                    },
+                    cancel: function () {
+                        console.log('the user clicked cancel');
+                    }
+                }
+            });
+        }
+
+    </script>
+
 
 }
 

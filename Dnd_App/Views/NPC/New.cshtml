@@ -32,11 +32,26 @@
 
           function Back() {
 
-                var Ok = confirm('Are you sure you want to leave?');
-                if (Ok) {
-                    window.location.href = '@Url.Action("Panel", "User")';
-                }
-         }
+
+                $.confirm({
+                    title: 'Are you sure you want to leave?',
+                    type: 'black',
+                    buttons: {
+                        ok: {
+                            text: "ok!",
+                            btnClass: 'btn',
+                            keys: ['enter'],
+                            action: function () {
+                                window.location.href = '@Url.Action("Panel", "User")';
+                                LoadNPCs();
+                            }
+                        },
+                        cancel: function () {
+                            console.log('the user clicked cancel');
+                        }
+                    }
+                });
+          }
 
 
 
@@ -45,31 +60,43 @@
     <script>
         function Save() {
 
-            var Ok = confirm('Are you sure want to save the changes?');
-            if (Ok) {
+             $.confirm({
+                 title: 'Are you sure want to save the changes?',
+                type: 'black',
+                buttons: {
+                    ok: {
+                        text: "ok!",
+                        btnClass: 'btn',
+                        keys: ['enter'],
+                        action: function () {
+                            $.ajax({
+                                type: "POST",
+                                cache: false,
+                                dataType: "html",
+                                data: JSON.stringify({ 'TempID': @Model.TempID }),
+                                url: "@Url.Action("Save","NPC")",
+                                contentType: "application/json; charset=utf-8",
+                                success: function (data) {
+                                    Materialize.toast('Success!');
+                                    window.location.href = '@Url.Action("Panel", "User")';
+                                },
+                                failure: function (errMsg) {
 
-                $.ajax({
-                type: "POST",
-                cache: false,
-                dataType: "html",
-                data: JSON.stringify({ 'TempID': @Model.TempID }),
-                url: "@Url.Action("Save","NPC")",
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    window.location.href = '@Url.Action("Panel", "User")';
+                                }
+                            });
+                        }
                     },
-                failure: function (errMsg) {
-
+                    cancel: function () {
+                        console.log('the user clicked cancel');
                     }
-                });
+                }
+            });
 
-            }
+
+
          }
     </script>
             
-
-
-
 
 
     <script>
@@ -149,6 +176,6 @@
     </script>
 
 
-
+   
 
 }

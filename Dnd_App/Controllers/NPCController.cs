@@ -56,7 +56,10 @@ namespace Dnd_App.Controllers
             U.AddNPC(Npc.Id);
             Utils.TemporalDB.Instance.RemoveNPC(TempID);
 
-            return View("Panel","User");
+            return Json(new
+            {
+                message = "Succesful"
+            });
         }
 
         [HttpGet]
@@ -68,7 +71,16 @@ namespace Dnd_App.Controllers
             NPC.Select();
             return PartialView("_View",NPC);
         }
-        
+
+        [HttpPost]
+        public void Delete(long id)
+        {
+            Utils.Presets Preset = new Utils.Presets();
+            var NPC = Preset.initVoidNPC();
+            NPC.Id = (int)id;
+            NPC.Delete();
+        }
+
 
         #region Callbacks --> Basic Info
 
