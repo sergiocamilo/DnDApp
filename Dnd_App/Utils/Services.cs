@@ -12,6 +12,7 @@ namespace Dnd_App.Utils
     {
         public static String EMAIL = ConfigurationManager.AppSettings["email"].ToString();
         public static String PASS = ConfigurationManager.AppSettings["passwordemail"].ToString();
+        public static String DOMAIN = ConfigurationManager.AppSettings["domainname"].ToString();
 
         public static void SendTokenEmail(String Email, String Token)
         {
@@ -27,7 +28,7 @@ namespace Dnd_App.Utils
             MailMessage mm = new MailMessage(EMAIL,
                 Email,
                 "Your token is:" + Token,
-                "Go to: /Validate"
+                "Go to: "+ DOMAIN +"/validate"
                 );
             mm.BodyEncoding = UTF8Encoding.UTF8;
             mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
