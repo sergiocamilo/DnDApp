@@ -289,11 +289,13 @@
     <Compile Include="Models\Combat\Combat.cs" />
     <Compile Include="Models\Combat\NPCCombat.cs" />
     <Compile Include="Models\Combat\PCCombat.cs" />
+    <Compile Include="Models\Combat\UserCombat.cs" />
     <Compile Include="Models\Enum\ArmorName.cs" />
     <Compile Include="Models\Enum\Background.cs" />
     <Compile Include="Models\Enum\LanguageName.cs" />
     <Compile Include="Models\Enum\Race.cs" />
     <Compile Include="Models\Enum\Role.cs" />
+    <Compile Include="Models\Enum\RoleCombat.cs" />
     <Compile Include="Models\Enum\SkillName.cs" />
     <Compile Include="Models\Enum\TypeAction.cs" />
     <Compile Include="Models\Enum\TypeAlignAttitude.cs" />

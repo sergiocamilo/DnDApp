@@ -26,6 +26,8 @@ namespace Dnd_App.Controllers
             Utils.Presets Preset = new Utils.Presets();
             var Combat = Preset.GenerateEmptyCombat();
             Utils.TemporalDB.Instance.InsertCombat(Combat);
+            var U = Dnd_App.Utils.Session.CurrentSession();
+            Combat.DM = new Models.Combat.UserCombat() { User = U, RoleCombat= Models.Enum.RoleCombat.DM };
 
             return View(Combat);
         }
@@ -50,6 +52,35 @@ namespace Dnd_App.Controllers
             var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
             return PartialView(Combat);
         }
+
+
+
+
+        #region Callbacks --> Basic Info
+
+        [HttpPost]
+        public ActionResult _UpdateName(String newName, long TempID)
+        {
+            var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
+            var LastValue = Combat.Name;
+            Combat.Name = newName;
+
+            return Json(new { nameValue = "Name", lastValue = LastValue, newValue = newName });
+        }
+
+
+        [HttpPost]
+        public ActionResult _AddParticipant(List<String> list, int TempID)
+        {
+
+            var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
+            Combat.AddUserCombat(list);
+
+
+            return Json(new { nameValue = "Success" });
+        }
+
+        #endregion
 
 
 

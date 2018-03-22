@@ -570,8 +570,10 @@ namespace Dnd_App.Utils
         public Combat GenerateEmptyCombat()
         {
             var Empty = new Combat();
+            Empty.Name = "Name combat";
             Empty.NPCs = new List<NPCCombat>();
             Empty.PCs = new List<PCCombat>();
+            Empty.Participants = new List<UserCombat>();
             return Empty;
         }
 

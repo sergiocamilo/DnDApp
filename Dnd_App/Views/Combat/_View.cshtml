@@ -6,7 +6,11 @@
             <h3>@Model.Name</h3>
         </div>
         <div class="col s12">
-            <div class="chip">Dungeon Master: Jane Doe</div>
+            <div class="chip">Dungeon Master: @Model.DM.User.UserName</div>
+            @for (int i = 0; i < Model.Participants.Count; i++)
+            {
+                <div class="chip">Player: @Model.Participants[i].User.UserName</div>
+            }
         </div>
     </div>
     <div class="row">

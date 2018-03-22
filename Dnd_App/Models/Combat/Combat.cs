@@ -15,9 +15,11 @@ namespace Dnd_App.Models.Combat
         public long TempID { set; get; }
         public String Name { set; get; }
 
+        public UserCombat DM { set; get; }
+
+        public List<UserCombat> Participants { set; get; }
         public List<PCCombat> PCs { set; get; }
         public List<NPCCombat> NPCs { set; get; }
-        public List<User> Participants { set; get; }
 
 
 
@@ -51,6 +53,32 @@ namespace Dnd_App.Models.Combat
             catch (Exception)
             {
                 throw;
+            }
+        }
+
+        public void AddUserCombat(List<String> list)
+        {
+            var NewUserCombat = new List<UserCombat>();
+
+            if (list == null)
+                list = new List<String>();
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                var User = new User();
+                User.UserName = list[i];
+                User.Read();
+                NewUserCombat.Add(new UserCombat() { User = User, RoleCombat = Enum.RoleCombat.Player });
+            }
+
+            if (list.Count <= this.Participants.Count)
+            {
+                this.Participants = this.Participants.Intersect(NewUserCombat, new UserCombat()).ToList();
+            }
+            else
+            {
+                NewUserCombat = NewUserCombat.Except(this.Participants, new UserCombat()).ToList();
+                this.Participants.AddRange(NewUserCombat);
             }
         }
 

@@ -35,10 +35,18 @@
                                 <label for="name">Name</label>
                             </div>
                             <div class="input-field col s12">
-                                <select multiple="multiple" id="speedsMultiple">
+                                <select multiple="multiple" id="participantsMultiple">
                                     @foreach (var u in Dnd_App.Utils.ViewHelpers.AllUsernames())
                                     {
-                                        <option value="@u.UserName">@u.UserName</option>
+                                        if (u.UserName != U.UserName)
+                                        {
+                                            <option value="@u.UserName">@u.UserName</option>
+                                        }
+                                        else
+                                        {
+                                            <option selected disabled value="@u.UserName">@u.UserName</option>
+                                        }
+
                                     }
                                 </select>
                                 <label>Select participants</label>
@@ -67,6 +75,17 @@
 @section scripts{
 
     <script src="~/Scripts/materialize/initform.js"></script>
+
+    <script>
+        function UpdateToast(data) {
+            console.log(data);
+            var json = JSON.parse(data);
+            if (json["lastValue"] == "") {
+                json["lastValue"] = "void";
+            }
+            Materialize.toast('<i class="fa fa-check-circle fa-fw"></i> ' + json["nameValue"] + ': "' + json["lastValue"] + '" was changed to "' + json["newValue"] + '"', 3000);
+        }
+    </script>
 
     <script>
         $(document).ready(
@@ -163,4 +182,80 @@
 
                 }
     </script>
+
+
+    <!--Basic info-->
+    <script>
+           $(document).ready(
+                function updateName() {
+                    $("#Name").focusout(function (event) {
+
+                        var name = $("#Name").val();
+
+                        if (name == "") {
+                            Materialize.toast('<i class="fa fa-exclamation-triangle"></i> Alert: Name can not be empty!', 3000);
+                            name = "Name";
+                            $("#Name").val("Name");
+                        }
+
+                        $.ajax({
+                           type: "POST",
+                           cache: false,
+                            url: "@Url.Action("_UpdateName", "Combat")",
+                            dataType: "html",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify({ 'newName': name, 'tempID': @Model.TempID }),
+                            success: function (data)
+                            {
+                                UpdateToast(data);
+                                reloadCombatView();
+                            },
+                            failure: function (errMsg) {
+
+                                alert(errMsg);
+                            }
+                        });
+
+                    });
+                }
+            );
+    </script>
+
+    <!--selectedParticipants-->
+    <script>
+           $(document).ready(
+               function selectedParticipants() {
+                   $("#participantsMultiple").change(function (event) {
+
+                       var selectedValues = $('#participantsMultiple').val();
+                       console.log("select participants: " + selectedValues);
+                       addParticipants(selectedValues);
+
+                   });
+               }
+           );
+    </script>
+
+<!--addParticipants-->
+    <script>
+           function addParticipants(list) {
+            $.ajax({
+                type: "POST",
+                cache: false,
+                url: "@Url.Action("_AddParticipant")",
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ 'list': list, 'TempID': @Model.TempID }),
+                success: function (data)
+                {
+                    reloadCombatView();
+                },
+                failure: function (errMsg) {
+                    console.log("error ?")
+                    alert(errMsg);
+                }
+            });
+        }
+    </script>
+
 }
