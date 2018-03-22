@@ -6,7 +6,6 @@
 
 @section styles{
     <link href="~/Content/Panel.css" rel="stylesheet" />
-    <link type="text/css" rel="stylesheet" href="~/Content/tingle.css" media="screen,projection" />
 }
 
 <div class="preloader-background">
@@ -41,7 +40,7 @@
 
 @section scripts{
     
-    <script src="~/Scripts/tingle.js"></script>
+    
 
     <script>
         function preloaderin() {
@@ -67,7 +66,6 @@
     </script>
 
     <script>
-        preloader();
         function LoadDashboard() {
             preloaderin();
             $.ajax({
@@ -156,53 +154,7 @@
             }
     </script>
 
-    <script>
-
-        var modal = new tingle.modal({
-            footer: false,
-            stickyFooter: false,
-            closeMethods: ['overlay', 'button', 'escape'],
-            closeLabel: "Close",
-            cssClass: ['custom-class-1', 'custom-class-2'],
-            onOpen: function () {
-                console.log('modal open');
-            },
-            onClose: function () {
-                console.log('modal closed');
-            },
-            beforeClose: function () {
-                // here's goes some logic
-                // e.g. save content before closing the modal
-                return true; // close the modal
-                
-            }
-        });
-    </script>
-
-    <script>
-        function LoadNPCModalView(id) {
-
-            $.ajax({
-                type: "GET",
-                cache: false,
-                data: { 'id': id },
-                url: '@Url.Action("_ViewFromDB", "NPC")',
-                dataType: "html",
-                contentType: "application/json; charset=utf-8",
-                success: function (data)
-                {
-                    modal.setContent(''+data);
-                    modal.open();
-                    //var _CurrentView = $("#_CurrentView");
-                    //_CurrentView.html(data);
-                },
-                failure: function (errMsg) {
-                    console.log("error ?")
-                    alert(errMsg);
-                }
-            });
-        }
-    </script>
+    
 
     <script>
         function DeleteNPC(id) {

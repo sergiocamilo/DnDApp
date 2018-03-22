@@ -9,6 +9,8 @@
     <link type="text/css" rel="stylesheet" href="~/Content/materialize.min.css" media="screen,projection" />
     <link href="~/Content/Gradients.css" rel="stylesheet" />
     <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="~/Content/tingle.css" media="screen,projection" />
+
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
     @Styles.Render("~/Content/css")
     @RenderSection("styles", required: false)
@@ -20,6 +22,56 @@
     <script src="~/Scripts/materialize/materialize.min.js"></script>
     <script src="~/Scripts/app.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+    <script src="~/Scripts/tingle.js"></script>
     @RenderSection("scripts", required: false)
+
+    <script>
+
+        var modal = new tingle.modal({
+            footer: false,
+            stickyFooter: false,
+            closeMethods: ['overlay', 'button', 'escape'],
+            closeLabel: "Close",
+            cssClass: ['custom-class-1', 'custom-class-2'],
+            onOpen: function () {
+                console.log('modal open');
+            },
+            onClose: function () {
+                console.log('modal closed');
+            },
+            beforeClose: function () {
+                // here's goes some logic
+                // e.g. save content before closing the modal
+                return true; // close the modal
+
+            }
+        });
+    </script>
+    <script>
+        function LoadNPCModalView(id) {
+
+            $.ajax({
+                type: "GET",
+                cache: false,
+                data: { 'id': id },
+                url: '@Url.Action("_ViewFromDB", "NPC")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                success: function (data)
+                {
+                    modal.setContent(''+data);
+                    modal.open();
+                    //var _CurrentView = $("#_CurrentView");
+                    //_CurrentView.html(data);
+                },
+                failure: function (errMsg) {
+                    console.log("error ?")
+                    alert(errMsg);
+                }
+            });
+        }
+    </script>
+
+
 </body>
 </html>
