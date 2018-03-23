@@ -276,6 +276,9 @@
                     data: JSON.stringify({ 'IdNPC': id, 'TempID': @Model.TempID }),
                     success: function (data)
                     {
+                        console.log(data);
+                        var json = JSON.parse(data);
+                        Materialize.toast(json["msg"],3000);
                         reloadCombatView();
                     },
                     failure: function (errMsg) {
@@ -298,6 +301,9 @@
                     data: JSON.stringify({ 'TempIDNPC': id, 'TempID': @Model.TempID }),
                     success: function (data)
                     {
+                        console.log(data);
+                        var json = JSON.parse(data);
+                        Materialize.toast(json["msg"], 3000);
                         reloadCombatView();
                     },
                     failure: function (errMsg) {
