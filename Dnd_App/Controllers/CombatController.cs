@@ -38,13 +38,7 @@ namespace Dnd_App.Controllers
             var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
             return PartialView(Combat);
         }
-
-        [HttpGet]
-        public PartialViewResult _AddNPC(long TempID)
-        {
-            var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
-            return PartialView(Combat);
-        }
+        
 
         [HttpGet]
         public PartialViewResult _AddPC(long TempID)
@@ -83,6 +77,41 @@ namespace Dnd_App.Controllers
         #endregion
 
 
+        #region add npc
 
+        [HttpGet]
+        public PartialViewResult _AddNPC(long TempID)
+        {
+            var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
+            return PartialView(Combat);
+        }
+
+        [HttpPost]
+        public ActionResult _AddNPCCombat(int IdNPC, int TempID)
+        {
+            
+            var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
+            Utils.Presets Preset = new Utils.Presets();
+            var NPC = Preset.initVoidNPC();
+            NPC.Id = IdNPC;
+            NPC.Select();
+            Combat.InsertNPC(NPC);
+
+
+            return Json(new { msg = NPC.Name + " added" });
+        }
+
+        [HttpPost]
+        public ActionResult _RemoveNPCCombat(int TempIDNPC, int TempID)
+        {
+
+            var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
+            Combat.RemoveNPC(TempIDNPC);
+
+            return Json(new { msg = "Removed" });
+        }
+
+
+        #endregion
     }
 }

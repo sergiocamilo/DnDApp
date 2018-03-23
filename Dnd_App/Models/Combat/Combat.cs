@@ -20,24 +20,11 @@ namespace Dnd_App.Models.Combat
         public List<UserCombat> Participants { set; get; }
         public List<PCCombat> PCs { set; get; }
         public List<NPCCombat> NPCs { set; get; }
+        public int IndexNPCs { set; get; }
 
 
 
-        public void AddNPC(NPC NPC, long IdUser)
-        {
-            try
-            {
-                this.NPCs.Add(new NPCCombat() {
-                    IdNPC = NPC.Id,
-                    IdUser = IdUser,
-                    Initiative = this.CalculateInitiativeNPC(NPC)
-                });
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+
 
         public void AddPC(PC PC, long IdUser)
         {
@@ -84,7 +71,7 @@ namespace Dnd_App.Models.Combat
 
         public void DeleteNpc(int IdNPC)
         {
-            this.NPCs.RemoveAll(npc => npc.IdNPC == IdNPC);
+            this.NPCs.RemoveAll(npc => npc.TempID == IdNPC);
         }
 
         public void DeletePc(int IdPC)
@@ -102,6 +89,42 @@ namespace Dnd_App.Models.Combat
             return (int)10.5 + PC.abilitiesScores.Find(con => con.ShortName == "Dex").ModValue;
             
         }
+
+
+
+        #region NPC in combat
+
+        public void InsertNPC(NPC NewNPC)
+        {
+            lock (new { })
+            {
+                NPCs.Add(new NPCCombat() {
+                    NPC = NewNPC,
+                    Initiative = CalculateInitiativeNPC(NewNPC),
+                    TempID = IndexNPCs });
+                IndexNPCs++;
+            }
+        }
+
+        public NPCCombat SelectNPC(long TempID)
+        {
+            return NPCs.Where(npc => npc.TempID == TempID).First();
+        }
+
+        public void RemoveNPC(long TempID)
+        {
+            lock (new { })
+            {
+                NPCs.RemoveAll(npc => npc.TempID == TempID);
+            }
+        }
+        
+        #endregion
+
+        
+
+
+
 
     }
 }

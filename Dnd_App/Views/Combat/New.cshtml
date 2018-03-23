@@ -184,7 +184,8 @@
     </script>
 
 
-    <!--Basic info-->
+    <!--Basic info--------------------------------------------------------------->
+    <!--updateName-->
     <script>
            $(document).ready(
                 function updateName() {
@@ -236,26 +237,76 @@
            );
     </script>
 
-<!--addParticipants-->
+    <!--addParticipants-->
     <script>
            function addParticipants(list) {
-            $.ajax({
-                type: "POST",
-                cache: false,
-                url: "@Url.Action("_AddParticipant")",
-                dataType: "html",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify({ 'list': list, 'TempID': @Model.TempID }),
-                success: function (data)
-                {
-                    reloadCombatView();
-                },
-                failure: function (errMsg) {
-                    console.log("error ?")
-                    alert(errMsg);
-                }
-            });
-        }
+                $.ajax({
+                    type: "POST",
+                    cache: false,
+                    url: "@Url.Action("_AddParticipant")",
+                    dataType: "html",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({ 'list': list, 'TempID': @Model.TempID }),
+                    success: function (data)
+                    {
+                        reloadCombatView();
+                    },
+                    failure: function (errMsg) {
+                        console.log("error ?")
+                        alert(errMsg);
+                    }
+                });
+            }
+    </script>
+
+
+
+
+
+
+    <!--addNPC-->
+    <script>
+           function addNPC(id) {
+                $.ajax({
+                    type: "POST",
+                    cache: false,
+                    url: "@Url.Action("_AddNPCCombat")",
+                    dataType: "html",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({ 'IdNPC': id, 'TempID': @Model.TempID }),
+                    success: function (data)
+                    {
+                        reloadCombatView();
+                    },
+                    failure: function (errMsg) {
+                        console.log("error ?")
+                        alert(errMsg);
+                    }
+                });
+            }
+    </script>
+
+    <!--removeNPC-->
+    <script>
+           function removeNPC(id) {
+                $.ajax({
+                    type: "POST",
+                    cache: false,
+                    url: "@Url.Action("_RemoveNPCCombat")",
+                    dataType: "html",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({ 'TempIDNPC': id, 'TempID': @Model.TempID }),
+                    success: function (data)
+                    {
+                        reloadCombatView();
+                    },
+                    failure: function (errMsg) {
+                        console.log("error ?")
+                        alert(errMsg);
+                    }
+                });
+            }
     </script>
 
 }
+

@@ -10,11 +10,8 @@ namespace Dnd_App.Models.Combat
     {
         [Key]
         public long Id { set; get; }
-
-        public long IdCombat { set; get; }
-        public long IdUser { set; get; }
-        public long IdNPC { set; get; }
-
+        public long TempID { set; get; }
+        public Models.Characters.NPC NPC { set; get; }
         public int Initiative { set; get; }
     }
 }
