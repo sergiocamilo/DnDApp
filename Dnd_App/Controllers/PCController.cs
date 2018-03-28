@@ -53,21 +53,21 @@ namespace Dnd_App.Controllers
         [HttpPost]
         public ActionResult Save(long TempID)
         {
-            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            var Pc = Utils.TemporalDB.Instance.SelectPC(TempID);
             var U = Dnd_App.Utils.Session.CurrentSession();
 
 
-            if (Npc.Id == 0)//new npc
+            if (Pc.id == 0)//new npc
             {
-                Npc.Create();
-                U.AddNPC(Npc.Id);
+                Pc.Create();
+                //U.AddNPC(Npc.Id);
             }
             else
             {
-                var newid = Npc.Update();
-                U.AddNPC(newid);
+                //var newid = Npc.Update();
+                //U.AddNPC(newid);
             }
-            Utils.TemporalDB.Instance.RemoveNPC(TempID);
+            Utils.TemporalDB.Instance.RemovePC(TempID);
 
             return Json(new
             {

@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using Dnd_App.Models.Enum;
+using Dnd_App.Entitites;
 
 namespace Dnd_App.Models.Characters
 {
@@ -23,6 +24,7 @@ namespace Dnd_App.Models.Characters
         public Race race { set; get; }
         public _Class _class { set; get; }
         public Background background { set; get; }
+
         public Challenge level { set; get; }
 
         public Armor armorClass { set; get; }
@@ -74,10 +76,199 @@ namespace Dnd_App.Models.Characters
         public List<Action> presetActions { set; get; }
 
 
+        public Boolean Create()
+        {
+            try
+            {
+                using (var DB = new DnDAppDBEntities())
+                {
+                    var PCEntity = new Entitites.PC()
+                    {
+                        name = name,
+                        Size = size.ToEntity(),
+                        alignmentAttitude = (int)alignmentAttitude,
+                        alignmentMorality = (int)alignmentMorality,
+                        Armor = armorClass.ToEntity(),
+                        HitPoint = hitPoint.ToEntity(),
+                        telepathy = telepathy,
+                        Challenge = level.ToEntity(),
+                        HP = HP,
+                        armorBonus = armorBonus,
+                        race = (int)race,
+                        background = (int) background,
+                        C_class = (int) _class
+                    };
+
+                    foreach (var s in this.speeds)
+                    {
+                        DB.PC_Speed.Add(new PC_Speed() { PC = PCEntity, Speed = s.ToEntity(), isTemplate = false });
+                    }
+
+                    foreach (var s in this.presetSpeeds)
+                    {
+                        DB.PC_Speed.Add(new PC_Speed() { PC = PCEntity, Speed = s.ToEntity(), isTemplate = true });
+                    }
+
+                    foreach (var AS in this.abilitiesScores)
+                    {
+                        DB.PC_AbilityScore.Add(new PC_AbilityScore() { PC = PCEntity, AbilityScore = AS.ToEntity() });
+                    }
+
+                    foreach (var s in this.savingThrows)
+                    {
+                        DB.PC_SavingThrow.Add(new PC_SavingThrow() { PC = PCEntity, SavingThrow = s.ToEntity(), isTemplate = false });
+                    }
+
+                    foreach (var s in this.presetSavingThrows)
+                    {
+                        DB.PC_SavingThrow.Add(new PC_SavingThrow() { PC = PCEntity, SavingThrow = s.ToEntity(), isTemplate = true });
+                    }
+
+                    foreach (var s in this.skills)
+                    {
+                        DB.PC_Skill.Add(new PC_Skill() { PC = PCEntity, Skill = s.ToEntity(), isTemplate = false });
+                    }
+
+                    foreach (var s in this.presetSkills)
+                    {
+                        DB.PC_Skill.Add(new PC_Skill() { PC = PCEntity, Skill = s.ToEntity(), isTemplate = true });
+                    }
+
+                    foreach (var s in this.vulnerabilities)
+                    {
+                        var v = s.ToEntity();
+                        v.damage1 = (int)Enum._Damage.Vul;
+                        DB.PC_Damage.Add(new PC_Damage() { PC = PCEntity, Damage = v, isTemplate = false });
+                    }
+
+                    foreach (var s in this.presetVulnerabilities)
+                    {
+                        var v = s.ToEntity();
+                        v.damage1 = (int)Enum._Damage.Vul;
+                        DB.PC_Damage.Add(new PC_Damage() { PC = PCEntity, Damage = v, isTemplate = true });
+                    }
+
+                    foreach (var s in this.resistances)
+                    {
+                        var v = s.ToEntity();
+                        v.damage1 = (int)Enum._Damage.Res;
+                        DB.PC_Damage.Add(new PC_Damage() { PC = PCEntity, Damage = v, isTemplate = false });
+                    }
+
+                    foreach (var s in this.presetResistances)
+                    {
+                        var v = s.ToEntity();
+                        v.damage1 = (int)Enum._Damage.Res;
+                        DB.PC_Damage.Add(new PC_Damage() { PC = PCEntity, Damage = v, isTemplate = true });
+                    }
+
+                    foreach (var s in this.presetImmunitiesDamage)
+                    {
+                        var v = s.ToEntity();
+                        v.damage1 = (int)Enum._Damage.Imm;
+                        DB.PC_Damage.Add(new PC_Damage() { PC = PCEntity, Damage = v, isTemplate = true });
+                    }
+
+                    foreach (var s in this.immunitiesDamage)
+                    {
+                        var v = s.ToEntity();
+                        v.damage1 = (int)Enum._Damage.Imm;
+                        DB.PC_Damage.Add(new PC_Damage() { PC = PCEntity, Damage = v, isTemplate = false });
+                    }
+
+                    foreach (var s in this.immunitiesCondition)
+                    {
+                        var v = s.ToEntity();
+                        DB.PC_Condition.Add(new PC_Condition() { PC = PCEntity, Condition = v, isTemplate = false });
+                    }
+
+                    foreach (var s in this.presetImmunitiesCondition)
+                    {
+                        var v = s.ToEntity();
+                        DB.PC_Condition.Add(new PC_Condition() { PC = PCEntity, Condition = v, isTemplate = true });
+                    }
+
+                    foreach (var s in this.senses)
+                    {
+                        DB.PC_Sense.Add(new PC_Sense() { PC = PCEntity, Sense = s.ToEntity(), isTemplate = false });
+                    }
+
+                    foreach (var s in this.presetSenses)
+                    {
+                        DB.PC_Sense.Add(new PC_Sense() { PC = PCEntity, Sense = s.ToEntity(), isTemplate = true });
+                    }
+
+                    foreach (var s in this.languagesSpeak)
+                    {
+                        var v = s.ToEntity();
+                        v.typeLanguage = (int)Enum._Language.speak;
+                        DB.PC_Language.Add(new PC_Language() { PC = PCEntity, Language = v, isTemplate = false });
+                    }
+
+                    foreach (var s in this.presetLanguagesSpeak)
+                    {
+                        var v = s.ToEntity();
+                        v.typeLanguage = (int)Enum._Language.speak;
+                        DB.PC_Language.Add(new PC_Language() { PC = PCEntity, Language = v, isTemplate = true });
+                    }
+
+                    foreach (var s in this.languagesUndersatand)
+                    {
+                        var v = s.ToEntity();
+                        v.typeLanguage = (int)Enum._Language.understand;
+                        DB.PC_Language.Add(new PC_Language() { PC = PCEntity, Language = v, isTemplate = false });
+                    }
+
+                    foreach (var s in this.presetLanguagesUndersatand)
+                    {
+                        var v = s.ToEntity();
+                        v.typeLanguage = (int)Enum._Language.understand;
+                        DB.PC_Language.Add(new PC_Language() { PC = PCEntity, Language = v, isTemplate = true });
+                    }
+
+                    foreach (var s in this.specialTraits)
+                    {
+                        DB.PC_SpecialTrait.Add(new PC_SpecialTrait() { PC = PCEntity, SpecialTrait = s.ToEntity(), isTemplate= false });
+                    }
+
+                    foreach (var s in this.presetSpecialTraits)
+                    {
+                        DB.PC_SpecialTrait.Add(new PC_SpecialTrait() { PC = PCEntity, SpecialTrait = s.ToEntity(), isTemplate = true });
+                    }
+
+                    foreach (var s in this.actions)
+                    {
+                        var v = s.ToEntity();
+                        v.Actiontype = (int)Enum._Action.Action;
+                        DB.PC_Action.Add(new PC_Action() { PC = PCEntity, Action = v, isTemplate = false });
+                    }
+
+                    foreach (var s in this.presetActions)
+                    {
+                        var v = s.ToEntity();
+                        v.Actiontype = (int)Enum._Action.Action;
+                        DB.PC_Action.Add(new PC_Action() { PC = PCEntity, Action = v, isTemplate = true });
+                    }
 
 
 
-        
+                    DB.PC.Add(PCEntity);
+                    DB.SaveChanges();
+
+                    this.id = PCEntity.id;
+
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+
+        #region Calculos
+
 
         public void ChangePreset()
         {
@@ -452,6 +643,9 @@ namespace Dnd_App.Models.Characters
             }
             this.immunitiesCondition = newlist;
         }
+
+        #endregion
+
 
         public object Clone()
         {

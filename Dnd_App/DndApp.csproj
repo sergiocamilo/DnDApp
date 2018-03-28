@@ -242,6 +242,39 @@
     <Compile Include="Entitites\NPC_Speed.cs">
       <DependentUpon>Dnd_APPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entitites\PC.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\PC_AbilityScore.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\PC_Action.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\PC_Condition.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\PC_Damage.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\PC_Language.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\PC_SavingThrow.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\PC_Sense.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\PC_Skill.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\PC_SpecialTrait.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entitites\PC_Speed.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entitites\SavingThrow.cs">
       <DependentUpon>Dnd_APPModel.tt</DependentUpon>
     </Compile>

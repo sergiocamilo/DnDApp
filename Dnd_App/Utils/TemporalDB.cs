@@ -230,6 +230,14 @@ namespace Dnd_App.Utils
             return PCInstances[TempID];
         }
 
+        public void RemovePC(long id)
+        {
+            lock (new { })
+            {
+                PCInstances.Remove(id);
+            }
+        }
+
         #endregion
 
 
