@@ -12,61 +12,61 @@ namespace Dnd_App.Entitites
     using System;
     using System.Collections.Generic;
     
-    public partial class NPC
+    public partial class PC
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public NPC()
+        public PC()
         {
-            this.NPC_AbilityScore = new HashSet<NPC_AbilityScore>();
-            this.NPC_Action = new HashSet<NPC_Action>();
-            this.NPC_Damage = new HashSet<NPC_Damage>();
-            this.NPC_Language = new HashSet<NPC_Language>();
-            this.NPC_SavingThrow = new HashSet<NPC_SavingThrow>();
-            this.NPC_Sense = new HashSet<NPC_Sense>();
-            this.NPC_Skill = new HashSet<NPC_Skill>();
-            this.NPC_SpecialTrait = new HashSet<NPC_SpecialTrait>();
-            this.NPC_Speed = new HashSet<NPC_Speed>();
-            this.User_NPC = new HashSet<User_NPC>();
-            this.NPC_Condition = new HashSet<NPC_Condition>();
+            this.PC_Speed = new HashSet<PC_Speed>();
+            this.PC_AbilityScore = new HashSet<PC_AbilityScore>();
+            this.PC_Action = new HashSet<PC_Action>();
+            this.PC_Condition = new HashSet<PC_Condition>();
+            this.PC_Damage = new HashSet<PC_Damage>();
+            this.PC_Language = new HashSet<PC_Language>();
+            this.PC_SavingThrow = new HashSet<PC_SavingThrow>();
+            this.PC_Sense = new HashSet<PC_Sense>();
+            this.PC_Skill = new HashSet<PC_Skill>();
+            this.PC_SpecialTrait = new HashSet<PC_SpecialTrait>();
         }
     
         public int id { get; set; }
         public string name { get; set; }
-        public int typecreature { get; set; }
-        public string tag { get; set; }
         public int alignmentMorality { get; set; }
         public int alignmentAttitude { get; set; }
+        public int race { get; set; }
+        public int C_class { get; set; }
+        public int background { get; set; }
+        public int armorBonus { get; set; }
+        public int HP { get; set; }
         public int telepathy { get; set; }
-        public Nullable<int> size_id { get; set; }
-        public Nullable<int> armorclass_id { get; set; }
+        public Nullable<int> armorClass_id { get; set; }
         public Nullable<int> hitPoint_id { get; set; }
-        public Nullable<int> challenge_id { get; set; }
+        public Nullable<int> level_id { get; set; }
+        public Nullable<int> size_id { get; set; }
     
         public virtual Armor Armor { get; set; }
         public virtual Challenge Challenge { get; set; }
         public virtual HitPoint HitPoint { get; set; }
         public virtual Size Size { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NPC_AbilityScore> NPC_AbilityScore { get; set; }
+        public virtual ICollection<PC_Speed> PC_Speed { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NPC_Action> NPC_Action { get; set; }
+        public virtual ICollection<PC_AbilityScore> PC_AbilityScore { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NPC_Damage> NPC_Damage { get; set; }
+        public virtual ICollection<PC_Action> PC_Action { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NPC_Language> NPC_Language { get; set; }
+        public virtual ICollection<PC_Condition> PC_Condition { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NPC_SavingThrow> NPC_SavingThrow { get; set; }
+        public virtual ICollection<PC_Damage> PC_Damage { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NPC_Sense> NPC_Sense { get; set; }
+        public virtual ICollection<PC_Language> PC_Language { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NPC_Skill> NPC_Skill { get; set; }
+        public virtual ICollection<PC_SavingThrow> PC_SavingThrow { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NPC_SpecialTrait> NPC_SpecialTrait { get; set; }
+        public virtual ICollection<PC_Sense> PC_Sense { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NPC_Speed> NPC_Speed { get; set; }
+        public virtual ICollection<PC_Skill> PC_Skill { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User_NPC> User_NPC { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NPC_Condition> NPC_Condition { get; set; }
+        public virtual ICollection<PC_SpecialTrait> PC_SpecialTrait { get; set; }
     }
 }

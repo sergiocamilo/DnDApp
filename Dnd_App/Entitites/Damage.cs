@@ -18,6 +18,7 @@ namespace Dnd_App.Entitites
         public Damage()
         {
             this.NPC_Damage = new HashSet<NPC_Damage>();
+            this.PC_Damage = new HashSet<PC_Damage>();
         }
     
         public int id { get; set; }
@@ -26,5 +27,7 @@ namespace Dnd_App.Entitites
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NPC_Damage> NPC_Damage { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PC_Damage> PC_Damage { get; set; }
     }
 }

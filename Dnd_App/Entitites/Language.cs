@@ -18,6 +18,7 @@ namespace Dnd_App.Entitites
         public Language()
         {
             this.NPC_Language = new HashSet<NPC_Language>();
+            this.PC_Language = new HashSet<PC_Language>();
         }
     
         public int id { get; set; }
@@ -26,5 +27,7 @@ namespace Dnd_App.Entitites
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NPC_Language> NPC_Language { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PC_Language> PC_Language { get; set; }
     }
 }

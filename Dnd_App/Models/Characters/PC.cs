@@ -27,6 +27,7 @@ namespace Dnd_App.Models.Characters
 
         public Armor armorClass { set; get; }
         public int armorBonus { set; get; }
+
         public HitPoint hitPoint { set; get; }
         public int HP { set; get; }
 

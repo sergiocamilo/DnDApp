@@ -194,6 +194,114 @@
           <Property Name="NPC_id" Type="int" Nullable="false" />
           <Property Name="Speed_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="PC">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" />
+          <Property Name="alignmentMorality" Type="int" Nullable="false" />
+          <Property Name="alignmentAttitude" Type="int" Nullable="false" />
+          <Property Name="race" Type="int" Nullable="false" />
+          <Property Name="_class" Type="int" Nullable="false" />
+          <Property Name="background" Type="int" Nullable="false" />
+          <Property Name="armorBonus" Type="int" Nullable="false" />
+          <Property Name="HP" Type="int" Nullable="false" />
+          <Property Name="telepathy" Type="int" Nullable="false" />
+          <Property Name="armorClass_id" Type="int" />
+          <Property Name="hitPoint_id" Type="int" />
+          <Property Name="level_id" Type="int" />
+          <Property Name="size_id" Type="int" />
+        </EntityType>
+        <EntityType Name="PC_AbilityScore">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PC_id" Type="int" Nullable="false" />
+          <Property Name="AbilityScore_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PC_Action">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PC_id" Type="int" Nullable="false" />
+          <Property Name="Action_id" Type="int" Nullable="false" />
+          <Property Name="isTemplate" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PC_Condition">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PC_id" Type="int" Nullable="false" />
+          <Property Name="Condition_id" Type="int" Nullable="false" />
+          <Property Name="isTemplate" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PC_Damage">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PC_id" Type="int" Nullable="false" />
+          <Property Name="Damage_id" Type="int" Nullable="false" />
+          <Property Name="isTemplate" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PC_Language">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PC_id" Type="int" Nullable="false" />
+          <Property Name="Language_id" Type="int" Nullable="false" />
+          <Property Name="isTemplate" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PC_SavingThrow">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PC_id" Type="int" Nullable="false" />
+          <Property Name="SavingThrow_id" Type="int" Nullable="false" />
+          <Property Name="isTemplate" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PC_Sense">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PC_id" Type="int" Nullable="false" />
+          <Property Name="Sense_id" Type="int" Nullable="false" />
+          <Property Name="isTemplate" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PC_Skill">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PC_id" Type="int" Nullable="false" />
+          <Property Name="Skill_id" Type="int" Nullable="false" />
+          <Property Name="isTemplate" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PC_SpecialTrait">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PC_id" Type="int" Nullable="false" />
+          <Property Name="SpecialTrait_id" Type="int" Nullable="false" />
+          <Property Name="isTemplate" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PC_Speed">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PC_id" Type="int" Nullable="false" />
+          <Property Name="Speed_id" Type="int" Nullable="false" />
+          <Property Name="isTemplate" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="SavingThrow">
           <Key>
             <PropertyRef Name="id" />
@@ -308,6 +416,54 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="NPC">
+              <PropertyRef Name="size_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PC_dbo_Armor_armorClass_id">
+          <End Role="Armor" Type="Self.Armor" Multiplicity="0..1" />
+          <End Role="PC" Type="Self.PC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Armor">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC">
+              <PropertyRef Name="armorClass_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PC_dbo_Challenge_level_id">
+          <End Role="Challenge" Type="Self.Challenge" Multiplicity="0..1" />
+          <End Role="PC" Type="Self.PC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Challenge">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC">
+              <PropertyRef Name="level_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PC_dbo_HitPoint_hitPoint_id">
+          <End Role="HitPoint" Type="Self.HitPoint" Multiplicity="0..1" />
+          <End Role="PC" Type="Self.PC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HitPoint">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC">
+              <PropertyRef Name="hitPoint_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PC_dbo_Size_size_id">
+          <End Role="Size" Type="Self.Size" Multiplicity="0..1" />
+          <End Role="PC" Type="Self.PC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Size">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC">
               <PropertyRef Name="size_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -592,6 +748,286 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PC_AbilityScore_AbilityScore">
+          <End Role="AbilityScore" Type="Self.AbilityScore" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PC_AbilityScore" Type="Self.PC_AbilityScore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AbilityScore">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_AbilityScore">
+              <PropertyRef Name="AbilityScore_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_AbilityScore_PC">
+          <End Role="PC" Type="Self.PC" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PC_AbilityScore" Type="Self.PC_AbilityScore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PC">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_AbilityScore">
+              <PropertyRef Name="PC_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_Action_Action">
+          <End Role="Action" Type="Self.Action" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PC_Action" Type="Self.PC_Action" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Action">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_Action">
+              <PropertyRef Name="Action_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_Action_PC">
+          <End Role="PC" Type="Self.PC" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PC_Action" Type="Self.PC_Action" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PC">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_Action">
+              <PropertyRef Name="PC_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_Condition_Condition">
+          <End Role="Condition" Type="Self.Condition" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PC_Condition" Type="Self.PC_Condition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Condition">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_Condition">
+              <PropertyRef Name="Condition_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_Condition_PC">
+          <End Role="PC" Type="Self.PC" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PC_Condition" Type="Self.PC_Condition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PC">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_Condition">
+              <PropertyRef Name="PC_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_Damage_Damage">
+          <End Role="Damage" Type="Self.Damage" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PC_Damage" Type="Self.PC_Damage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Damage">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_Damage">
+              <PropertyRef Name="Damage_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_Damage_PC">
+          <End Role="PC" Type="Self.PC" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PC_Damage" Type="Self.PC_Damage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PC">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_Damage">
+              <PropertyRef Name="PC_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_Language_Language">
+          <End Role="Language" Type="Self.Language" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PC_Language" Type="Self.PC_Language" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_Language">
+              <PropertyRef Name="Language_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_Language_PC">
+          <End Role="PC" Type="Self.PC" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PC_Language" Type="Self.PC_Language" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PC">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_Language">
+              <PropertyRef Name="PC_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_SavingThrow_PC">
+          <End Role="PC" Type="Self.PC" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PC_SavingThrow" Type="Self.PC_SavingThrow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PC">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_SavingThrow">
+              <PropertyRef Name="PC_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_SavingThrow_SavingThrow">
+          <End Role="SavingThrow" Type="Self.SavingThrow" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PC_SavingThrow" Type="Self.PC_SavingThrow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SavingThrow">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_SavingThrow">
+              <PropertyRef Name="SavingThrow_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_Sense_PC">
+          <End Role="PC" Type="Self.PC" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PC_Sense" Type="Self.PC_Sense" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PC">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_Sense">
+              <PropertyRef Name="PC_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_Sense_Sense">
+          <End Role="Sense" Type="Self.Sense" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PC_Sense" Type="Self.PC_Sense" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sense">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_Sense">
+              <PropertyRef Name="Sense_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_Skill_PC">
+          <End Role="PC" Type="Self.PC" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PC_Skill" Type="Self.PC_Skill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PC">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_Skill">
+              <PropertyRef Name="PC_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_Skill_Skill">
+          <End Role="Skill" Type="Self.Skill" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PC_Skill" Type="Self.PC_Skill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skill">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_Skill">
+              <PropertyRef Name="Skill_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_SpecialTrait_PC">
+          <End Role="PC" Type="Self.PC" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PC_SpecialTrait" Type="Self.PC_SpecialTrait" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PC">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_SpecialTrait">
+              <PropertyRef Name="PC_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_SpecialTrait_SpecialTrait">
+          <End Role="SpecialTrait" Type="Self.SpecialTrait" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PC_SpecialTrait" Type="Self.PC_SpecialTrait" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SpecialTrait">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_SpecialTrait">
+              <PropertyRef Name="SpecialTrait_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_Speed_PC">
+          <End Role="PC" Type="Self.PC" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PC_Speed" Type="Self.PC_Speed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PC">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_Speed">
+              <PropertyRef Name="PC_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_Speed_Speed">
+          <End Role="Speed" Type="Self.Speed" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PC_Speed" Type="Self.PC_Speed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Speed">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_Speed">
+              <PropertyRef Name="Speed_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_User_NPC_NPC">
           <End Role="NPC" Type="Self.NPC" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -640,6 +1076,17 @@
           <EntitySet Name="NPC_Skill" EntityType="Self.NPC_Skill" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NPC_SpecialTrait" EntityType="Self.NPC_SpecialTrait" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NPC_Speed" EntityType="Self.NPC_Speed" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PC" EntityType="Self.PC" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PC_AbilityScore" EntityType="Self.PC_AbilityScore" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PC_Action" EntityType="Self.PC_Action" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PC_Condition" EntityType="Self.PC_Condition" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PC_Damage" EntityType="Self.PC_Damage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PC_Language" EntityType="Self.PC_Language" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PC_SavingThrow" EntityType="Self.PC_SavingThrow" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PC_Sense" EntityType="Self.PC_Sense" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PC_Skill" EntityType="Self.PC_Skill" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PC_SpecialTrait" EntityType="Self.PC_SpecialTrait" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PC_Speed" EntityType="Self.PC_Speed" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SavingThrow" EntityType="Self.SavingThrow" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sense" EntityType="Self.Sense" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Size" EntityType="Self.Size" Schema="dbo" store:Type="Tables" />
@@ -663,6 +1110,22 @@
           <AssociationSet Name="FK_dbo_NPC_dbo_Size_size_id" Association="Self.FK_dbo_NPC_dbo_Size_size_id">
             <End Role="Size" EntitySet="Size" />
             <End Role="NPC" EntitySet="NPC" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PC_dbo_Armor_armorClass_id" Association="Self.FK_dbo_PC_dbo_Armor_armorClass_id">
+            <End Role="Armor" EntitySet="Armor" />
+            <End Role="PC" EntitySet="PC" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PC_dbo_Challenge_level_id" Association="Self.FK_dbo_PC_dbo_Challenge_level_id">
+            <End Role="Challenge" EntitySet="Challenge" />
+            <End Role="PC" EntitySet="PC" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PC_dbo_HitPoint_hitPoint_id" Association="Self.FK_dbo_PC_dbo_HitPoint_hitPoint_id">
+            <End Role="HitPoint" EntitySet="HitPoint" />
+            <End Role="PC" EntitySet="PC" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PC_dbo_Size_size_id" Association="Self.FK_dbo_PC_dbo_Size_size_id">
+            <End Role="Size" EntitySet="Size" />
+            <End Role="PC" EntitySet="PC" />
           </AssociationSet>
           <AssociationSet Name="FK_NPC_AbilityScore_AbilityScore" Association="Self.FK_NPC_AbilityScore_AbilityScore">
             <End Role="AbilityScore" EntitySet="AbilityScore" />
@@ -744,6 +1207,86 @@
             <End Role="Speed" EntitySet="Speed" />
             <End Role="NPC_Speed" EntitySet="NPC_Speed" />
           </AssociationSet>
+          <AssociationSet Name="FK_PC_AbilityScore_AbilityScore" Association="Self.FK_PC_AbilityScore_AbilityScore">
+            <End Role="AbilityScore" EntitySet="AbilityScore" />
+            <End Role="PC_AbilityScore" EntitySet="PC_AbilityScore" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_AbilityScore_PC" Association="Self.FK_PC_AbilityScore_PC">
+            <End Role="PC" EntitySet="PC" />
+            <End Role="PC_AbilityScore" EntitySet="PC_AbilityScore" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_Action_Action" Association="Self.FK_PC_Action_Action">
+            <End Role="Action" EntitySet="Action" />
+            <End Role="PC_Action" EntitySet="PC_Action" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_Action_PC" Association="Self.FK_PC_Action_PC">
+            <End Role="PC" EntitySet="PC" />
+            <End Role="PC_Action" EntitySet="PC_Action" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_Condition_Condition" Association="Self.FK_PC_Condition_Condition">
+            <End Role="Condition" EntitySet="Condition" />
+            <End Role="PC_Condition" EntitySet="PC_Condition" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_Condition_PC" Association="Self.FK_PC_Condition_PC">
+            <End Role="PC" EntitySet="PC" />
+            <End Role="PC_Condition" EntitySet="PC_Condition" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_Damage_Damage" Association="Self.FK_PC_Damage_Damage">
+            <End Role="Damage" EntitySet="Damage" />
+            <End Role="PC_Damage" EntitySet="PC_Damage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_Damage_PC" Association="Self.FK_PC_Damage_PC">
+            <End Role="PC" EntitySet="PC" />
+            <End Role="PC_Damage" EntitySet="PC_Damage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_Language_Language" Association="Self.FK_PC_Language_Language">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="PC_Language" EntitySet="PC_Language" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_Language_PC" Association="Self.FK_PC_Language_PC">
+            <End Role="PC" EntitySet="PC" />
+            <End Role="PC_Language" EntitySet="PC_Language" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_SavingThrow_PC" Association="Self.FK_PC_SavingThrow_PC">
+            <End Role="PC" EntitySet="PC" />
+            <End Role="PC_SavingThrow" EntitySet="PC_SavingThrow" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_SavingThrow_SavingThrow" Association="Self.FK_PC_SavingThrow_SavingThrow">
+            <End Role="SavingThrow" EntitySet="SavingThrow" />
+            <End Role="PC_SavingThrow" EntitySet="PC_SavingThrow" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_Sense_PC" Association="Self.FK_PC_Sense_PC">
+            <End Role="PC" EntitySet="PC" />
+            <End Role="PC_Sense" EntitySet="PC_Sense" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_Sense_Sense" Association="Self.FK_PC_Sense_Sense">
+            <End Role="Sense" EntitySet="Sense" />
+            <End Role="PC_Sense" EntitySet="PC_Sense" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_Skill_PC" Association="Self.FK_PC_Skill_PC">
+            <End Role="PC" EntitySet="PC" />
+            <End Role="PC_Skill" EntitySet="PC_Skill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_Skill_Skill" Association="Self.FK_PC_Skill_Skill">
+            <End Role="Skill" EntitySet="Skill" />
+            <End Role="PC_Skill" EntitySet="PC_Skill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_SpecialTrait_PC" Association="Self.FK_PC_SpecialTrait_PC">
+            <End Role="PC" EntitySet="PC" />
+            <End Role="PC_SpecialTrait" EntitySet="PC_SpecialTrait" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_SpecialTrait_SpecialTrait" Association="Self.FK_PC_SpecialTrait_SpecialTrait">
+            <End Role="SpecialTrait" EntitySet="SpecialTrait" />
+            <End Role="PC_SpecialTrait" EntitySet="PC_SpecialTrait" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_Speed_PC" Association="Self.FK_PC_Speed_PC">
+            <End Role="PC" EntitySet="PC" />
+            <End Role="PC_Speed" EntitySet="PC_Speed" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_Speed_Speed" Association="Self.FK_PC_Speed_Speed">
+            <End Role="Speed" EntitySet="Speed" />
+            <End Role="PC_Speed" EntitySet="PC_Speed" />
+          </AssociationSet>
           <AssociationSet Name="FK_User_NPC_NPC" Association="Self.FK_User_NPC_NPC">
             <End Role="NPC" EntitySet="NPC" />
             <End Role="User_NPC" EntitySet="User_NPC" />
@@ -783,7 +1326,6 @@
           <EntitySet Name="NPC" EntityType="DnDAppDBModel.NPC" />
           <EntitySet Name="NPC_AbilityScore" EntityType="DnDAppDBModel.NPC_AbilityScore" />
           <EntitySet Name="NPC_Action" EntityType="DnDAppDBModel.NPC_Action" />
-          <EntitySet Name="NPC_Condition" EntityType="DnDAppDBModel.NPC_Condition" />
           <EntitySet Name="NPC_Damage" EntityType="DnDAppDBModel.NPC_Damage" />
           <EntitySet Name="NPC_Language" EntityType="DnDAppDBModel.NPC_Language" />
           <EntitySet Name="NPC_SavingThrow" EntityType="DnDAppDBModel.NPC_SavingThrow" />
@@ -813,10 +1355,6 @@
             <End Role="Challenge" EntitySet="Challenge" />
             <End Role="NPC" EntitySet="NPC" />
           </AssociationSet>
-          <AssociationSet Name="FK_NPC_Condition_Condition" Association="DnDAppDBModel.FK_NPC_Condition_Condition">
-            <End Role="Condition" EntitySet="Condition" />
-            <End Role="NPC_Condition" EntitySet="NPC_Condition" />
-          </AssociationSet>
           <AssociationSet Name="FK_NPC_Damage_Damage" Association="DnDAppDBModel.FK_NPC_Damage_Damage">
             <End Role="Damage" EntitySet="Damage" />
             <End Role="NPC_Damage" EntitySet="NPC_Damage" />
@@ -840,10 +1378,6 @@
           <AssociationSet Name="FK_NPC_Action_NPC" Association="DnDAppDBModel.FK_NPC_Action_NPC">
             <End Role="NPC" EntitySet="NPC" />
             <End Role="NPC_Action" EntitySet="NPC_Action" />
-          </AssociationSet>
-          <AssociationSet Name="FK_NPC_Condition_NPC" Association="DnDAppDBModel.FK_NPC_Condition_NPC">
-            <End Role="NPC" EntitySet="NPC" />
-            <End Role="NPC_Condition" EntitySet="NPC_Condition" />
           </AssociationSet>
           <AssociationSet Name="FK_NPC_Damage_NPC" Association="DnDAppDBModel.FK_NPC_Damage_NPC">
             <End Role="NPC" EntitySet="NPC" />
@@ -902,7 +1436,123 @@
             <End Role="User" EntitySet="User" />
             <End Role="User_NPC" EntitySet="User_NPC" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="PC" EntityType="DnDAppDBModel.PC" />
+          <EntitySet Name="PC_Speed" EntityType="DnDAppDBModel.PC_Speed" />
+          <AssociationSet Name="FK_dbo_PC_dbo_Armor_armorClass_id" Association="DnDAppDBModel.FK_dbo_PC_dbo_Armor_armorClass_id">
+            <End Role="Armor" EntitySet="Armor" />
+            <End Role="PC" EntitySet="PC" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PC_dbo_Challenge_level_id" Association="DnDAppDBModel.FK_dbo_PC_dbo_Challenge_level_id">
+            <End Role="Challenge" EntitySet="Challenge" />
+            <End Role="PC" EntitySet="PC" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PC_dbo_HitPoint_hitPoint_id" Association="DnDAppDBModel.FK_dbo_PC_dbo_HitPoint_hitPoint_id">
+            <End Role="HitPoint" EntitySet="HitPoint" />
+            <End Role="PC" EntitySet="PC" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PC_dbo_Size_size_id" Association="DnDAppDBModel.FK_dbo_PC_dbo_Size_size_id">
+            <End Role="Size" EntitySet="Size" />
+            <End Role="PC" EntitySet="PC" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_Speed_PC" Association="DnDAppDBModel.FK_PC_Speed_PC">
+            <End Role="PC" EntitySet="PC" />
+            <End Role="PC_Speed" EntitySet="PC_Speed" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_Speed_Speed" Association="DnDAppDBModel.FK_PC_Speed_Speed">
+            <End Role="Speed" EntitySet="Speed" />
+            <End Role="PC_Speed" EntitySet="PC_Speed" />
+          </AssociationSet>
+          <EntitySet Name="PC_AbilityScore" EntityType="DnDAppDBModel.PC_AbilityScore" />
+          <EntitySet Name="PC_Action" EntityType="DnDAppDBModel.PC_Action" />
+          <EntitySet Name="PC_Condition" EntityType="DnDAppDBModel.PC_Condition" />
+          <EntitySet Name="PC_Damage" EntityType="DnDAppDBModel.PC_Damage" />
+          <EntitySet Name="PC_Language" EntityType="DnDAppDBModel.PC_Language" />
+          <EntitySet Name="PC_SavingThrow" EntityType="DnDAppDBModel.PC_SavingThrow" />
+          <EntitySet Name="PC_Sense" EntityType="DnDAppDBModel.PC_Sense" />
+          <EntitySet Name="PC_Skill" EntityType="DnDAppDBModel.PC_Skill" />
+          <EntitySet Name="PC_SpecialTrait" EntityType="DnDAppDBModel.PC_SpecialTrait" />
+          <AssociationSet Name="FK_PC_AbilityScore_AbilityScore" Association="DnDAppDBModel.FK_PC_AbilityScore_AbilityScore">
+            <End Role="AbilityScore" EntitySet="AbilityScore" />
+            <End Role="PC_AbilityScore" EntitySet="PC_AbilityScore" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_Action_Action" Association="DnDAppDBModel.FK_PC_Action_Action">
+            <End Role="Action" EntitySet="Action" />
+            <End Role="PC_Action" EntitySet="PC_Action" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_Condition_Condition" Association="DnDAppDBModel.FK_PC_Condition_Condition">
+            <End Role="Condition" EntitySet="Condition" />
+            <End Role="PC_Condition" EntitySet="PC_Condition" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_Damage_Damage" Association="DnDAppDBModel.FK_PC_Damage_Damage">
+            <End Role="Damage" EntitySet="Damage" />
+            <End Role="PC_Damage" EntitySet="PC_Damage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_Language_Language" Association="DnDAppDBModel.FK_PC_Language_Language">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="PC_Language" EntitySet="PC_Language" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_AbilityScore_PC" Association="DnDAppDBModel.FK_PC_AbilityScore_PC">
+            <End Role="PC" EntitySet="PC" />
+            <End Role="PC_AbilityScore" EntitySet="PC_AbilityScore" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_Action_PC" Association="DnDAppDBModel.FK_PC_Action_PC">
+            <End Role="PC" EntitySet="PC" />
+            <End Role="PC_Action" EntitySet="PC_Action" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_Condition_PC" Association="DnDAppDBModel.FK_PC_Condition_PC">
+            <End Role="PC" EntitySet="PC" />
+            <End Role="PC_Condition" EntitySet="PC_Condition" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_Damage_PC" Association="DnDAppDBModel.FK_PC_Damage_PC">
+            <End Role="PC" EntitySet="PC" />
+            <End Role="PC_Damage" EntitySet="PC_Damage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_Language_PC" Association="DnDAppDBModel.FK_PC_Language_PC">
+            <End Role="PC" EntitySet="PC" />
+            <End Role="PC_Language" EntitySet="PC_Language" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_SavingThrow_PC" Association="DnDAppDBModel.FK_PC_SavingThrow_PC">
+            <End Role="PC" EntitySet="PC" />
+            <End Role="PC_SavingThrow" EntitySet="PC_SavingThrow" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_Sense_PC" Association="DnDAppDBModel.FK_PC_Sense_PC">
+            <End Role="PC" EntitySet="PC" />
+            <End Role="PC_Sense" EntitySet="PC_Sense" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_Skill_PC" Association="DnDAppDBModel.FK_PC_Skill_PC">
+            <End Role="PC" EntitySet="PC" />
+            <End Role="PC_Skill" EntitySet="PC_Skill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_SpecialTrait_PC" Association="DnDAppDBModel.FK_PC_SpecialTrait_PC">
+            <End Role="PC" EntitySet="PC" />
+            <End Role="PC_SpecialTrait" EntitySet="PC_SpecialTrait" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_SavingThrow_SavingThrow" Association="DnDAppDBModel.FK_PC_SavingThrow_SavingThrow">
+            <End Role="SavingThrow" EntitySet="SavingThrow" />
+            <End Role="PC_SavingThrow" EntitySet="PC_SavingThrow" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_Sense_Sense" Association="DnDAppDBModel.FK_PC_Sense_Sense">
+            <End Role="Sense" EntitySet="Sense" />
+            <End Role="PC_Sense" EntitySet="PC_Sense" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_Skill_Skill" Association="DnDAppDBModel.FK_PC_Skill_Skill">
+            <End Role="Skill" EntitySet="Skill" />
+            <End Role="PC_Skill" EntitySet="PC_Skill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PC_SpecialTrait_SpecialTrait" Association="DnDAppDBModel.FK_PC_SpecialTrait_SpecialTrait">
+            <End Role="SpecialTrait" EntitySet="SpecialTrait" />
+            <End Role="PC_SpecialTrait" EntitySet="PC_SpecialTrait" />
+          </AssociationSet>
+          <EntitySet Name="NPC_Condition" EntityType="DnDAppDBModel.NPC_Condition" />
+          <AssociationSet Name="FK_NPC_Condition_Condition" Association="DnDAppDBModel.FK_NPC_Condition_Condition">
+            <End Role="Condition" EntitySet="Condition" />
+            <End Role="NPC_Condition" EntitySet="NPC_Condition" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NPC_Condition_NPC" Association="DnDAppDBModel.FK_NPC_Condition_NPC">
+            <End Role="NPC" EntitySet="NPC" />
+            <End Role="NPC_Condition" EntitySet="NPC_Condition" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="AbilityScore">
           <Key>
             <PropertyRef Name="id" />
@@ -916,6 +1566,7 @@
           <Property Name="bonus" Type="Int32" Nullable="false" />
           <Property Name="inputValue" Type="Int32" Nullable="false" />
           <NavigationProperty Name="NPC_AbilityScore" Relationship="DnDAppDBModel.FK_NPC_AbilityScore_AbilityScore" FromRole="AbilityScore" ToRole="NPC_AbilityScore" />
+          <NavigationProperty Name="PC_AbilityScore" Relationship="DnDAppDBModel.FK_PC_AbilityScore_AbilityScore" FromRole="AbilityScore" ToRole="PC_AbilityScore" />
         </EntityType>
         <EntityType Name="Action">
           <Key>
@@ -941,6 +1592,7 @@
           <Property Name="typeDamage" Type="Int32" Nullable="false" />
           <Property Name="Actiontype" Type="Int32" Nullable="false" />
           <NavigationProperty Name="NPC_Action" Relationship="DnDAppDBModel.FK_NPC_Action_Action" FromRole="Action" ToRole="NPC_Action" />
+          <NavigationProperty Name="PC_Action" Relationship="DnDAppDBModel.FK_PC_Action_Action" FromRole="Action" ToRole="PC_Action" />
         </EntityType>
         <EntityType Name="Armor">
           <Key>
@@ -955,6 +1607,7 @@
           <Property Name="stealth" Type="Boolean" Nullable="false" />
           <Property Name="shield" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="NPC" Relationship="DnDAppDBModel.FK_dbo_NPC_dbo_Armor_armorClass_id" FromRole="Armor" ToRole="NPC" />
+          <NavigationProperty Name="PC" Relationship="DnDAppDBModel.FK_dbo_PC_dbo_Armor_armorClass_id" FromRole="Armor" ToRole="PC" />
         </EntityType>
         <EntityType Name="Challenge">
           <Key>
@@ -965,6 +1618,7 @@
           <Property Name="xp" Type="Int32" Nullable="false" />
           <Property Name="proficiencyBonus" Type="Int32" Nullable="false" />
           <NavigationProperty Name="NPC" Relationship="DnDAppDBModel.FK_dbo_NPC_dbo_Challenge_challenge_id" FromRole="Challenge" ToRole="NPC" />
+          <NavigationProperty Name="PC" Relationship="DnDAppDBModel.FK_dbo_PC_dbo_Challenge_level_id" FromRole="Challenge" ToRole="PC" />
         </EntityType>
         <EntityType Name="Condition">
           <Key>
@@ -972,6 +1626,7 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="condition1" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PC_Condition" Relationship="DnDAppDBModel.FK_PC_Condition_Condition" FromRole="Condition" ToRole="PC_Condition" />
           <NavigationProperty Name="NPC_Condition" Relationship="DnDAppDBModel.FK_NPC_Condition_Condition" FromRole="Condition" ToRole="NPC_Condition" />
         </EntityType>
         <EntityType Name="Damage">
@@ -982,6 +1637,7 @@
           <Property Name="damage1" Type="Int32" Nullable="false" />
           <Property Name="typeDamage" Type="Int32" Nullable="false" />
           <NavigationProperty Name="NPC_Damage" Relationship="DnDAppDBModel.FK_NPC_Damage_Damage" FromRole="Damage" ToRole="NPC_Damage" />
+          <NavigationProperty Name="PC_Damage" Relationship="DnDAppDBModel.FK_PC_Damage_Damage" FromRole="Damage" ToRole="PC_Damage" />
         </EntityType>
         <EntityType Name="HitPoint">
           <Key>
@@ -994,6 +1650,7 @@
           <Property Name="typeDie" Type="Int32" Nullable="false" />
           <Property Name="bonusMultiplied" Type="Int32" Nullable="false" />
           <NavigationProperty Name="NPC" Relationship="DnDAppDBModel.FK_dbo_NPC_dbo_HitPoint_hitPoint_id" FromRole="HitPoint" ToRole="NPC" />
+          <NavigationProperty Name="PC" Relationship="DnDAppDBModel.FK_dbo_PC_dbo_HitPoint_hitPoint_id" FromRole="HitPoint" ToRole="PC" />
         </EntityType>
         <EntityType Name="Language">
           <Key>
@@ -1003,6 +1660,7 @@
           <Property Name="name" Type="Int32" Nullable="false" />
           <Property Name="typeLanguage" Type="Int32" />
           <NavigationProperty Name="NPC_Language" Relationship="DnDAppDBModel.FK_NPC_Language_Language" FromRole="Language" ToRole="NPC_Language" />
+          <NavigationProperty Name="PC_Language" Relationship="DnDAppDBModel.FK_PC_Language_Language" FromRole="Language" ToRole="PC_Language" />
         </EntityType>
         <EntityType Name="NPC">
           <Key>
@@ -1025,7 +1683,6 @@
           <NavigationProperty Name="Size" Relationship="DnDAppDBModel.FK_dbo_NPC_dbo_Size_size_id" FromRole="NPC" ToRole="Size" />
           <NavigationProperty Name="NPC_AbilityScore" Relationship="DnDAppDBModel.FK_NPC_AbilityScore_NPC" FromRole="NPC" ToRole="NPC_AbilityScore" />
           <NavigationProperty Name="NPC_Action" Relationship="DnDAppDBModel.FK_NPC_Action_NPC" FromRole="NPC" ToRole="NPC_Action" />
-          <NavigationProperty Name="NPC_Condition" Relationship="DnDAppDBModel.FK_NPC_Condition_NPC" FromRole="NPC" ToRole="NPC_Condition" />
           <NavigationProperty Name="NPC_Damage" Relationship="DnDAppDBModel.FK_NPC_Damage_NPC" FromRole="NPC" ToRole="NPC_Damage" />
           <NavigationProperty Name="NPC_Language" Relationship="DnDAppDBModel.FK_NPC_Language_NPC" FromRole="NPC" ToRole="NPC_Language" />
           <NavigationProperty Name="NPC_SavingThrow" Relationship="DnDAppDBModel.FK_NPC_SavingThrow_NPC" FromRole="NPC" ToRole="NPC_SavingThrow" />
@@ -1034,6 +1691,7 @@
           <NavigationProperty Name="NPC_SpecialTrait" Relationship="DnDAppDBModel.FK_NPC_SpecialTrait_NPC" FromRole="NPC" ToRole="NPC_SpecialTrait" />
           <NavigationProperty Name="NPC_Speed" Relationship="DnDAppDBModel.FK_NPC_Speed_NPC" FromRole="NPC" ToRole="NPC_Speed" />
           <NavigationProperty Name="User_NPC" Relationship="DnDAppDBModel.FK_User_NPC_NPC" FromRole="NPC" ToRole="User_NPC" />
+          <NavigationProperty Name="NPC_Condition" Relationship="DnDAppDBModel.FK_NPC_Condition_NPC" FromRole="NPC" ToRole="NPC_Condition" />
         </EntityType>
         <EntityType Name="NPC_AbilityScore">
           <Key>
@@ -1054,16 +1712,6 @@
           <Property Name="Action_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Action" Relationship="DnDAppDBModel.FK_NPC_Action_Action" FromRole="NPC_Action" ToRole="Action" />
           <NavigationProperty Name="NPC" Relationship="DnDAppDBModel.FK_NPC_Action_NPC" FromRole="NPC_Action" ToRole="NPC" />
-        </EntityType>
-        <EntityType Name="NPC_Condition">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NPC_id" Type="Int32" Nullable="false" />
-          <Property Name="Condition_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Condition" Relationship="DnDAppDBModel.FK_NPC_Condition_Condition" FromRole="NPC_Condition" ToRole="Condition" />
-          <NavigationProperty Name="NPC" Relationship="DnDAppDBModel.FK_NPC_Condition_NPC" FromRole="NPC_Condition" ToRole="NPC" />
         </EntityType>
         <EntityType Name="NPC_Damage">
           <Key>
@@ -1143,6 +1791,7 @@
           <Property Name="modName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="value" Type="Int32" Nullable="false" />
           <NavigationProperty Name="NPC_SavingThrow" Relationship="DnDAppDBModel.FK_NPC_SavingThrow_SavingThrow" FromRole="SavingThrow" ToRole="NPC_SavingThrow" />
+          <NavigationProperty Name="PC_SavingThrow" Relationship="DnDAppDBModel.FK_PC_SavingThrow_SavingThrow" FromRole="SavingThrow" ToRole="PC_SavingThrow" />
         </EntityType>
         <EntityType Name="Sense">
           <Key>
@@ -1152,6 +1801,7 @@
           <Property Name="type" Type="Int32" Nullable="false" />
           <Property Name="range" Type="Int32" Nullable="false" />
           <NavigationProperty Name="NPC_Sense" Relationship="DnDAppDBModel.FK_NPC_Sense_Sense" FromRole="Sense" ToRole="NPC_Sense" />
+          <NavigationProperty Name="PC_Sense" Relationship="DnDAppDBModel.FK_PC_Sense_Sense" FromRole="Sense" ToRole="PC_Sense" />
         </EntityType>
         <EntityType Name="Size">
           <Key>
@@ -1161,6 +1811,7 @@
           <Property Name="size1" Type="Int32" Nullable="false" />
           <Property Name="space" Type="Int32" Nullable="false" />
           <NavigationProperty Name="NPC" Relationship="DnDAppDBModel.FK_dbo_NPC_dbo_Size_size_id" FromRole="Size" ToRole="NPC" />
+          <NavigationProperty Name="PC" Relationship="DnDAppDBModel.FK_dbo_PC_dbo_Size_size_id" FromRole="Size" ToRole="PC" />
         </EntityType>
         <EntityType Name="Skill">
           <Key>
@@ -1172,6 +1823,7 @@
           <Property Name="bonus" Type="Int32" Nullable="false" />
           <Property Name="total" Type="Int32" Nullable="false" />
           <NavigationProperty Name="NPC_Skill" Relationship="DnDAppDBModel.FK_NPC_Skill_Skill" FromRole="Skill" ToRole="NPC_Skill" />
+          <NavigationProperty Name="PC_Skill" Relationship="DnDAppDBModel.FK_PC_Skill_Skill" FromRole="Skill" ToRole="PC_Skill" />
         </EntityType>
         <EntityType Name="SpecialTrait">
           <Key>
@@ -1181,6 +1833,7 @@
           <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="NPC_SpecialTrait" Relationship="DnDAppDBModel.FK_NPC_SpecialTrait_SpecialTrait" FromRole="SpecialTrait" ToRole="NPC_SpecialTrait" />
+          <NavigationProperty Name="PC_SpecialTrait" Relationship="DnDAppDBModel.FK_PC_SpecialTrait_SpecialTrait" FromRole="SpecialTrait" ToRole="PC_SpecialTrait" />
         </EntityType>
         <EntityType Name="Speed">
           <Key>
@@ -1190,6 +1843,7 @@
           <Property Name="typeSpeed" Type="Int32" Nullable="false" />
           <Property Name="speedft" Type="Int32" Nullable="false" />
           <NavigationProperty Name="NPC_Speed" Relationship="DnDAppDBModel.FK_NPC_Speed_Speed" FromRole="Speed" ToRole="NPC_Speed" />
+          <NavigationProperty Name="PC_Speed" Relationship="DnDAppDBModel.FK_PC_Speed_Speed" FromRole="Speed" ToRole="PC_Speed" />
         </EntityType>
         <Association Name="FK_NPC_AbilityScore_AbilityScore">
           <End Type="DnDAppDBModel.AbilityScore" Role="AbilityScore" Multiplicity="1">
@@ -1240,20 +1894,6 @@
             </Principal>
             <Dependent Role="NPC">
               <PropertyRef Name="challenge_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_NPC_Condition_Condition">
-          <End Type="DnDAppDBModel.Condition" Role="Condition" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="DnDAppDBModel.NPC_Condition" Role="NPC_Condition" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Condition">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="NPC_Condition">
-              <PropertyRef Name="Condition_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1333,20 +1973,6 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="NPC_Action">
-              <PropertyRef Name="NPC_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_NPC_Condition_NPC">
-          <End Type="DnDAppDBModel.NPC" Role="NPC" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="DnDAppDBModel.NPC_Condition" Role="NPC_Condition" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NPC">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="NPC_Condition">
               <PropertyRef Name="NPC_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -1557,7 +2183,515 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="PC">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="alignmentMorality" Type="Int32" Nullable="false" />
+          <Property Name="alignmentAttitude" Type="Int32" Nullable="false" />
+          <Property Name="race" Type="Int32" Nullable="false" />
+          <Property Name="C_class" Type="Int32" Nullable="false" />
+          <Property Name="background" Type="Int32" Nullable="false" />
+          <Property Name="armorBonus" Type="Int32" Nullable="false" />
+          <Property Name="HP" Type="Int32" Nullable="false" />
+          <Property Name="telepathy" Type="Int32" Nullable="false" />
+          <Property Name="armorClass_id" Type="Int32" />
+          <Property Name="hitPoint_id" Type="Int32" />
+          <Property Name="level_id" Type="Int32" />
+          <Property Name="size_id" Type="Int32" />
+          <NavigationProperty Name="Armor" Relationship="DnDAppDBModel.FK_dbo_PC_dbo_Armor_armorClass_id" FromRole="PC" ToRole="Armor" />
+          <NavigationProperty Name="Challenge" Relationship="DnDAppDBModel.FK_dbo_PC_dbo_Challenge_level_id" FromRole="PC" ToRole="Challenge" />
+          <NavigationProperty Name="HitPoint" Relationship="DnDAppDBModel.FK_dbo_PC_dbo_HitPoint_hitPoint_id" FromRole="PC" ToRole="HitPoint" />
+          <NavigationProperty Name="Size" Relationship="DnDAppDBModel.FK_dbo_PC_dbo_Size_size_id" FromRole="PC" ToRole="Size" />
+          <NavigationProperty Name="PC_Speed" Relationship="DnDAppDBModel.FK_PC_Speed_PC" FromRole="PC" ToRole="PC_Speed" />
+          <NavigationProperty Name="PC_AbilityScore" Relationship="DnDAppDBModel.FK_PC_AbilityScore_PC" FromRole="PC" ToRole="PC_AbilityScore" />
+          <NavigationProperty Name="PC_Action" Relationship="DnDAppDBModel.FK_PC_Action_PC" FromRole="PC" ToRole="PC_Action" />
+          <NavigationProperty Name="PC_Condition" Relationship="DnDAppDBModel.FK_PC_Condition_PC" FromRole="PC" ToRole="PC_Condition" />
+          <NavigationProperty Name="PC_Damage" Relationship="DnDAppDBModel.FK_PC_Damage_PC" FromRole="PC" ToRole="PC_Damage" />
+          <NavigationProperty Name="PC_Language" Relationship="DnDAppDBModel.FK_PC_Language_PC" FromRole="PC" ToRole="PC_Language" />
+          <NavigationProperty Name="PC_SavingThrow" Relationship="DnDAppDBModel.FK_PC_SavingThrow_PC" FromRole="PC" ToRole="PC_SavingThrow" />
+          <NavigationProperty Name="PC_Sense" Relationship="DnDAppDBModel.FK_PC_Sense_PC" FromRole="PC" ToRole="PC_Sense" />
+          <NavigationProperty Name="PC_Skill" Relationship="DnDAppDBModel.FK_PC_Skill_PC" FromRole="PC" ToRole="PC_Skill" />
+          <NavigationProperty Name="PC_SpecialTrait" Relationship="DnDAppDBModel.FK_PC_SpecialTrait_PC" FromRole="PC" ToRole="PC_SpecialTrait" />
+        </EntityType>
+        <EntityType Name="PC_Speed">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PC_id" Type="Int32" Nullable="false" />
+          <Property Name="Speed_id" Type="Int32" Nullable="false" />
+          <Property Name="isTemplate" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PC" Relationship="DnDAppDBModel.FK_PC_Speed_PC" FromRole="PC_Speed" ToRole="PC" />
+          <NavigationProperty Name="Speed" Relationship="DnDAppDBModel.FK_PC_Speed_Speed" FromRole="PC_Speed" ToRole="Speed" />
+        </EntityType>
+        <Association Name="FK_dbo_PC_dbo_Armor_armorClass_id">
+          <End Type="DnDAppDBModel.Armor" Role="Armor" Multiplicity="0..1" />
+          <End Type="DnDAppDBModel.PC" Role="PC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Armor">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC">
+              <PropertyRef Name="armorClass_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PC_dbo_Challenge_level_id">
+          <End Type="DnDAppDBModel.Challenge" Role="Challenge" Multiplicity="0..1" />
+          <End Type="DnDAppDBModel.PC" Role="PC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Challenge">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC">
+              <PropertyRef Name="level_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PC_dbo_HitPoint_hitPoint_id">
+          <End Type="DnDAppDBModel.HitPoint" Role="HitPoint" Multiplicity="0..1" />
+          <End Type="DnDAppDBModel.PC" Role="PC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HitPoint">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC">
+              <PropertyRef Name="hitPoint_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PC_dbo_Size_size_id">
+          <End Type="DnDAppDBModel.Size" Role="Size" Multiplicity="0..1" />
+          <End Type="DnDAppDBModel.PC" Role="PC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Size">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC">
+              <PropertyRef Name="size_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_Speed_PC">
+          <End Type="DnDAppDBModel.PC" Role="PC" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DnDAppDBModel.PC_Speed" Role="PC_Speed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PC">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_Speed">
+              <PropertyRef Name="PC_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_Speed_Speed">
+          <End Type="DnDAppDBModel.Speed" Role="Speed" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DnDAppDBModel.PC_Speed" Role="PC_Speed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Speed">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_Speed">
+              <PropertyRef Name="Speed_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PC_AbilityScore">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PC_id" Type="Int32" Nullable="false" />
+          <Property Name="AbilityScore_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AbilityScore" Relationship="DnDAppDBModel.FK_PC_AbilityScore_AbilityScore" FromRole="PC_AbilityScore" ToRole="AbilityScore" />
+          <NavigationProperty Name="PC" Relationship="DnDAppDBModel.FK_PC_AbilityScore_PC" FromRole="PC_AbilityScore" ToRole="PC" />
+        </EntityType>
+        <EntityType Name="PC_Action">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PC_id" Type="Int32" Nullable="false" />
+          <Property Name="Action_id" Type="Int32" Nullable="false" />
+          <Property Name="isTemplate" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Action" Relationship="DnDAppDBModel.FK_PC_Action_Action" FromRole="PC_Action" ToRole="Action" />
+          <NavigationProperty Name="PC" Relationship="DnDAppDBModel.FK_PC_Action_PC" FromRole="PC_Action" ToRole="PC" />
+        </EntityType>
+        <EntityType Name="PC_Condition">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PC_id" Type="Int32" Nullable="false" />
+          <Property Name="Condition_id" Type="Int32" Nullable="false" />
+          <Property Name="isTemplate" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Condition" Relationship="DnDAppDBModel.FK_PC_Condition_Condition" FromRole="PC_Condition" ToRole="Condition" />
+          <NavigationProperty Name="PC" Relationship="DnDAppDBModel.FK_PC_Condition_PC" FromRole="PC_Condition" ToRole="PC" />
+        </EntityType>
+        <EntityType Name="PC_Damage">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PC_id" Type="Int32" Nullable="false" />
+          <Property Name="Damage_id" Type="Int32" Nullable="false" />
+          <Property Name="isTemplate" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Damage" Relationship="DnDAppDBModel.FK_PC_Damage_Damage" FromRole="PC_Damage" ToRole="Damage" />
+          <NavigationProperty Name="PC" Relationship="DnDAppDBModel.FK_PC_Damage_PC" FromRole="PC_Damage" ToRole="PC" />
+        </EntityType>
+        <EntityType Name="PC_Language">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PC_id" Type="Int32" Nullable="false" />
+          <Property Name="Language_id" Type="Int32" Nullable="false" />
+          <Property Name="isTemplate" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Language" Relationship="DnDAppDBModel.FK_PC_Language_Language" FromRole="PC_Language" ToRole="Language" />
+          <NavigationProperty Name="PC" Relationship="DnDAppDBModel.FK_PC_Language_PC" FromRole="PC_Language" ToRole="PC" />
+        </EntityType>
+        <EntityType Name="PC_SavingThrow">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PC_id" Type="Int32" Nullable="false" />
+          <Property Name="SavingThrow_id" Type="Int32" Nullable="false" />
+          <Property Name="isTemplate" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PC" Relationship="DnDAppDBModel.FK_PC_SavingThrow_PC" FromRole="PC_SavingThrow" ToRole="PC" />
+          <NavigationProperty Name="SavingThrow" Relationship="DnDAppDBModel.FK_PC_SavingThrow_SavingThrow" FromRole="PC_SavingThrow" ToRole="SavingThrow" />
+        </EntityType>
+        <EntityType Name="PC_Sense">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PC_id" Type="Int32" Nullable="false" />
+          <Property Name="Sense_id" Type="Int32" Nullable="false" />
+          <Property Name="isTemplate" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PC" Relationship="DnDAppDBModel.FK_PC_Sense_PC" FromRole="PC_Sense" ToRole="PC" />
+          <NavigationProperty Name="Sense" Relationship="DnDAppDBModel.FK_PC_Sense_Sense" FromRole="PC_Sense" ToRole="Sense" />
+        </EntityType>
+        <EntityType Name="PC_Skill">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PC_id" Type="Int32" Nullable="false" />
+          <Property Name="Skill_id" Type="Int32" Nullable="false" />
+          <Property Name="isTemplate" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PC" Relationship="DnDAppDBModel.FK_PC_Skill_PC" FromRole="PC_Skill" ToRole="PC" />
+          <NavigationProperty Name="Skill" Relationship="DnDAppDBModel.FK_PC_Skill_Skill" FromRole="PC_Skill" ToRole="Skill" />
+        </EntityType>
+        <EntityType Name="PC_SpecialTrait">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PC_id" Type="Int32" Nullable="false" />
+          <Property Name="SpecialTrait_id" Type="Int32" Nullable="false" />
+          <Property Name="isTemplate" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PC" Relationship="DnDAppDBModel.FK_PC_SpecialTrait_PC" FromRole="PC_SpecialTrait" ToRole="PC" />
+          <NavigationProperty Name="SpecialTrait" Relationship="DnDAppDBModel.FK_PC_SpecialTrait_SpecialTrait" FromRole="PC_SpecialTrait" ToRole="SpecialTrait" />
+        </EntityType>
+        <Association Name="FK_PC_AbilityScore_AbilityScore">
+          <End Type="DnDAppDBModel.AbilityScore" Role="AbilityScore" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DnDAppDBModel.PC_AbilityScore" Role="PC_AbilityScore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AbilityScore">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_AbilityScore">
+              <PropertyRef Name="AbilityScore_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_Action_Action">
+          <End Type="DnDAppDBModel.Action" Role="Action" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DnDAppDBModel.PC_Action" Role="PC_Action" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Action">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_Action">
+              <PropertyRef Name="Action_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_Condition_Condition">
+          <End Type="DnDAppDBModel.Condition" Role="Condition" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DnDAppDBModel.PC_Condition" Role="PC_Condition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Condition">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_Condition">
+              <PropertyRef Name="Condition_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_Damage_Damage">
+          <End Type="DnDAppDBModel.Damage" Role="Damage" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DnDAppDBModel.PC_Damage" Role="PC_Damage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Damage">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_Damage">
+              <PropertyRef Name="Damage_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_Language_Language">
+          <End Type="DnDAppDBModel.Language" Role="Language" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DnDAppDBModel.PC_Language" Role="PC_Language" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_Language">
+              <PropertyRef Name="Language_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_AbilityScore_PC">
+          <End Type="DnDAppDBModel.PC" Role="PC" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DnDAppDBModel.PC_AbilityScore" Role="PC_AbilityScore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PC">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_AbilityScore">
+              <PropertyRef Name="PC_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_Action_PC">
+          <End Type="DnDAppDBModel.PC" Role="PC" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DnDAppDBModel.PC_Action" Role="PC_Action" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PC">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_Action">
+              <PropertyRef Name="PC_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_Condition_PC">
+          <End Type="DnDAppDBModel.PC" Role="PC" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DnDAppDBModel.PC_Condition" Role="PC_Condition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PC">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_Condition">
+              <PropertyRef Name="PC_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_Damage_PC">
+          <End Type="DnDAppDBModel.PC" Role="PC" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DnDAppDBModel.PC_Damage" Role="PC_Damage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PC">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_Damage">
+              <PropertyRef Name="PC_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_Language_PC">
+          <End Type="DnDAppDBModel.PC" Role="PC" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DnDAppDBModel.PC_Language" Role="PC_Language" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PC">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_Language">
+              <PropertyRef Name="PC_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_SavingThrow_PC">
+          <End Type="DnDAppDBModel.PC" Role="PC" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DnDAppDBModel.PC_SavingThrow" Role="PC_SavingThrow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PC">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_SavingThrow">
+              <PropertyRef Name="PC_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_Sense_PC">
+          <End Type="DnDAppDBModel.PC" Role="PC" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DnDAppDBModel.PC_Sense" Role="PC_Sense" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PC">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_Sense">
+              <PropertyRef Name="PC_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_Skill_PC">
+          <End Type="DnDAppDBModel.PC" Role="PC" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DnDAppDBModel.PC_Skill" Role="PC_Skill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PC">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_Skill">
+              <PropertyRef Name="PC_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_SpecialTrait_PC">
+          <End Type="DnDAppDBModel.PC" Role="PC" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DnDAppDBModel.PC_SpecialTrait" Role="PC_SpecialTrait" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PC">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_SpecialTrait">
+              <PropertyRef Name="PC_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_SavingThrow_SavingThrow">
+          <End Type="DnDAppDBModel.SavingThrow" Role="SavingThrow" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DnDAppDBModel.PC_SavingThrow" Role="PC_SavingThrow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SavingThrow">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_SavingThrow">
+              <PropertyRef Name="SavingThrow_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_Sense_Sense">
+          <End Type="DnDAppDBModel.Sense" Role="Sense" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DnDAppDBModel.PC_Sense" Role="PC_Sense" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sense">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_Sense">
+              <PropertyRef Name="Sense_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_Skill_Skill">
+          <End Type="DnDAppDBModel.Skill" Role="Skill" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DnDAppDBModel.PC_Skill" Role="PC_Skill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skill">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_Skill">
+              <PropertyRef Name="Skill_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PC_SpecialTrait_SpecialTrait">
+          <End Type="DnDAppDBModel.SpecialTrait" Role="SpecialTrait" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DnDAppDBModel.PC_SpecialTrait" Role="PC_SpecialTrait" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SpecialTrait">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PC_SpecialTrait">
+              <PropertyRef Name="SpecialTrait_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="NPC_Condition">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NPC_id" Type="Int32" Nullable="false" />
+          <Property Name="Condition_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Condition" Relationship="DnDAppDBModel.FK_NPC_Condition_Condition" FromRole="NPC_Condition" ToRole="Condition" />
+          <NavigationProperty Name="NPC" Relationship="DnDAppDBModel.FK_NPC_Condition_NPC" FromRole="NPC_Condition" ToRole="NPC" />
+        </EntityType>
+        <Association Name="FK_NPC_Condition_Condition">
+          <End Type="DnDAppDBModel.Condition" Role="Condition" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DnDAppDBModel.NPC_Condition" Role="NPC_Condition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Condition">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="NPC_Condition">
+              <PropertyRef Name="Condition_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NPC_Condition_NPC">
+          <End Type="DnDAppDBModel.NPC" Role="NPC" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DnDAppDBModel.NPC_Condition" Role="NPC_Condition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NPC">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="NPC_Condition">
+              <PropertyRef Name="NPC_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1712,15 +2846,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="NPC_Condition">
-            <EntityTypeMapping TypeName="DnDAppDBModel.NPC_Condition">
-              <MappingFragment StoreEntitySet="NPC_Condition">
-                <ScalarProperty Name="Condition_id" ColumnName="Condition_id" />
-                <ScalarProperty Name="NPC_id" ColumnName="NPC_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="NPC_Damage">
             <EntityTypeMapping TypeName="DnDAppDBModel.NPC_Damage">
               <MappingFragment StoreEntitySet="NPC_Damage">
@@ -1844,6 +2969,134 @@
             <EntityTypeMapping TypeName="DnDAppDBModel.User_NPC">
               <MappingFragment StoreEntitySet="User_NPC">
                 <ScalarProperty Name="User_id" ColumnName="User_id" />
+                <ScalarProperty Name="NPC_id" ColumnName="NPC_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PC">
+            <EntityTypeMapping TypeName="DnDAppDBModel.PC">
+              <MappingFragment StoreEntitySet="PC">
+                <ScalarProperty Name="size_id" ColumnName="size_id" />
+                <ScalarProperty Name="level_id" ColumnName="level_id" />
+                <ScalarProperty Name="hitPoint_id" ColumnName="hitPoint_id" />
+                <ScalarProperty Name="armorClass_id" ColumnName="armorClass_id" />
+                <ScalarProperty Name="telepathy" ColumnName="telepathy" />
+                <ScalarProperty Name="HP" ColumnName="HP" />
+                <ScalarProperty Name="armorBonus" ColumnName="armorBonus" />
+                <ScalarProperty Name="background" ColumnName="background" />
+                <ScalarProperty Name="C_class" ColumnName="_class" />
+                <ScalarProperty Name="race" ColumnName="race" />
+                <ScalarProperty Name="alignmentAttitude" ColumnName="alignmentAttitude" />
+                <ScalarProperty Name="alignmentMorality" ColumnName="alignmentMorality" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PC_Speed">
+            <EntityTypeMapping TypeName="DnDAppDBModel.PC_Speed">
+              <MappingFragment StoreEntitySet="PC_Speed">
+                <ScalarProperty Name="isTemplate" ColumnName="isTemplate" />
+                <ScalarProperty Name="Speed_id" ColumnName="Speed_id" />
+                <ScalarProperty Name="PC_id" ColumnName="PC_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PC_AbilityScore">
+            <EntityTypeMapping TypeName="DnDAppDBModel.PC_AbilityScore">
+              <MappingFragment StoreEntitySet="PC_AbilityScore">
+                <ScalarProperty Name="AbilityScore_id" ColumnName="AbilityScore_id" />
+                <ScalarProperty Name="PC_id" ColumnName="PC_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PC_Action">
+            <EntityTypeMapping TypeName="DnDAppDBModel.PC_Action">
+              <MappingFragment StoreEntitySet="PC_Action">
+                <ScalarProperty Name="isTemplate" ColumnName="isTemplate" />
+                <ScalarProperty Name="Action_id" ColumnName="Action_id" />
+                <ScalarProperty Name="PC_id" ColumnName="PC_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PC_Condition">
+            <EntityTypeMapping TypeName="DnDAppDBModel.PC_Condition">
+              <MappingFragment StoreEntitySet="PC_Condition">
+                <ScalarProperty Name="isTemplate" ColumnName="isTemplate" />
+                <ScalarProperty Name="Condition_id" ColumnName="Condition_id" />
+                <ScalarProperty Name="PC_id" ColumnName="PC_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PC_Damage">
+            <EntityTypeMapping TypeName="DnDAppDBModel.PC_Damage">
+              <MappingFragment StoreEntitySet="PC_Damage">
+                <ScalarProperty Name="isTemplate" ColumnName="isTemplate" />
+                <ScalarProperty Name="Damage_id" ColumnName="Damage_id" />
+                <ScalarProperty Name="PC_id" ColumnName="PC_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PC_Language">
+            <EntityTypeMapping TypeName="DnDAppDBModel.PC_Language">
+              <MappingFragment StoreEntitySet="PC_Language">
+                <ScalarProperty Name="isTemplate" ColumnName="isTemplate" />
+                <ScalarProperty Name="Language_id" ColumnName="Language_id" />
+                <ScalarProperty Name="PC_id" ColumnName="PC_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PC_SavingThrow">
+            <EntityTypeMapping TypeName="DnDAppDBModel.PC_SavingThrow">
+              <MappingFragment StoreEntitySet="PC_SavingThrow">
+                <ScalarProperty Name="isTemplate" ColumnName="isTemplate" />
+                <ScalarProperty Name="SavingThrow_id" ColumnName="SavingThrow_id" />
+                <ScalarProperty Name="PC_id" ColumnName="PC_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PC_Sense">
+            <EntityTypeMapping TypeName="DnDAppDBModel.PC_Sense">
+              <MappingFragment StoreEntitySet="PC_Sense">
+                <ScalarProperty Name="isTemplate" ColumnName="isTemplate" />
+                <ScalarProperty Name="Sense_id" ColumnName="Sense_id" />
+                <ScalarProperty Name="PC_id" ColumnName="PC_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PC_Skill">
+            <EntityTypeMapping TypeName="DnDAppDBModel.PC_Skill">
+              <MappingFragment StoreEntitySet="PC_Skill">
+                <ScalarProperty Name="isTemplate" ColumnName="isTemplate" />
+                <ScalarProperty Name="Skill_id" ColumnName="Skill_id" />
+                <ScalarProperty Name="PC_id" ColumnName="PC_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PC_SpecialTrait">
+            <EntityTypeMapping TypeName="DnDAppDBModel.PC_SpecialTrait">
+              <MappingFragment StoreEntitySet="PC_SpecialTrait">
+                <ScalarProperty Name="isTemplate" ColumnName="isTemplate" />
+                <ScalarProperty Name="SpecialTrait_id" ColumnName="SpecialTrait_id" />
+                <ScalarProperty Name="PC_id" ColumnName="PC_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NPC_Condition">
+            <EntityTypeMapping TypeName="DnDAppDBModel.NPC_Condition">
+              <MappingFragment StoreEntitySet="NPC_Condition">
+                <ScalarProperty Name="Condition_id" ColumnName="Condition_id" />
                 <ScalarProperty Name="NPC_id" ColumnName="NPC_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>

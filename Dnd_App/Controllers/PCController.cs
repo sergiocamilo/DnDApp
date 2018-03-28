@@ -50,6 +50,52 @@ namespace Dnd_App.Controllers
             return PartialView(pc);
         }
 
+        [HttpPost]
+        public ActionResult Save(long TempID)
+        {
+            var Npc = Utils.TemporalDB.Instance.SelectNPC(TempID);
+            var U = Dnd_App.Utils.Session.CurrentSession();
+
+
+            if (Npc.Id == 0)//new npc
+            {
+                Npc.Create();
+                U.AddNPC(Npc.Id);
+            }
+            else
+            {
+                var newid = Npc.Update();
+                U.AddNPC(newid);
+            }
+            Utils.TemporalDB.Instance.RemoveNPC(TempID);
+
+            return Json(new
+            {
+                message = "Succesful"
+            });
+        }
+
+        //[HttpGet]
+        //public ActionResult Edit(int id)
+        //{
+        //    Utils.Presets Preset = new Utils.Presets();
+        //    var NPC = Preset.initVoidNPC();
+        //    NPC.Id = (int)id;
+        //    NPC.Select();
+        //    Utils.TemporalDB.Instance.InsertNPC(NPC);
+        //    return View("New", NPC);
+        //}
+
+        //[HttpGet]
+        //public ActionResult _ViewFromDB(long id)
+        //{
+        //    Utils.Presets Preset = new Utils.Presets();
+        //    var NPC = Preset.initVoidNPC();
+        //    NPC.Id = (int)id;
+        //    NPC.Select();
+        //    return PartialView("_View", NPC);
+        //}
+
 
         #region Callbacks --> Basic Info
 

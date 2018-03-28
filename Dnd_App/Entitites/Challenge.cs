@@ -18,6 +18,7 @@ namespace Dnd_App.Entitites
         public Challenge()
         {
             this.NPC = new HashSet<NPC>();
+            this.PC = new HashSet<PC>();
         }
     
         public int id { get; set; }
@@ -27,5 +28,7 @@ namespace Dnd_App.Entitites
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NPC> NPC { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PC> PC { get; set; }
     }
 }

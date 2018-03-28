@@ -18,6 +18,7 @@ namespace Dnd_App.Entitites
         public SavingThrow()
         {
             this.NPC_SavingThrow = new HashSet<NPC_SavingThrow>();
+            this.PC_SavingThrow = new HashSet<PC_SavingThrow>();
         }
     
         public int id { get; set; }
@@ -26,5 +27,7 @@ namespace Dnd_App.Entitites
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NPC_SavingThrow> NPC_SavingThrow { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PC_SavingThrow> PC_SavingThrow { get; set; }
     }
 }

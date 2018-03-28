@@ -17,12 +17,15 @@ namespace Dnd_App.Entitites
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Condition()
         {
+            this.PC_Condition = new HashSet<PC_Condition>();
             this.NPC_Condition = new HashSet<NPC_Condition>();
         }
     
         public int id { get; set; }
         public int condition1 { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PC_Condition> PC_Condition { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NPC_Condition> NPC_Condition { get; set; }
     }

@@ -18,6 +18,7 @@ namespace Dnd_App.Entitites
         public AbilityScore()
         {
             this.NPC_AbilityScore = new HashSet<NPC_AbilityScore>();
+            this.PC_AbilityScore = new HashSet<PC_AbilityScore>();
         }
     
         public int id { get; set; }
@@ -31,5 +32,7 @@ namespace Dnd_App.Entitites
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NPC_AbilityScore> NPC_AbilityScore { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PC_AbilityScore> PC_AbilityScore { get; set; }
     }
 }

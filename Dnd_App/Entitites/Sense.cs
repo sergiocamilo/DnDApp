@@ -18,6 +18,7 @@ namespace Dnd_App.Entitites
         public Sense()
         {
             this.NPC_Sense = new HashSet<NPC_Sense>();
+            this.PC_Sense = new HashSet<PC_Sense>();
         }
     
         public int id { get; set; }
@@ -26,5 +27,7 @@ namespace Dnd_App.Entitites
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NPC_Sense> NPC_Sense { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PC_Sense> PC_Sense { get; set; }
     }
 }

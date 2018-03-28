@@ -18,6 +18,7 @@ namespace Dnd_App.Entitites
         public SpecialTrait()
         {
             this.NPC_SpecialTrait = new HashSet<NPC_SpecialTrait>();
+            this.PC_SpecialTrait = new HashSet<PC_SpecialTrait>();
         }
     
         public int id { get; set; }
@@ -26,5 +27,7 @@ namespace Dnd_App.Entitites
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NPC_SpecialTrait> NPC_SpecialTrait { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PC_SpecialTrait> PC_SpecialTrait { get; set; }
     }
 }

@@ -4,45 +4,42 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e05ef1ac309a48c8b5cd3c716456eb50" Name="Diagram1" ZoomLevel="82">
-        <EntityTypeShape EntityType="DnDAppDBModel.User" Width="1.5" PointX="11.875" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="DnDAppDBModel.AbilityScore" Width="1.5" PointX="9.625" PointY="1.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="DnDAppDBModel.Action" Width="1.5" PointX="9.625" PointY="4.125" IsExpanded="false" />
-        <EntityTypeShape EntityType="DnDAppDBModel.Armor" Width="1.5" PointX="0.5" PointY="1.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="DnDAppDBModel.Challenge" Width="1.5" PointX="0.5" PointY="4.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="DnDAppDBModel.Condition" Width="1.5" PointX="9.75" PointY="10" IsExpanded="false" />
-        <EntityTypeShape EntityType="DnDAppDBModel.Damage" Width="1.5" PointX="9.75" PointY="8.875" IsExpanded="false" />
-        <EntityTypeShape EntityType="DnDAppDBModel.HitPoint" Width="1.5" PointX="0.5" PointY="2.625" IsExpanded="false" />
-        <EntityTypeShape EntityType="DnDAppDBModel.Language" Width="1.5" PointX="9.625" PointY="5.125" IsExpanded="false" />
-        <EntityTypeShape EntityType="DnDAppDBModel.NPC" Width="2.125" PointX="3.125" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DnDAppDBModel.NPC_AbilityScore" Width="1.5" PointX="6.625" PointY="1.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="DnDAppDBModel.NPC_Action" Width="1.5" PointX="6.75" PointY="4.125" IsExpanded="false" />
-        <EntityTypeShape EntityType="DnDAppDBModel.NPC_Condition" Width="1.5" PointX="6.625" PointY="10" IsExpanded="false" />
-        <EntityTypeShape EntityType="DnDAppDBModel.NPC_Damage" Width="1.5" PointX="6.625" PointY="8.875" IsExpanded="false" />
-        <EntityTypeShape EntityType="DnDAppDBModel.NPC_Language" Width="1.5" PointX="6.75" PointY="5.125" IsExpanded="false" />
-        <EntityTypeShape EntityType="DnDAppDBModel.NPC_SavingThrow" Width="1.5" PointX="6.75" PointY="3.25" IsExpanded="false" />
-        <EntityTypeShape EntityType="DnDAppDBModel.NPC_Sense" Width="1.5" PointX="6.75" PointY="7.875" IsExpanded="false" />
-        <EntityTypeShape EntityType="DnDAppDBModel.NPC_Skill" Width="1.5" PointX="6.75" PointY="7.125" IsExpanded="false" />
-        <EntityTypeShape EntityType="DnDAppDBModel.NPC_SpecialTrait" Width="1.5" PointX="6.75" PointY="2.5" IsExpanded="false" />
-        <EntityTypeShape EntityType="DnDAppDBModel.NPC_Speed" Width="1.5" PointX="6.875" PointY="6" IsExpanded="false" />
-        <EntityTypeShape EntityType="DnDAppDBModel.SavingThrow" Width="1.5" PointX="9.5" PointY="3.25" IsExpanded="false" />
-        <EntityTypeShape EntityType="DnDAppDBModel.Sense" Width="1.5" PointX="9.625" PointY="7.875" IsExpanded="false" />
-        <EntityTypeShape EntityType="DnDAppDBModel.Size" Width="1.5" PointX="0.5" PointY="3.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="DnDAppDBModel.Skill" Width="1.5" PointX="9.75" PointY="7" IsExpanded="false" />
-        <EntityTypeShape EntityType="DnDAppDBModel.SpecialTrait" Width="1.5" PointX="9.625" PointY="2.375" IsExpanded="false" />
-        <EntityTypeShape EntityType="DnDAppDBModel.Speed" Width="1.5" PointX="9.75" PointY="6.125" IsExpanded="false" />
+      <Diagram DiagramId="e05ef1ac309a48c8b5cd3c716456eb50" Name="Diagram1" ZoomLevel="71">
+        <EntityTypeShape EntityType="DnDAppDBModel.User" Width="1.5" PointX="7.5" PointY="0.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.AbilityScore" Width="1.5" PointX="7.375" PointY="1.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.Action" Width="1.5" PointX="7.375" PointY="4.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.Armor" Width="1.5" PointX="4.375" PointY="11" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.Challenge" Width="1.5" PointX="4.375" PointY="14" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.Condition" Width="1.5" PointX="7.5" PointY="10" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.Damage" Width="1.5" PointX="7.5" PointY="8.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.HitPoint" Width="1.5" PointX="4.375" PointY="11.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.Language" Width="1.5" PointX="7.375" PointY="5.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.NPC" Width="2.125" PointX="0.5" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DnDAppDBModel.NPC_AbilityScore" Width="1.5" PointX="4.25" PointY="1.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.NPC_Action" Width="1.5" PointX="4.5" PointY="4.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.NPC_Damage" Width="1.5" PointX="3.625" PointY="8.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.NPC_Language" Width="1.5" PointX="4.5" PointY="5.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.NPC_SavingThrow" Width="1.5" PointX="4.5" PointY="3.25" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.NPC_Sense" Width="1.5" PointX="4.5" PointY="7.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.NPC_Skill" Width="1.5" PointX="4.5" PointY="7.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.NPC_SpecialTrait" Width="1.5" PointX="4.5" PointY="2.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.NPC_Speed" Width="1.5" PointX="4.625" PointY="6" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.SavingThrow" Width="1.5" PointX="7.25" PointY="3.25" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.Sense" Width="1.5" PointX="7.375" PointY="7.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.Size" Width="1.5" PointX="4.375" PointY="13" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.Skill" Width="1.5" PointX="7.5" PointY="7" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.SpecialTrait" Width="1.5" PointX="7.375" PointY="2.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.Speed" Width="1.5" PointX="7.5" PointY="6.125" IsExpanded="false" />
         <AssociationConnector Association="DnDAppDBModel.FK_NPC_AbilityScore_AbilityScore" />
         <AssociationConnector Association="DnDAppDBModel.FK_NPC_Action_Action" />
         <AssociationConnector Association="DnDAppDBModel.FK_dbo_NPC_dbo_Armor_armorClass_id" />
         <AssociationConnector Association="DnDAppDBModel.FK_dbo_NPC_dbo_Challenge_challenge_id" />
-        <AssociationConnector Association="DnDAppDBModel.FK_NPC_Condition_Condition" />
         <AssociationConnector Association="DnDAppDBModel.FK_NPC_Damage_Damage" />
         <AssociationConnector Association="DnDAppDBModel.FK_dbo_NPC_dbo_HitPoint_hitPoint_id" />
         <AssociationConnector Association="DnDAppDBModel.FK_NPC_Language_Language" />
         <AssociationConnector Association="DnDAppDBModel.FK_dbo_NPC_dbo_Size_size_id" />
         <AssociationConnector Association="DnDAppDBModel.FK_NPC_AbilityScore_NPC" />
         <AssociationConnector Association="DnDAppDBModel.FK_NPC_Action_NPC" />
-        <AssociationConnector Association="DnDAppDBModel.FK_NPC_Condition_NPC" />
         <AssociationConnector Association="DnDAppDBModel.FK_NPC_Damage_NPC" />
         <AssociationConnector Association="DnDAppDBModel.FK_NPC_Language_NPC" />
         <AssociationConnector Association="DnDAppDBModel.FK_NPC_SavingThrow_NPC" />
@@ -55,10 +52,48 @@
         <AssociationConnector Association="DnDAppDBModel.FK_NPC_Skill_Skill" />
         <AssociationConnector Association="DnDAppDBModel.FK_NPC_SpecialTrait_SpecialTrait" />
         <AssociationConnector Association="DnDAppDBModel.FK_NPC_Speed_Speed" />
-        <EntityTypeShape EntityType="DnDAppDBModel.User_NPC" Width="1.5" PointX="6.5" PointY="1" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.User_NPC" Width="1.5" PointX="4.25" PointY="1" IsExpanded="false" />
         <AssociationConnector Association="DnDAppDBModel.FK_User_NPC_NPC" />
         <AssociationConnector Association="DnDAppDBModel.FK_User_NPC_User" />
-      </Diagram>
+        <EntityTypeShape EntityType="DnDAppDBModel.PC" Width="2" PointX="13.375" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DnDAppDBModel.PC_Speed" Width="1.5" PointX="10.625" PointY="6.125" IsExpanded="false" />
+        <AssociationConnector Association="DnDAppDBModel.FK_dbo_PC_dbo_Armor_armorClass_id" />
+        <AssociationConnector Association="DnDAppDBModel.FK_dbo_PC_dbo_Challenge_level_id" />
+        <AssociationConnector Association="DnDAppDBModel.FK_dbo_PC_dbo_HitPoint_hitPoint_id" />
+        <AssociationConnector Association="DnDAppDBModel.FK_dbo_PC_dbo_Size_size_id" />
+        <AssociationConnector Association="DnDAppDBModel.FK_PC_Speed_PC" />
+        <AssociationConnector Association="DnDAppDBModel.FK_PC_Speed_Speed" />
+        <EntityTypeShape EntityType="DnDAppDBModel.PC_AbilityScore" Width="1.5" PointX="10.5" PointY="1.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.PC_Action" Width="1.5" PointX="10.375" PointY="4.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.PC_Condition" Width="1.5" PointX="10.25" PointY="10.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.PC_Damage" Width="1.5" PointX="10.375" PointY="8.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.PC_Language" Width="1.5" PointX="10.125" PointY="5.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.PC_SavingThrow" Width="1.5" PointX="10.375" PointY="3.25" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.PC_Sense" Width="1.5" PointX="10.375" PointY="7.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.PC_Skill" Width="1.5" PointX="10.5" PointY="7.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.PC_SpecialTrait" Width="1.5" PointX="10.5" PointY="2.375" IsExpanded="false" />
+        <AssociationConnector Association="DnDAppDBModel.FK_PC_AbilityScore_AbilityScore" />
+        <AssociationConnector Association="DnDAppDBModel.FK_PC_Action_Action" />
+        <AssociationConnector Association="DnDAppDBModel.FK_PC_Condition_Condition" />
+        <AssociationConnector Association="DnDAppDBModel.FK_PC_Damage_Damage" />
+        <AssociationConnector Association="DnDAppDBModel.FK_PC_Language_Language" />
+        <AssociationConnector Association="DnDAppDBModel.FK_PC_AbilityScore_PC" />
+        <AssociationConnector Association="DnDAppDBModel.FK_PC_Action_PC" />
+        <AssociationConnector Association="DnDAppDBModel.FK_PC_Condition_PC" />
+        <AssociationConnector Association="DnDAppDBModel.FK_PC_Damage_PC" />
+        <AssociationConnector Association="DnDAppDBModel.FK_PC_Language_PC" />
+        <AssociationConnector Association="DnDAppDBModel.FK_PC_SavingThrow_PC" />
+        <AssociationConnector Association="DnDAppDBModel.FK_PC_Sense_PC" />
+        <AssociationConnector Association="DnDAppDBModel.FK_PC_Skill_PC" />
+        <AssociationConnector Association="DnDAppDBModel.FK_PC_SpecialTrait_PC" />
+        <AssociationConnector Association="DnDAppDBModel.FK_PC_SavingThrow_SavingThrow" />
+        <AssociationConnector Association="DnDAppDBModel.FK_PC_Sense_Sense" />
+        <AssociationConnector Association="DnDAppDBModel.FK_PC_Skill_Skill" />
+        <AssociationConnector Association="DnDAppDBModel.FK_PC_SpecialTrait_SpecialTrait" />
+        <EntityTypeShape EntityType="DnDAppDBModel.NPC_Condition" Width="1.5" PointX="4.375" PointY="9.875" IsExpanded="false" />
+        <AssociationConnector Association="DnDAppDBModel.FK_NPC_Condition_Condition" />
+        <AssociationConnector Association="DnDAppDBModel.FK_NPC_Condition_NPC" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

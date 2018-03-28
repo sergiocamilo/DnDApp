@@ -18,6 +18,7 @@ namespace Dnd_App.Entitites
         public Speed()
         {
             this.NPC_Speed = new HashSet<NPC_Speed>();
+            this.PC_Speed = new HashSet<PC_Speed>();
         }
     
         public int id { get; set; }
@@ -26,5 +27,7 @@ namespace Dnd_App.Entitites
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NPC_Speed> NPC_Speed { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PC_Speed> PC_Speed { get; set; }
     }
 }

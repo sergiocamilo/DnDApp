@@ -4,6 +4,7 @@
     ViewBag.Title = "New PC";
     ViewBag.Character = "PC";
     ViewBag.TempID = Model.TempID;
+
 }
 
 <main>
@@ -91,34 +92,103 @@
 
 
 
-    @section Scripts{
+@section Scripts{
 
-<script src="~/Scripts/materialize/initform.js"></script>
-<script src="~/Scripts/materialize/loadform.js"></script>
+    <!--Save back-->
+    <script>
 
-        <!--Alert dd-->
-<script>
-    function Alertoast(a, t) {
-        alert(a);
-        Materialize.toast(t, 3000);
-
-    }
-</script>
+          function Back() {
 
 
+                $.confirm({
+                    title: 'Are you sure you want to leave?',
+                    type: 'black',
+                    buttons: {
+                        ok: {
+                            text: "ok!",
+                            btnClass: 'btn',
+                            keys: ['enter'],
+                            action: function () {
+                                window.location.href = '@Url.Action("Panel", "User")';
+                            }
+                        },
+                        cancel: function () {
+                            console.log('the user clicked cancel');
+                        }
+                    }
+                });
+          }
 
 
-        <!--loadcreate on load-->
-        <script>
+
+    </script>
+
+    <script>
+        function Save() {
+
+             $.confirm({
+                 title: 'Are you sure want to save the changes?',
+                type: 'black',
+                buttons: {
+                    ok: {
+                        text: "ok!",
+                        btnClass: 'btn',
+                        keys: ['enter'],
+                        action: function () {
+                            $.ajax({
+                                type: "POST",
+                                cache: false,
+                                dataType: "html",
+                                data: JSON.stringify({ 'TempID': @Model.TempID }),
+                                url: "@Url.Action("Save","PC")",
+                                contentType: "application/json; charset=utf-8",
+                                success: function (data) {
+                                    Materialize.toast('Success!');
+                                    window.location.href = '@Url.Action("Panel", "User")';
+                                },
+                                failure: function (errMsg) {
+
+                                }
+                            });
+                        }
+                    },
+                    cancel: function () {
+                        console.log('the user clicked cancel');
+                    }
+                }
+            });
+
+
+
+         }
+    </script>
+
+    <script src="~/Scripts/materialize/initform.js"></script>
+    <script src="~/Scripts/materialize/loadform.js"></script>
+
+    <!--Alert dd-->
+    <script>
+        function Alertoast(a, t) {
+            alert(a);
+            Materialize.toast(t, 3000);
+
+        }
+    </script>
+
+
+
+
+    <!--loadcreate on load-->
+    <script>
             $(document).ready(
                 function loadCreate() {
                     reloadCreate();
                 }
             );
-        </script>
+    </script>
 
-        <!--alignmentAttitude on load-->
-        <script>
+    <!--alignmentAttitude on load-->
+    <script>
             $(document).ready(
                 function loadalignmentAttitude() {
                     var al = @Convert.ToInt32(Model.alignmentAttitude);
@@ -129,10 +199,10 @@
                     $('#alignmentAttitude').material_select();
                }
            );
-        </script>
+    </script>
 
-        <!--alignmentmor on load-->
-        <script>
+    <!--alignmentmor on load-->
+    <script>
                 $(document).ready(
                     function loadalignmentMorality() {
                         var al = @Convert.ToInt32(Model.alignmentMorality);
@@ -144,10 +214,10 @@
                         $('#alignmentMorality').material_select();
                 }
             );
-        </script>
+    </script>
 
-        <!--Challenge on load-->
-        <script>
+    <!--Challenge on load-->
+    <script>
             $(document).ready(
                 function loadChallenge() {
                     var xp =  @Model.level.XP;
@@ -157,14 +227,14 @@
                     $('#chrating').material_select();
             }
         );
-        </script>
+    </script>
 
-        <!--reloadcreate-->
-        <script>
+    <!--reloadcreate-->
+    <script>
             function reloadCreate() {
-               
+
                     $.ajax({
-                        
+
                         type: "GET",
                         cache: false,
                         url: "@Url.Action("_Create")",
@@ -184,22 +254,22 @@
                     });
             }
 
-        </script>
+    </script>
 
 
 
-        <!--loadpcview on load-->
-        <script>
+    <!--loadpcview on load-->
+    <script>
                 $(document).ready(
                     function loadPCView() {
                         reloadpcView();
                     }
                 );
-        </script>
+    </script>
 
 
-        <!--reloadNpcView-->
-        <script>
+    <!--reloadNpcView-->
+    <script>
         function reloadpcView() {
 
             $.ajax({
@@ -221,11 +291,11 @@
                 });
 
             }
-        </script>
+    </script>
 
-       
 
-    }
+
+}
 
 
 

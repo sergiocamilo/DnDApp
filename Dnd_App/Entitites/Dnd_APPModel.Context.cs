@@ -37,7 +37,6 @@ namespace Dnd_App.Entitites
         public virtual DbSet<NPC> NPC { get; set; }
         public virtual DbSet<NPC_AbilityScore> NPC_AbilityScore { get; set; }
         public virtual DbSet<NPC_Action> NPC_Action { get; set; }
-        public virtual DbSet<NPC_Condition> NPC_Condition { get; set; }
         public virtual DbSet<NPC_Damage> NPC_Damage { get; set; }
         public virtual DbSet<NPC_Language> NPC_Language { get; set; }
         public virtual DbSet<NPC_SavingThrow> NPC_SavingThrow { get; set; }
@@ -52,5 +51,17 @@ namespace Dnd_App.Entitites
         public virtual DbSet<SpecialTrait> SpecialTrait { get; set; }
         public virtual DbSet<Speed> Speed { get; set; }
         public virtual DbSet<User_NPC> User_NPC { get; set; }
+        public virtual DbSet<PC> PC { get; set; }
+        public virtual DbSet<PC_Speed> PC_Speed { get; set; }
+        public virtual DbSet<PC_AbilityScore> PC_AbilityScore { get; set; }
+        public virtual DbSet<PC_Action> PC_Action { get; set; }
+        public virtual DbSet<PC_Condition> PC_Condition { get; set; }
+        public virtual DbSet<PC_Damage> PC_Damage { get; set; }
+        public virtual DbSet<PC_Language> PC_Language { get; set; }
+        public virtual DbSet<PC_SavingThrow> PC_SavingThrow { get; set; }
+        public virtual DbSet<PC_Sense> PC_Sense { get; set; }
+        public virtual DbSet<PC_Skill> PC_Skill { get; set; }
+        public virtual DbSet<PC_SpecialTrait> PC_SpecialTrait { get; set; }
+        public virtual DbSet<NPC_Condition> NPC_Condition { get; set; }
     }
 }

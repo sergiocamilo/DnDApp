@@ -18,6 +18,7 @@ namespace Dnd_App.Entitites
         public Skill()
         {
             this.NPC_Skill = new HashSet<NPC_Skill>();
+            this.PC_Skill = new HashSet<PC_Skill>();
         }
     
         public int id { get; set; }
@@ -28,5 +29,7 @@ namespace Dnd_App.Entitites
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NPC_Skill> NPC_Skill { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PC_Skill> PC_Skill { get; set; }
     }
 }
