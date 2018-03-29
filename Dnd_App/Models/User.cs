@@ -21,6 +21,8 @@ namespace Dnd_App.Models
 
         //Colections
         public List<Models.Characters.NPC> Npcs { get; set; }
+        public List<Models.Characters.PC> Pcs { get; set; }
+
 
         public Boolean LogIn(String UserNameIn, String PassIn)
         {
@@ -217,9 +219,53 @@ namespace Dnd_App.Models
 
         }
 
-       
+        public Boolean LoadPCs()
+        {
+            this.Pcs = new List<Characters.PC>();
+            try
+            {
+                Utils.Presets Preset = new Utils.Presets();
 
-        
+                using (var DB = new DnDAppDBEntities())
+                {
+                    var PCIds = DB.User_PC.Where(u => u.User_id == this.Id).Select(n => n.PC_id).ToList();
+                    foreach (var _id in PCIds)
+                    {
+                        var pc = Preset.initVoidPC();
+                        pc.id = _id;
+                        pc.Select();
+                        this.Pcs.Add(pc);
+                    }
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+        }
+
+        public Boolean AddPC(int PCID)
+        {
+            try
+            {
+                using (var DB = new DnDAppDBEntities())
+                {
+                    DB.User_PC.Add(new User_PC() { User_id = (int)this.Id, PC_id = PCID });
+                    DB.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+        }
+
+
+
 
     }
 }

@@ -63,5 +63,6 @@ namespace Dnd_App.Entitites
         public virtual DbSet<PC_Skill> PC_Skill { get; set; }
         public virtual DbSet<PC_SpecialTrait> PC_SpecialTrait { get; set; }
         public virtual DbSet<NPC_Condition> NPC_Condition { get; set; }
+        public virtual DbSet<User_PC> User_PC { get; set; }
     }
 }

@@ -372,6 +372,14 @@
           <Property Name="NPC_id" Type="int" Nullable="false" />
           <Property Name="User_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="User_PC">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PC_id" Type="int" Nullable="false" />
+          <Property Name="User_id" Type="int" Nullable="false" />
+        </EntityType>
         <Association Name="FK_dbo_NPC_dbo_Armor_armorClass_id">
           <End Role="Armor" Type="Self.Armor" Multiplicity="0..1" />
           <End Role="NPC" Type="Self.NPC" Multiplicity="*" />
@@ -1056,6 +1064,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_User_PC_PC">
+          <End Role="PC" Type="Self.PC" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="User_PC" Type="Self.User_PC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PC">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="User_PC">
+              <PropertyRef Name="PC_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_PC_User">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="User_PC" Type="Self.User_PC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="User_PC">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="DnDAppDBModelStoreContainer">
           <EntitySet Name="AbilityScore" EntityType="Self.AbilityScore" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Action" EntityType="Self.Action" Schema="dbo" store:Type="Tables" />
@@ -1095,6 +1131,7 @@
           <EntitySet Name="Speed" EntityType="Self.Speed" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_NPC" EntityType="Self.User_NPC" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_PC" EntityType="Self.User_PC" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_NPC_dbo_Armor_armorClass_id" Association="Self.FK_dbo_NPC_dbo_Armor_armorClass_id">
             <End Role="Armor" EntitySet="Armor" />
             <End Role="NPC" EntitySet="NPC" />
@@ -1295,6 +1332,14 @@
             <End Role="User" EntitySet="User" />
             <End Role="User_NPC" EntitySet="User_NPC" />
           </AssociationSet>
+          <AssociationSet Name="FK_User_PC_PC" Association="Self.FK_User_PC_PC">
+            <End Role="PC" EntitySet="PC" />
+            <End Role="User_PC" EntitySet="User_PC" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_PC_User" Association="Self.FK_User_PC_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="User_PC" EntitySet="User_PC" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -1312,6 +1357,7 @@
           <Property Name="isActive" Type="Boolean" Nullable="false" />
           <Property Name="token" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="User_NPC" Relationship="DnDAppDBModel.FK_User_NPC_User" FromRole="User" ToRole="User_NPC" />
+          <NavigationProperty Name="User_PC" Relationship="DnDAppDBModel.FK_User_PC_User" FromRole="User" ToRole="User_PC" />
         </EntityType>
         <EntityContainer Name="DnDAppDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="User" EntityType="Self.User" />
@@ -1551,6 +1597,15 @@
           <AssociationSet Name="FK_NPC_Condition_NPC" Association="DnDAppDBModel.FK_NPC_Condition_NPC">
             <End Role="NPC" EntitySet="NPC" />
             <End Role="NPC_Condition" EntitySet="NPC_Condition" />
+          </AssociationSet>
+          <EntitySet Name="User_PC" EntityType="DnDAppDBModel.User_PC" />
+          <AssociationSet Name="FK_User_PC_PC" Association="DnDAppDBModel.FK_User_PC_PC">
+            <End Role="PC" EntitySet="PC" />
+            <End Role="User_PC" EntitySet="User_PC" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_PC_User" Association="DnDAppDBModel.FK_User_PC_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="User_PC" EntitySet="User_PC" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="AbilityScore">
@@ -2215,6 +2270,7 @@
           <NavigationProperty Name="PC_Sense" Relationship="DnDAppDBModel.FK_PC_Sense_PC" FromRole="PC" ToRole="PC_Sense" />
           <NavigationProperty Name="PC_Skill" Relationship="DnDAppDBModel.FK_PC_Skill_PC" FromRole="PC" ToRole="PC_Skill" />
           <NavigationProperty Name="PC_SpecialTrait" Relationship="DnDAppDBModel.FK_PC_SpecialTrait_PC" FromRole="PC" ToRole="PC_SpecialTrait" />
+          <NavigationProperty Name="User_PC" Relationship="DnDAppDBModel.FK_User_PC_PC" FromRole="PC" ToRole="User_PC" />
         </EntityType>
         <EntityType Name="PC_Speed">
           <Key>
@@ -2691,6 +2747,44 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="User_PC">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PC_id" Type="Int32" Nullable="false" />
+          <Property Name="User_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PC" Relationship="DnDAppDBModel.FK_User_PC_PC" FromRole="User_PC" ToRole="PC" />
+          <NavigationProperty Name="User" Relationship="DnDAppDBModel.FK_User_PC_User" FromRole="User_PC" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_User_PC_PC">
+          <End Type="DnDAppDBModel.PC" Role="PC" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DnDAppDBModel.User_PC" Role="User_PC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PC">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="User_PC">
+              <PropertyRef Name="PC_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_PC_User">
+          <End Type="DnDAppDBModel.User" Role="User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DnDAppDBModel.User_PC" Role="User_PC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="User_PC">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3098,6 +3192,15 @@
               <MappingFragment StoreEntitySet="NPC_Condition">
                 <ScalarProperty Name="Condition_id" ColumnName="Condition_id" />
                 <ScalarProperty Name="NPC_id" ColumnName="NPC_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_PC">
+            <EntityTypeMapping TypeName="DnDAppDBModel.User_PC">
+              <MappingFragment StoreEntitySet="User_PC">
+                <ScalarProperty Name="User_id" ColumnName="User_id" />
+                <ScalarProperty Name="PC_id" ColumnName="PC_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -27,6 +27,7 @@ namespace Dnd_App.Entitites
             this.PC_Sense = new HashSet<PC_Sense>();
             this.PC_Skill = new HashSet<PC_Skill>();
             this.PC_SpecialTrait = new HashSet<PC_SpecialTrait>();
+            this.User_PC = new HashSet<User_PC>();
         }
     
         public int id { get; set; }
@@ -68,5 +69,7 @@ namespace Dnd_App.Entitites
         public virtual ICollection<PC_Skill> PC_Skill { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PC_SpecialTrait> PC_SpecialTrait { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<User_PC> User_PC { get; set; }
     }
 }

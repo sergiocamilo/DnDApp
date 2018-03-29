@@ -299,6 +299,9 @@
     <Compile Include="Entitites\User_NPC.cs">
       <DependentUpon>Dnd_APPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entitites\User_PC.cs">
+      <DependentUpon>Dnd_APPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="e05ef1ac309a48c8b5cd3c716456eb50" Name="Diagram1" ZoomLevel="71">
-        <EntityTypeShape EntityType="DnDAppDBModel.User" Width="1.5" PointX="7.5" PointY="0.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="DnDAppDBModel.User" Width="1.5" PointX="9" PointY="0.5" IsExpanded="false" />
         <EntityTypeShape EntityType="DnDAppDBModel.AbilityScore" Width="1.5" PointX="7.375" PointY="1.75" IsExpanded="false" />
         <EntityTypeShape EntityType="DnDAppDBModel.Action" Width="1.5" PointX="7.375" PointY="4.125" IsExpanded="false" />
         <EntityTypeShape EntityType="DnDAppDBModel.Armor" Width="1.5" PointX="4.375" PointY="11" IsExpanded="false" />
@@ -93,6 +93,9 @@
         <EntityTypeShape EntityType="DnDAppDBModel.NPC_Condition" Width="1.5" PointX="4.375" PointY="9.875" IsExpanded="false" />
         <AssociationConnector Association="DnDAppDBModel.FK_NPC_Condition_Condition" />
         <AssociationConnector Association="DnDAppDBModel.FK_NPC_Condition_NPC" />
+        <EntityTypeShape EntityType="DnDAppDBModel.User_PC" Width="1.5" PointX="14.25" PointY="1" IsExpanded="false" />
+        <AssociationConnector Association="DnDAppDBModel.FK_User_PC_PC" />
+        <AssociationConnector Association="DnDAppDBModel.FK_User_PC_User" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
