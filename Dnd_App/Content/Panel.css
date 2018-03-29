@@ -51,9 +51,9 @@ header, main, footer {
 }
 
 #li-logo {
+    padding-top: 60px;
     margin-bottom: 35px;
-    margin-top:0px;
-    
+    margin-top: 0px;
 }
 
 #li-a-logo {
@@ -63,4 +63,8 @@ header, main, footer {
 
 #sn-li-a {
     font-weight: 300;
+}
+
+.side-nav li > a:hover {
+    background-color: rgba(0,0,0,0.5);
 }

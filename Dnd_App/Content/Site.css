@@ -156,10 +156,11 @@
 }
 
 .preloader-background {
+    padding-left: 233px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #eee;
+    background: white;
     position: fixed;
     z-index: 100;
     top: 0;

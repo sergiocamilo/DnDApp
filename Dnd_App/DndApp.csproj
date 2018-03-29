@@ -386,6 +386,8 @@
     <Content Include="Entitites\Dnd_APPModel.edmx.diagram">
       <DependentUpon>Dnd_APPModel.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\dndapp - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\dndapp - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.2.1-vsdoc.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
