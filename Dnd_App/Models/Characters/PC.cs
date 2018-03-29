@@ -389,6 +389,16 @@ namespace Dnd_App.Models.Characters
                         this.presetSavingThrows.Add(Mapper.Map<SavingThrow>(s.SavingThrow));
                     }
 
+                    foreach (var s in PCEntity.PC_SpecialTrait.Where(n => !n.isTemplate))
+                    {
+                        this.specialTraits.Add(Mapper.Map<SpecialTrait>(s.SpecialTrait));
+                    }
+
+                    foreach (var s in PCEntity.PC_SpecialTrait.Where(n => n.isTemplate))
+                    {
+                        this.presetSpecialTraits.Add(Mapper.Map<SpecialTrait>(s.SpecialTrait));
+                    }
+
                     foreach (var s in PCEntity.PC_Action.Where(n => !n.isTemplate))
                     {
                         if ((Enum._Action)s.Action.Actiontype == Enum._Action.Action)

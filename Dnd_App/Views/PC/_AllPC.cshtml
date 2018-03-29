@@ -18,19 +18,21 @@
 
 <div class="row">
 
-    @foreach (var item in Dnd_App.Utils.TemporalDB.Instance.PCInstances)
+    @if (U.LoadPCs())
     {
+        foreach (var item in U.Pcs)
+        {
         <div class="col s12 m4">
             <!-- Basic Card -->
             <div class="card green-to-green z-depth-2">
                 <div id="charcard-content" class="card-content white-text">
-                    <span class="card-title">@item.Value.name</span>
+                    <span class="card-title">@item.name</span>
                     <hr />
-                    <p>Armor Class: @item.Value.armorClass.Total </p>
-                    <p>Hit Points: @item.Value.hitPoint.HitPointsAVG </p>
+                    <p>Armor Class: @item.armorClass.Total </p>
+                    <p>Hit Points: @item.hitPoint.HitPointsAVG </p>
                     <hr />
                     <div class="row">
-                        @foreach (var ascore in item.Value.abilitiesScores)
+                        @foreach (var ascore in item.abilitiesScores)
                         {
                             <div class="col s6">
                                 @if (@ascore.ModValue >= 0)
@@ -46,11 +48,12 @@
                     </div>
                 </div>
                 <div id="charcard-action" class="card-action center">
-                    <a class="white-text" href="#">Edit</a>
-                    <a class="white-text" href="javascript:LoadPCModalView(@item.Value.TempID);">View</a>
-                    <a class="white-text" href="#">Delete</a>
+                    <a class="white-text" href="@Url.Action("Edit", "PC", new { id = item.id })">Edit</a>
+                    <a class="white-text" href="javascript:LoadPCModalView(@item.id);">View</a>
+                    <a class="white-text" href="javascript:DeletePC(@item.id);">Delete</a>
                 </div>
             </div>
         </div>
+        }
     }
 </div>

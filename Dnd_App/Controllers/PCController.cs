@@ -60,12 +60,12 @@ namespace Dnd_App.Controllers
             if (Pc.id == 0)//new npc
             {
                 Pc.Create();
-                //U.AddNPC(Npc.Id);
+                U.AddPC(Pc.id);
             }
             else
             {
-                //var newid = Npc.Update();
-                //U.AddNPC(newid);
+                var newid = Pc.Update();
+                U.AddPC(newid);
             }
             Utils.TemporalDB.Instance.RemovePC(TempID);
 

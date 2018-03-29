@@ -72,6 +72,31 @@
         }
     </script>
 
+    <script>
+        function LoadPCModalView(id) {
+
+            $.ajax({
+                type: "GET",
+                cache: false,
+                data: { 'id': id },
+                url: '@Url.Action("_ViewFromDB", "PC")',
+                dataType: "html",
+                contentType: "application/json; charset=utf-8",
+                success: function (data)
+                {
+                    modal.setContent(''+data);
+                    modal.open();
+                    //var _CurrentView = $("#_CurrentView");
+                    //_CurrentView.html(data);
+                },
+                failure: function (errMsg) {
+                    console.log("error ?")
+                    alert(errMsg);
+                }
+            });
+        }
+    </script>
+
 
 </body>
 </html>
