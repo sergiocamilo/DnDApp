@@ -75,26 +75,35 @@ namespace Dnd_App.Controllers
             });
         }
 
-        //[HttpGet]
-        //public ActionResult Edit(int id)
-        //{
-        //    Utils.Presets Preset = new Utils.Presets();
-        //    var NPC = Preset.initVoidNPC();
-        //    NPC.Id = (int)id;
-        //    NPC.Select();
-        //    Utils.TemporalDB.Instance.InsertNPC(NPC);
-        //    return View("New", NPC);
-        //}
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            Utils.Presets Preset = new Utils.Presets();
+            var PC = Preset.initVoidPC();
+            PC.id = (int)id;
+            PC.Select();
+            Utils.TemporalDB.Instance.InsertPC(PC);
+            return View("New", PC);
+        }
 
-        //[HttpGet]
-        //public ActionResult _ViewFromDB(long id)
-        //{
-        //    Utils.Presets Preset = new Utils.Presets();
-        //    var NPC = Preset.initVoidNPC();
-        //    NPC.Id = (int)id;
-        //    NPC.Select();
-        //    return PartialView("_View", NPC);
-        //}
+        [HttpGet]
+        public ActionResult _ViewFromDB(long id)
+        {
+            Utils.Presets Preset = new Utils.Presets();
+            var PC = Preset.initVoidPC();
+            PC.id = (int)id;
+            PC.Select();
+            return PartialView("_View", PC);
+        }
+
+        [HttpPost]
+        public void Delete(long id)
+        {
+            Utils.Presets Preset = new Utils.Presets();
+            var PC = Preset.initVoidPC();
+            PC.id = (int)id;
+            PC.Delete();
+        }
 
 
         #region Callbacks --> Basic Info

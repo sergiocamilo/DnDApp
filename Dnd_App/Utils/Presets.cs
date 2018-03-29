@@ -117,7 +117,53 @@ namespace Dnd_App.Utils
 
             return Empty;
         }
-        
+
+
+        public PC initVoidPC()
+        {
+
+            PC Empty = new PC();
+
+            Empty.name = "";
+            Empty.size = new Size();
+            Empty.alignmentMorality = TypeAlignMorality.none;
+            Empty.alignmentAttitude = TypeAlignAttitude.none;
+            Empty.race = Race.HighElf;
+            Empty._class = _Class.Cleric;
+            Empty.background = Background.Acolyte;
+            Empty.armorClass = new Armor();
+            Empty.hitPoint = new HitPoint();
+            Empty.speeds = new List<Speed>();
+            Empty.presetSpeeds = new List<Speed>();
+            Empty.abilitiesScores = new List<AbilityScore>();
+            Empty.savingThrows = new List<SavingThrow>();
+            Empty.presetSavingThrows = new List<SavingThrow>();
+            Empty.skills = new List<Skill>();
+            Empty.presetSkills = new List<Skill>();
+            Empty.vulnerabilities = new List<Damage>();
+            Empty.presetVulnerabilities = new List<Damage>();
+            Empty.immunitiesDamage = new List<Damage>();
+            Empty.presetImmunitiesDamage = new List<Damage>();
+            Empty.resistances = new List<Damage>();
+            Empty.presetResistances = new List<Damage>();
+            Empty.immunitiesCondition = new List<Condition>();
+            Empty.presetImmunitiesCondition = new List<Condition>();
+            Empty.senses = new List<Sense>();
+            Empty.presetSenses = new List<Sense>();
+            Empty.languagesSpeak = new List<Language>();
+            Empty.presetLanguagesSpeak = new List<Language>();
+            Empty.languagesUndersatand = new List<Language>();
+            Empty.presetLanguagesUndersatand = new List<Language>();
+            Empty.telepathy = 0;
+            Empty.level = new Challenge();
+            Empty.specialTraits = new List<SpecialTrait>();
+            Empty.presetSpecialTraits = new List<SpecialTrait>();
+            Empty.actions = new List<Models.Characters.Action>();
+            Empty.presetActions = new List<Models.Characters.Action>();
+
+            return Empty;
+        }
+
 
 
         #region PC templates

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using Dnd_App.Models.Enum;
 using Dnd_App.Entitites;
+using AutoMapper;
 
 namespace Dnd_App.Models.Characters
 {
@@ -266,6 +267,178 @@ namespace Dnd_App.Models.Characters
             }
         }
 
+        public Boolean Select()
+        {
+            try
+            {
+                using (var DB = new DnDAppDBEntities())
+                {
+                    var PCEntity = DB.PC.Where(pc => pc.id == this.id).First();
+
+                    this.id = PCEntity.id;
+                    this.name = PCEntity.name;
+                    this.size = Mapper.Map<Size>(PCEntity.Size);
+                    this.alignmentAttitude = (Enum.TypeAlignAttitude)PCEntity.alignmentAttitude;
+                    this.alignmentMorality = (Enum.TypeAlignMorality)PCEntity.alignmentMorality;
+                    this.armorClass = Mapper.Map<Armor>(PCEntity.Armor);
+                    this.hitPoint = Mapper.Map<HitPoint>(PCEntity.HitPoint);
+                    this.level = Mapper.Map<Challenge>(PCEntity.Challenge);
+                    this.telepathy = PCEntity.telepathy;
+                    this.race = (Race) PCEntity.race;
+                    this._class = (_Class)PCEntity.C_class;
+                    this.background = (Background)PCEntity.background;
+
+                    foreach (var s in PCEntity.PC_Speed.Where(n => !n.isTemplate))
+                    {
+                        this.speeds.Add(Mapper.Map<Speed>(s.Speed));
+                    }
+
+                    foreach (var s in PCEntity.PC_Speed.Where(n => n.isTemplate))
+                    {
+                        this.presetSpeeds.Add(Mapper.Map<Speed>(s.Speed));
+                    }
+
+                    foreach (var AS in PCEntity.PC_AbilityScore)
+                    {
+                        this.abilitiesScores.Add(Mapper.Map<AbilityScore>(AS.AbilityScore));
+                    }
+
+                    foreach (var s in PCEntity.PC_SavingThrow.Where(n => !n.isTemplate))
+                    {
+                        this.savingThrows.Add(Mapper.Map<SavingThrow>(s.SavingThrow));
+                    }
+
+                    foreach (var s in PCEntity.PC_SavingThrow.Where(n => n.isTemplate))
+                    {
+                        this.presetSavingThrows.Add(Mapper.Map<SavingThrow>(s.SavingThrow));
+                    }
+
+                    foreach (var s in PCEntity.PC_Skill.Where(n => !n.isTemplate))
+                    {
+                        this.skills.Add(Mapper.Map<Skill>(s.Skill));
+                    }
+
+                    foreach (var s in PCEntity.PC_Skill.Where(n => n.isTemplate))
+                    {
+                        this.presetSkills.Add(Mapper.Map<Skill>(s.Skill));
+                    }
+
+                    foreach (var s in PCEntity.PC_Damage.Where(n => !n.isTemplate))
+                    {
+                        if ((Enum._Damage)s.Damage.damage1 == Enum._Damage.Vul)
+                            this.vulnerabilities.Add(Mapper.Map<Damage>(s.Damage));
+                        if ((Enum._Damage)s.Damage.damage1 == Enum._Damage.Res)
+                            this.resistances.Add(Mapper.Map<Damage>(s.Damage));
+                        if ((Enum._Damage)s.Damage.damage1 == Enum._Damage.Imm)
+                            this.immunitiesDamage.Add(Mapper.Map<Damage>(s.Damage));
+                    }
+
+                    foreach (var s in PCEntity.PC_Damage.Where(n => n.isTemplate))
+                    {
+                        if ((Enum._Damage)s.Damage.damage1 == Enum._Damage.Vul)
+                            this.presetVulnerabilities.Add(Mapper.Map<Damage>(s.Damage));
+                        if ((Enum._Damage)s.Damage.damage1 == Enum._Damage.Res)
+                            this.presetResistances.Add(Mapper.Map<Damage>(s.Damage));
+                        if ((Enum._Damage)s.Damage.damage1 == Enum._Damage.Imm)
+                            this.presetImmunitiesDamage.Add(Mapper.Map<Damage>(s.Damage));
+                    }
+
+                    foreach (var s in PCEntity.PC_Condition.Where(n => !n.isTemplate))
+                    {
+                        this.immunitiesCondition.Add(Mapper.Map<Condition>(s.Condition));
+                    }
+
+                    foreach (var s in PCEntity.PC_Condition.Where(n => n.isTemplate))
+                    {
+                        this.presetImmunitiesCondition.Add(Mapper.Map<Condition>(s.Condition));
+                    }
+
+                    foreach (var s in PCEntity.PC_Sense.Where(n => !n.isTemplate))
+                    {
+                        this.senses.Add(Mapper.Map<Sense>(s.Sense));
+                    }
+
+                    foreach (var s in PCEntity.PC_Sense.Where(n => n.isTemplate))
+                    {
+                        this.presetSenses.Add(Mapper.Map<Sense>(s.Sense));
+                    }
+
+                    foreach (var s in PCEntity.PC_Language.Where(n => !n.isTemplate))
+                    {
+                        if ((Enum._Language)s.Language.typeLanguage == Enum._Language.speak)
+                            this.languagesSpeak.Add(Mapper.Map<Language>(s.Language));
+                        if ((Enum._Language)s.Language.typeLanguage == Enum._Language.understand)
+                            this.languagesUndersatand.Add(Mapper.Map<Language>(s.Language));
+                    }
+
+                    foreach (var s in PCEntity.PC_Language.Where(n => n.isTemplate))
+                    {
+                        if ((Enum._Language)s.Language.typeLanguage == Enum._Language.speak)
+                            this.presetLanguagesSpeak.Add(Mapper.Map<Language>(s.Language));
+                        if ((Enum._Language)s.Language.typeLanguage == Enum._Language.understand)
+                            this.presetLanguagesUndersatand.Add(Mapper.Map<Language>(s.Language));
+                    }
+
+                    foreach (var s in PCEntity.PC_SavingThrow.Where(n => !n.isTemplate))
+                    {
+                        this.savingThrows.Add(Mapper.Map<SavingThrow>(s.SavingThrow));
+                    }
+
+                    foreach (var s in PCEntity.PC_SavingThrow.Where(n => n.isTemplate))
+                    {
+                        this.presetSavingThrows.Add(Mapper.Map<SavingThrow>(s.SavingThrow));
+                    }
+
+                    foreach (var s in PCEntity.PC_Action.Where(n => !n.isTemplate))
+                    {
+                        if ((Enum._Action)s.Action.Actiontype == Enum._Action.Action)
+                            this.actions.Add(Mapper.Map<Action>(s.Action));
+                    }
+
+                    foreach (var s in PCEntity.PC_Action.Where(n => n.isTemplate))
+                    {
+                        if ((Enum._Action)s.Action.Actiontype == Enum._Action.Action)
+                            this.presetActions.Add(Mapper.Map<Action>(s.Action));
+                    }
+
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public int Update()
+        {
+            
+            this.Delete();
+            this.id = 0;
+            this.Create();
+            return this.id;
+
+            //Actualizar referencias
+
+        }
+
+        public Boolean Delete()
+        {
+            try
+            {
+                using (var DB = new DnDAppDBEntities())
+                {
+                    var PCEntityOld = DB.PC.Where(pc => pc.id == this.id).First();
+                    DB.PC.Remove(PCEntityOld);
+                    DB.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
 
         #region Calculos
 
