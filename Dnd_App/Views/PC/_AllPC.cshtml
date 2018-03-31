@@ -2,18 +2,21 @@
     var U = Dnd_App.Utils.Session.CurrentSession();
 }
 
-<div id="subheader" class="section black-to-grey white-text">
+
+
+<div id="subheader" class="section grey darken-4 white-text">
     <div class="row">
         <div class="col s6">
-            <h3 id="logo">My PCs</h3>
+            <h4 class="light"><i class="fab fa-pied-piper-alt" style="color:white"> </i> My PCs</h4>
         </div>
         <div class="col s6">
             <p>
-                @Html.ActionLink("Create new", "New", "PC", null, new { @class = "btn-large waves-effect waves-light right blue", @style = "margin-top: 10px;" })
+                @Html.ActionLink("Create new", "New", "PC", null, new { @class = "btn waves-effect waves-light right blue" })
             </p>
         </div>
     </div>
 </div>
+
 
 
 <div class="row">

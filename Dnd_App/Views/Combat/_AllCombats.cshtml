@@ -3,14 +3,32 @@
 }
 
 
-<div id="subheader" class="section black-to-grey white-text">
+<div id="subheader" class="section grey darken-4 white-text">
     <div class="row">
         <div class="col s6">
-            <h3 id="logo">My Combats</h3>
+            <h4 class="light"><i class="fab fa-d-and-d" style="color:white"> </i> Combats</h4>
         </div>
-        <div class="col s6">
+    </div>
+</div>
+
+<div class="section">
+    <div class="row">
+        <div class="col s6 center">
+            <h4 class=" center" id="logo">Create new</h4>
+            <p class="center light">
+                Parallax is an effect where the background content or image in this case, is moved at a different speed than the foreground content while scrolling.
+            </p>
             <p>
-                @Html.ActionLink("Create new", "New", "Combat", null, new { @class = "btn-large waves-effect waves-light right blue", @style = "margin-top: 10px;" })
+                @Html.ActionLink("Create new", "New", "Combat", null, new { @class = "btn-large waves-effect waves-light blue", @style = "margin-top: 10px;" })
+            </p>
+        </div>
+        <div class="col s6 center">
+            <h4 class=" center" id="logo">Join</h4>
+            <p class="center light">
+                Parallax is an effect where the background content or image in this case, is moved at a different speed than the foreground content while scrolling.
+            </p>
+            <p>
+                @Html.ActionLink("Join", "New", "Combat", null, new { @class = "btn-large waves-effect waves-light blue", @style = "margin-top: 10px;" })
             </p>
         </div>
     </div>
