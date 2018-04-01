@@ -12,6 +12,7 @@
             <a href="#" class="brand-logo bar-logo left" id="logo">DnDApp</a>
             <ul id="nav-mobile" class="right hide-on-small-only">
                 <li>Actions:</li>
+                <li><a href="javascript:Back()" class="waves-effect waves-light btn red">Back</a></li>
                 <li><a href="@Url.Action("Generate","Combat", new { id= Model.TempID })" class="waves-effect waves-light btn blue">Generate</a></li>
             </ul>
         </div>
@@ -250,6 +251,7 @@
                     success: function (data)
                     {
                         reloadCombatView();
+                        reloadAddpcView();
                     },
                     failure: function (errMsg) {
                         console.log("error ?")
@@ -312,6 +314,91 @@
                     }
                 });
             }
+    </script>
+
+
+    <!--addPC-->
+    <script>
+           function addPC(idpc, username) {
+               console.log(idpc+" - "+ username);
+                $.ajax({
+                    type: "POST",
+                    cache: false,
+                    url: "@Url.Action("_AddPCCombat")",
+                    dataType: "html",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({ 'IdPC': idpc, 'Username': username, 'TempID': @Model.TempID }),
+                    success: function (data)
+                    {
+                        console.log(data);
+                        var json = JSON.parse(data);
+                        Materialize.toast(json["msg"],3000);
+                        reloadCombatView();
+                    },
+                    failure: function (errMsg) {
+                        console.log("error ?")
+                        alert(errMsg);
+                    }
+                });
+            }
+    </script>
+
+<!--removePC-->
+    <script>
+           function removePC(id) {
+                $.ajax({
+                    type: "POST",
+                    cache: false,
+                    url: "@Url.Action("_RemovePCCombat")",
+                    dataType: "html",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({ 'TempIDPC': id, 'TempID': @Model.TempID }),
+                    success: function (data)
+                    {
+                        console.log(data);
+                        var json = JSON.parse(data);
+                        Materialize.toast(json["msg"], 3000);
+                        reloadCombatView();
+                    },
+                    failure: function (errMsg) {
+                        console.log("error ?")
+                        alert(errMsg);
+                    }
+                });
+            }
+    </script>
+
+
+
+
+    <!--back-->
+    <script>
+
+          function Back() {
+
+
+                $.confirm({
+                    title: 'Are you sure you want to leave?',
+                    type: 'black',
+                    buttons: {
+                        ok: {
+                            text: "ok!",
+                            btnClass: 'btn',
+                            keys: ['enter'],
+                            action: function () {
+                                window.location.href = '@Url.Action("Panel", "User")';
+                                LoadNPCs();
+                            }
+                        },
+                        cancel: function () {
+                            console.log('the user clicked cancel');
+                        }
+                    }
+                });
+          }
+
+
+
     </script>
 
 }

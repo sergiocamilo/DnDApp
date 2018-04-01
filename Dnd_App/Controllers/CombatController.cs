@@ -40,12 +40,7 @@ namespace Dnd_App.Controllers
         }
         
 
-        [HttpGet]
-        public PartialViewResult _AddPC(long TempID)
-        {
-            var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
-            return PartialView(Combat);
-        }
+        
 
 
 
@@ -113,5 +108,55 @@ namespace Dnd_App.Controllers
 
 
         #endregion
+
+        #region add pc
+
+        [HttpGet]
+        public PartialViewResult _AddPC(long TempID)
+        {
+            var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
+            return PartialView(Combat);
+        }
+
+
+        [HttpPost]
+        public ActionResult _AddPCCombat(int IdPC, String Username, int TempID)
+        {
+
+            var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
+            Utils.Presets Preset = new Utils.Presets();
+            var PC = Preset.initVoidPC();
+            PC.id = IdPC;
+            PC.Select();
+            var User = new Models.User();
+            User.UserName = Username;
+            User.Read();
+            if (Combat.InsertPC(PC, User))
+            {
+                return Json(new { msg = PC.name + " added" });
+            }
+            else
+            {
+                return Json(new { msg = "Not added, "+ User.UserName + " already has a pc associated" });
+            }
+            
+
+            
+        }
+
+        [HttpPost]
+        public ActionResult _RemovePCCombat(int TempIDPC, int TempID)
+        {
+
+            var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
+            Combat.RemovePC(TempIDPC);
+
+            return Json(new { msg = "Removed" });
+        }
+
+
+        #endregion
+
+
     }
 }

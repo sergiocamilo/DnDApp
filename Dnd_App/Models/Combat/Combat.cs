@@ -21,27 +21,9 @@ namespace Dnd_App.Models.Combat
         public List<PCCombat> PCs { set; get; }
         public List<NPCCombat> NPCs { set; get; }
         public int IndexNPCs { set; get; }
+        public int IndexPCs { set; get; }
 
-
-
-
-
-        public void AddPC(PC PC, long IdUser)
-        {
-            try
-            {
-                this.PCs.Add(new PCCombat()
-                {
-                    IdPC = PC.id,
-                    IdUser = IdUser,
-                    Initiative = this.CalculateInitiativePC(PC)
-                });
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+        
 
         public void AddUserCombat(List<String> list)
         {
@@ -68,16 +50,7 @@ namespace Dnd_App.Models.Combat
                 this.Participants.AddRange(NewUserCombat);
             }
         }
-
-        public void DeleteNpc(int IdNPC)
-        {
-            this.NPCs.RemoveAll(npc => npc.TempID == IdNPC);
-        }
-
-        public void DeletePc(int IdPC)
-        {
-            this.PCs.RemoveAll(pc => pc.IdPC == IdPC);
-        }
+        
 
         public int CalculateInitiativeNPC(NPC NPC)
         {
@@ -118,13 +91,49 @@ namespace Dnd_App.Models.Combat
                 NPCs.RemoveAll(npc => npc.TempID == TempID);
             }
         }
-        
+
+        #endregion
+
+        #region PC in combat
+
+        public Boolean InsertPC(PC NewPC, User User)
+        {
+            lock (new { })
+            {
+                if (PCs.Exists(pc => pc.User.UserName == User.UserName))
+                {
+                    return false;
+                }
+                else
+                {
+                    PCs.Add(new PCCombat()
+                    {
+                        PC = NewPC,
+                        User = User,
+                        Initiative = CalculateInitiativePC(NewPC),
+                        TempID = IndexPCs
+                    });
+                    IndexPCs++;
+                    return true;
+                }
+            }
+        }
+
+        public PCCombat SelectPC(long TempID)
+        {
+            return PCs.Where(pc => pc.TempID == TempID).First();
+        }
+
+        public void RemovePC(long TempID)
+        {
+            lock (new { })
+            {
+                PCs.RemoveAll(pc => pc.TempID == TempID);
+            }
+        }
+
         #endregion
 
         
-
-
-
-
     }
 }
