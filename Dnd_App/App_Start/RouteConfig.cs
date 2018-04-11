@@ -57,6 +57,12 @@ namespace Dnd_App
             );
 
             routes.MapRoute(
+                name: "StartCombat",
+                url: "DoCombat/{TempID}",
+                defaults: new { controller = "Combat", action = "Generate", TempID = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

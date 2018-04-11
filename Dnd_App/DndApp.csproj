@@ -322,6 +322,7 @@
     <Compile Include="Models\Characters\SpecialTrait.cs" />
     <Compile Include="Models\Characters\Speed.cs" />
     <Compile Include="Models\Characters\TypeHitDie.cs" />
+    <Compile Include="Models\Combat\CharacterCombat.cs" />
     <Compile Include="Models\Combat\Combat.cs" />
     <Compile Include="Models\Combat\NPCCombat.cs" />
     <Compile Include="Models\Combat\PCCombat.cs" />
@@ -336,6 +337,7 @@
     <Compile Include="Models\Enum\TypeAction.cs" />
     <Compile Include="Models\Enum\TypeAlignAttitude.cs" />
     <Compile Include="Models\Enum\TypeAlignMorality.cs" />
+    <Compile Include="Models\Enum\TypeCharacter.cs" />
     <Compile Include="Models\Enum\TypeCondition.cs" />
     <Compile Include="Models\Enum\TypeCreature.cs" />
     <Compile Include="Models\Enum\TypeDamage.cs" />
@@ -471,6 +473,8 @@
     <Content Include="Views\Combat\_AddPC.cshtml" />
     <Content Include="Views\User\Validate.cshtml" />
     <Content Include="Views\User\ChangePassword.cshtml" />
+    <Content Include="Views\Combat\Generate.cshtml" />
+    <Content Include="Views\Combat\_CurrentCharacter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

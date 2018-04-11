@@ -93,6 +93,14 @@ namespace Dnd_App.Controllers
             return PartialView("_View",NPC);
         }
 
+        [HttpGet]
+        public ActionResult _ViewFromCombat(long TempIDCombat, int INPC)
+        {
+            var Combat = Utils.TemporalDB.Instance.SelectCombat(TempIDCombat);
+            var NPC = Combat.NPCs[INPC].NPC;
+            return PartialView("_View", NPC);
+        }
+
         [HttpPost]
         public void Delete(long id)
         {

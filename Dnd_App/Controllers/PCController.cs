@@ -96,6 +96,14 @@ namespace Dnd_App.Controllers
             return PartialView("_View", PC);
         }
 
+        [HttpGet]
+        public ActionResult _ViewFromCombat(long TempIDCombat, int IPC)
+        {
+            var Combat = Utils.TemporalDB.Instance.SelectCombat(TempIDCombat);
+            var PC = Combat.PCs[IPC].PC;
+            return PartialView("_View", PC);
+        }
+
         [HttpPost]
         public void Delete(long id)
         {

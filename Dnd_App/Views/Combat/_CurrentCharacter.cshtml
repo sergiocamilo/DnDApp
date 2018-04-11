@@ -1,0 +1,194 @@
+﻿@model Dnd_App.Models.Combat.Combat
+
+
+@if (Model.Characters[Model.IndexCharacter].Type == Dnd_App.Models.Enum.TypeCharacter.NPC)
+{
+    var npc = Model.NPCs[Model.Characters[Model.IndexCharacter].iList].NPC;
+
+    <div class="card orange-to-orangeblack z-depth-2">
+        <div class="row">
+            <div class="col s12">
+                <div class="row">
+                    <div class="col s8">
+                        <h4 class="title"><i class="material-icons">security</i>@npc.Name (NPC)</h4>
+                        <h5>Actions</h5>
+                    </div>
+                    <div class="col s4">
+                        <br />
+                        <a href="javascript:NPCStatBlock(@Model.Characters[Model.IndexCharacter].iList)" class="waves-effect waves-light btn blue right">Statblock</a>
+                    </div>
+                </div>
+                <ul class="collection">
+                    @{ 
+                        #region ACTIONS
+
+                        List<String> TextActions = new List<string>();
+
+                        for (int i = 0; i < npc.Actions.Count; i++)
+                        {
+                            var TextAction = "";
+
+                            if (npc.Actions[i].Limited != null && npc.Actions[i].Limited != "")
+                            {
+                                TextAction += "(" + npc.Actions[i].Limited + ") ";
+                            }
+
+                            TextAction += Dnd_App.Utils.Helpers.Description(npc.Actions[i].TypeAction) + ": +" + npc.Actions[i].TotalBonusAttack + " to hit, ";
+
+                            if (npc.Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeAttack
+                                || npc.Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeWeaponAttack
+                                || npc.Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeorRangedAttack
+                                || npc.Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeorRangedWeaponAttack)
+                            {
+                                TextAction += " reach " + npc.Actions[i].Range + "ft.";
+                            }
+
+                            if (npc.Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.RangeAttack
+                                || npc.Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.RangeWeaponAttack
+                                || npc.Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeorRangedAttack
+                                || npc.Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeorRangedWeaponAttack)
+                            {
+                                TextAction += "range " + npc.Actions[i].Min + "/" + @npc.Actions[i].Max + " ft.";
+                            }
+
+                            TextAction += ", ";
+
+                            TextAction += npc.Actions[i].Target + ".";
+
+                            var bonus = npc.Actions[i].BonusDamage + npc.Actions[i].AbilityDamage;
+                            if (bonus < 0)
+                            {
+                                TextAction += "Hit: " + npc.Actions[i].Damage + " (" + npc.Actions[i].HitDie + " " + npc.Actions[i].Die + " " + bonus + ") ";
+                            }
+                            else
+                            {
+                                TextAction += "Hit: " + npc.Actions[i].Damage + " (" + @npc.Actions[i].HitDie + " " + npc.Actions[i].Die + " + " + bonus + ") ";
+                            }
+                            TextAction += npc.Actions[i].TypeDamage + " damage. ";
+                            TextAction += npc.Actions[i].Description;
+
+                            TextActions.Add(TextAction);
+                        }
+
+                        #endregion
+                    }
+                    @for (int i = 0; i < npc.Actions.Count; i++)
+                     {
+                        <li class="collection-item" style="background: transparent;">
+                            <div class="row">
+                                <div class="col s9">
+                                    <h5 class="title font-bold">@npc.Actions[i].Name.</h5>
+                                </div>
+                                <div class="col s3">
+                                    <a href="javascript:removePC();" class="secondary-content btn-flat blue white-text">Target</a>
+                                </div>
+                                <div class="col s12">
+                                    <p>
+                                        @TextActions[i]
+                                    </p>
+                                </div>
+
+                            </div>
+                        </li>
+                     }
+                </ul>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    var pc = Model.PCs[Model.Characters[Model.IndexCharacter].iList];
+    <div class="card green-to-green z-depth-2">
+        <div class="row">
+            <div class="col s12">
+                <div class="row">
+                    <div class="col s8">
+                        <h4 class="title"><i class="material-icons">security</i>@pc.PC.name (@pc.User.UserName)</h4>
+                        <h5>Actions</h5>
+                    </div>
+                    <div class="col s4">
+                        <br />
+                        <a href="javascript:PCStatBlock(@Model.Characters[Model.IndexCharacter].iList);" class="waves-effect waves-light btn blue right">Statblock</a>
+                    </div>
+                </div>
+                <ul class="collection">
+                    @{
+                        var Actions = new List<Dnd_App.Models.Characters.Action>();
+                        Actions = pc.PC.presetActions.Concat(pc.PC.actions).ToList();
+
+                        List<String> TextActions = new List<string>();
+
+                        for (int i = 0; i < Actions.Count; i++)
+                        {
+                            var TextAction = "";
+
+                            if (Actions[i].Limited != null && Actions[i].Limited != "")
+                            {
+                                TextAction += "(" + Actions[i].Limited + ") ";
+                            }
+
+                            TextAction += Dnd_App.Utils.Helpers.Description(Actions[i].TypeAction) + ": +" + Actions[i].TotalBonusAttack + " to hit, ";
+
+                            if (Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeAttack
+                                || Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeWeaponAttack
+                                || Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeorRangedAttack
+                                || Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeorRangedWeaponAttack)
+                            {
+                                TextAction += " reach " + Actions[i].Range + "ft.";
+                            }
+
+                            if (Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.RangeAttack
+                                || Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.RangeWeaponAttack
+                                || Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeorRangedAttack
+                                || Actions[i].TypeAction == Dnd_App.Models.Enum.TypeAction.MeleeorRangedWeaponAttack)
+                            {
+                                TextAction += "range " + Actions[i].Min + "/" + Actions[i].Max + " ft.";
+                            }
+
+                            TextAction += ", ";
+
+                            TextAction += Actions[i].Target + ".";
+
+                            var bonus = Actions[i].BonusDamage + Actions[i].AbilityDamage;
+                            if (bonus < 0)
+                            {
+                                TextAction += "Hit: " + Actions[i].Damage + " (" + Actions[i].HitDie + " " + Actions[i].Die + " " + bonus + ") ";
+                            }
+                            else
+                            {
+                                TextAction += "Hit: " + Actions[i].Damage + " (" + Actions[i].HitDie + " " + Actions[i].Die + " + " + bonus + ") ";
+                            }
+                            TextAction += Actions[i].TypeDamage + " damage. ";
+                            TextAction += Actions[i].Description;
+
+                            TextActions.Add(TextAction);
+                        }
+                    }
+                    @for (int i = 0; i < Actions.Count; i++)
+                     {
+                        <li class="collection-item" style="background: transparent;">
+                            <div class="row">
+                                <div class="col s9">
+                                    <h5 class="title font-bold">@Actions[i].Name.</h5>
+                                </div>
+                                <div class="col s3">
+                                    <a href="javascript:removePC();" class="secondary-content btn-flat blue white-text">Target</a>
+                                </div>
+                                <div class="col s12">
+                                    <p>
+                                        @TextActions[i]
+                                    </p>
+                                </div>
+
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+}
+
+
+

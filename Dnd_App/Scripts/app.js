@@ -7,6 +7,8 @@
         //$('select').material_select();
         $('.parallax').parallax();
 
+        
+
         // APPs
         //appDetacoop.aniSignin();
         

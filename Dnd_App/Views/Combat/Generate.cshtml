@@ -1,0 +1,160 @@
+﻿@model Dnd_App.Models.Combat.Combat
+
+@{
+    ViewBag.Title = "Generate";
+}
+
+<main>
+    <nav class="z-depth-0 grey darken-4">
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo bar-logo left" id="logo">DnDApp</a>
+            <ul id="nav-mobile" class="right hide-on-small-only">
+                <li>Actions:</li>
+                <li><a href="javascript:$('#colid1').collapsible('open', 0);" class="waves-effect waves-light btn red">End combat</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="row row-new-character">
+
+        <div class="col s6 col-new-character">
+            <div class="card-panel red-to-red white-text">
+                <div class="row">
+                    <div class="col s7">
+                        <h4 class="left">Name</h4>
+                    </div>
+                    <div class="col s5">
+                        <br />
+                        <a href="javascript:NextTurn();" class="waves-effect waves-light btn blue right">Next turn</a>
+                    </div>
+                </div>
+
+                <div id="_CurrentCharacter">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="col s6 col-new-character">
+            <div class="npcview z-depth-3" id="_CurrentStatBlock">
+
+            </div>
+        </div>
+
+    </div>
+
+</main>
+
+
+
+
+@section scripts{
+
+    <script>
+        $(document).ready(
+            function loadCombatView() {
+                reloadCombatView();
+            }
+        );
+    </script>
+
+    <script>
+            function reloadCombatView() {
+
+                $.ajax({
+                    type: "GET",
+                    cache: false,
+                    url: "@Url.Action("_CurrentCharacter", "Combat")",
+                    data: { 'TempID': @Model.TempID },
+                    contentType: "application/json; charset=utf-8",
+                        success: function (data)
+                        {
+
+                            var _npcSpeeds = $("#_CurrentCharacter");
+                            _npcSpeeds.html(data);
+                        },
+                        failure: function (errMsg) {
+                            console.log("error ?")
+                            alert(errMsg);
+                        }
+                    });
+
+        }
+        
+    </script>
+
+    <script>
+        function NextTurn() {
+
+            $.ajax({
+                    type: "GET",
+                    cache: false,
+                    url: "@Url.Action("NextTurn", "Combat")",
+                    data: { 'TempID': @Model.TempID },
+                    contentType: "application/json; charset=utf-8",
+                        success: function (data)
+                        {
+                            console.log(data);
+                            reloadCombatView();
+                        },
+                        failure: function (errMsg) {
+                            console.log("error ?")
+                            alert(errMsg);
+                        }
+                    });
+
+            
+                    
+        }
+
+    </script>
+
+    <script>
+        function NPCStatBlock(i) {
+
+            $.ajax({
+                type: "GET",
+                cache: false,
+                url: "@Url.Action("_ViewFromCombat", "NPC")",
+                data: { 'TempIDCombat': @Model.TempID, 'INPC': i },
+                contentType: "application/json; charset=utf-8",
+                    success: function (data)
+                    {
+
+                        var _npcSpeeds = $("#_CurrentStatBlock");
+                        _npcSpeeds.html(data);
+                    },
+                    failure: function (errMsg) {
+                        console.log("error ?")
+                        alert(errMsg);
+                    }
+                });
+
+            }
+    </script>
+
+    <script>
+        function PCStatBlock(i) {
+
+            $.ajax({
+                type: "GET",
+                cache: false,
+                url: "@Url.Action("_ViewFromCombat", "PC")",
+                data: { 'TempIDCombat': @Model.TempID, 'IPC': i },
+                contentType: "application/json; charset=utf-8",
+                    success: function (data)
+                    {
+
+                        var _npcSpeeds = $("#_CurrentStatBlock");
+                        _npcSpeeds.html(data);
+                    },
+                    failure: function (errMsg) {
+                        console.log("error ?")
+                        alert(errMsg);
+                    }
+                });
+
+            }
+    </script>
+
+}

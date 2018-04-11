@@ -38,12 +38,38 @@ namespace Dnd_App.Controllers
             var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
             return PartialView(Combat);
         }
-        
 
-        
+        [HttpGet]
+        public ActionResult Generate(long TempID)
+        {
+            var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
+            if (Combat.Characters == null)
+            {
+                Combat.GenerateCharacterList();
+            }
+            
+            //var Combat = new Models.Combat.Combat();
+            //Combat.NPCs = new List<Models.Combat.NPCCombat>();
+            //Combat.PCs = new List<Models.Combat.PCCombat>();
+            return View(Combat);
+        }
+
+        [HttpGet]
+        public PartialViewResult _CurrentCharacter(long TempID)
+        {
+            var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
+            return PartialView(Combat);
+        }
 
 
 
+        [HttpGet]
+        public void NextTurn(long TempID)
+        {
+            var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
+            Combat.NextTurn();
+            //return Json(new { msg = "Next Turn OK" });
+        }
 
         #region Callbacks --> Basic Info
 
@@ -64,6 +90,8 @@ namespace Dnd_App.Controllers
 
             var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
             Combat.AddUserCombat(list);
+
+
 
 
             return Json(new { nameValue = "Success" });

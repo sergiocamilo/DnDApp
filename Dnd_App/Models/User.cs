@@ -105,7 +105,7 @@ namespace Dnd_App.Models
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return false;
             }

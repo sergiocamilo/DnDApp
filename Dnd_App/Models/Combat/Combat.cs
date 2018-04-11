@@ -23,7 +23,9 @@ namespace Dnd_App.Models.Combat
         public int IndexNPCs { set; get; }
         public int IndexPCs { set; get; }
 
-        
+        public List<CharacterCombat> Characters { set; get; }
+        public int IndexCharacter { set; get; }
+
 
         public void AddUserCombat(List<String> list)
         {
@@ -42,30 +44,73 @@ namespace Dnd_App.Models.Combat
 
             if (list.Count <= this.Participants.Count)
             {
+                this.IntersectPCUser(NewUserCombat);
                 this.Participants = this.Participants.Intersect(NewUserCombat, new UserCombat()).ToList();
+
             }
             else
             {
                 NewUserCombat = NewUserCombat.Except(this.Participants, new UserCombat()).ToList();
                 this.Participants.AddRange(NewUserCombat);
             }
-        }
-        
 
-        public int CalculateInitiativeNPC(NPC NPC)
-        {
-            return (int)10.5 + NPC.AbilitiesScores.Find(con => con.ShortName == "Dex").ModValue;
         }
 
-        public int CalculateInitiativePC(PC PC)
+       public void IntersectPCUser(List<UserCombat> New)
         {
-            return (int)10.5 + PC.abilitiesScores.Find(con => con.ShortName == "Dex").ModValue;
-            
+            var u  = this.Participants.Except(New, new UserCombat()).ToList().First();
+            if (u!= null)
+            {
+                this.PCs.RemoveAll(pc => pc.User.UserName == u.User.UserName);
+            }
+        }
+
+
+        public void GenerateCharacterList()
+        {
+            this.Characters = new List<CharacterCombat>();
+            this.IndexCharacter = 0;
+
+            for (int i = 0; i < PCs.Count; i++)
+            {
+                this.Characters.Add(new CharacterCombat(){
+                    iList = i,
+                    Initiative = PCs[i].Initiative,
+                    Type = Enum.TypeCharacter.PC
+                });
+            }
+            for (int i = 0; i < NPCs.Count; i++)
+            {
+                this.Characters.Add(new CharacterCombat()
+                {
+                    iList = i,
+                    Initiative = NPCs[i].Initiative,
+                    Type = Enum.TypeCharacter.NPC
+                });
+            }
+
+            this.Characters = this.Characters.OrderByDescending(character => character.Initiative).ToList();
+        }
+
+        public int NextTurn()
+        {
+            this.IndexCharacter++;
+            if (IndexCharacter >= Characters.Count)
+            {
+                IndexCharacter = 0;
+            }
+
+            return IndexCharacter;
         }
 
 
 
         #region NPC in combat
+
+        public int CalculateInitiativeNPC(NPC NPC)
+        {
+            return (int)10.5 + NPC.AbilitiesScores.Find(con => con.ShortName == "Dex").ModValue;
+        }
 
         public void InsertNPC(NPC NewNPC)
         {
@@ -95,6 +140,12 @@ namespace Dnd_App.Models.Combat
         #endregion
 
         #region PC in combat
+
+        public int CalculateInitiativePC(PC PC)
+        {
+            return (int)10.5 + PC.abilitiesScores.Find(con => con.ShortName == "Dex").ModValue;
+
+        }
 
         public Boolean InsertPC(PC NewPC, User User)
         {
