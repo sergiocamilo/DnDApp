@@ -16,7 +16,6 @@
     </nav>
 
     <div class="row row-new-character">
-
         <div class="col s6 col-new-character">
             <div class="card-panel red-to-red white-text">
                 <div class="row">
@@ -28,16 +27,20 @@
                         <a href="javascript:NextTurn();" class="waves-effect waves-light btn blue right">Next turn</a>
                     </div>
                 </div>
-
-                <div id="_CurrentCharacter">
-                    
-                </div>
+                <div id="_CurrentCharacter"></div>
             </div>
         </div>
 
         <div class="col s6 col-new-character">
-            <div class="npcview z-depth-3" id="_CurrentStatBlock">
 
+            <div class="npcview z-depth-3" id="_CurrentAction">
+                <h5 class="center">No Action selected yet</h5>
+            </div>
+
+            <hr />
+
+            <div class="npcview z-depth-3" id="_CurrentStatBlock">
+                <h5 class="center">No Statblock preview selected yet</h5>
             </div>
         </div>
 
@@ -96,6 +99,8 @@
                         {
                             console.log(data);
                             reloadCombatView();
+                            var _action = $("#_CurrentAction");
+                            _action.html('<h5 class="center">No Action selected yet</h5>');
                         },
                         failure: function (errMsg) {
                             console.log("error ?")
@@ -156,5 +161,29 @@
 
             }
     </script>
+
+<script>
+        function loadTarget(iAction) {
+
+            $.ajax({
+                type: "GET",
+                cache: false,
+                url: "@Url.Action("SelectTarget", "Combat")",
+                data: { 'TempID': @Model.TempID, 'iAction': iAction },
+                contentType: "application/json; charset=utf-8",
+                    success: function (data)
+                    {
+
+                        var _npcSpeeds = $("#_CurrentAction");
+                        _npcSpeeds.html(data);
+                    },
+                    failure: function (errMsg) {
+                        console.log("error ?")
+                        alert(errMsg);
+                    }
+                });
+
+            }
+</script>
 
 }

@@ -475,6 +475,7 @@
     <Content Include="Views\User\ChangePassword.cshtml" />
     <Content Include="Views\Combat\Generate.cshtml" />
     <Content Include="Views\Combat\_CurrentCharacter.cshtml" />
+    <Content Include="Views\Combat\SelectTarget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

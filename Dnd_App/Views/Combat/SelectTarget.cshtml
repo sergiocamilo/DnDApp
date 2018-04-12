@@ -1,0 +1,70 @@
+﻿@model Dnd_App.Models.Combat.Combat
+
+@{ 
+
+    var CurrentAction = new Dnd_App.Models.Characters.Action();
+
+    if (Model.Characters[Model.IndexCharacter].Type == Dnd_App.Models.Enum.TypeCharacter.NPC)
+    {
+        var npc = Model.NPCs[Model.Characters[Model.IndexCharacter].iList].NPC;
+        CurrentAction = Model.NPCs[Model.Characters[Model.IndexCharacter].iList].NPC.Actions[ViewBag.iAction];
+    }
+    else
+    {
+        var pc = Model.PCs[Model.Characters[Model.IndexCharacter].iList];
+        var Actions = new List<Dnd_App.Models.Characters.Action>();
+        Actions = pc.PC.presetActions.Concat(pc.PC.actions).ToList();
+        CurrentAction = Actions[ViewBag.iAction];
+    }
+
+
+
+
+}
+
+
+<div class="card white z-depth-2 grey darken-4">
+    <div class="row">
+        <div class="col s12">
+            
+            <h4 class="white-text light">Select targets for @CurrentAction.Name</h4>
+            <ul class="collection">
+
+                @foreach (var character in Model.Characters)
+                {
+                    if (character.Type == Dnd_App.Models.Enum.TypeCharacter.NPC)
+                    {
+                        var npc = Model.NPCs[character.iList];
+                        <li class="collection-item orange-to-orangeblack white-text">
+                            <div class="row">
+                                <div class="col s9">
+                                    <h5 class="title">@npc.NPC.Name (NPC)</h5>
+                                </div>
+                                <div class="col s3">
+                                    <a href="javascript:;" class="secondary-content btn-flat blue white-text">Apply</a>
+                                </div>
+                                <div class="col s12"></div>
+                            </div>
+                        </li>
+                    }
+                    else
+                    {
+                        var pc = Model.PCs[character.iList];
+                        <li class="collection-item green-to-green white-text">
+                            <div class="row">
+                                <div class="col s9">
+                                    <h5 class="title">@pc.PC.name (@pc.User.UserName)</h5>
+                                </div>
+                                <div class="col s3">
+                                    <a href="javascript:;" class="secondary-content btn-flat blue white-text">Apply</a>
+                                </div>
+                                <div class="col s12"></div>
+                            </div>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+    
+</div>

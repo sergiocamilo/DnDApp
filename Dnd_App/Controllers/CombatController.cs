@@ -71,6 +71,16 @@ namespace Dnd_App.Controllers
             //return Json(new { msg = "Next Turn OK" });
         }
 
+        [HttpGet]
+        public PartialViewResult SelectTarget(long TempID, int iAction)
+        {
+            var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
+            ViewBag.iAction = iAction;
+            return PartialView(Combat);
+        }
+
+
+
         #region Callbacks --> Basic Info
 
         [HttpPost]
