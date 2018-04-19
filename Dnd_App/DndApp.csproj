@@ -476,6 +476,7 @@
     <Content Include="Views\Combat\Generate.cshtml" />
     <Content Include="Views\Combat\_CurrentCharacter.cshtml" />
     <Content Include="Views\Combat\SelectTarget.cshtml" />
+    <Content Include="Views\Combat\_Characters.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

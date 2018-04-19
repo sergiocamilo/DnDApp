@@ -72,50 +72,17 @@
                                 </select>
                                 <label>Select effect</label>
                             </div>
+                            <div class="input-field col s6">
+                                <input value="0" id="duration-input" type="number">
+                                <label class="active" for="duration-input">Duration</label>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col s12">
-            <ul class="collection">
-
-                @foreach (var character in Model.Characters)
-                {
-                    if (character.Type == Dnd_App.Models.Enum.TypeCharacter.NPC)
-                    {
-                        var npc = Model.NPCs[character.iList];
-                        <li class="collection-item orange-to-orangeblack white-text">
-                            <div class="row">
-                                <div class="col s9">
-                                    <h5 class="title">@npc.NPC.Name (NPC)</h5>
-                                    <p>HP: @npc.NPC.HitPoint.HitPointsAVG</p>
-                                </div>
-                                <div class="col s3">
-                                    <a href="javascript:applyActionTo(@character.iList, 0);" class="secondary-content btn-flat blue white-text">Apply</a>
-                                </div>
-                                <div class="col s12"></div>
-                            </div>
-                        </li>
-                    }
-                    else
-                    {
-                        var pc = Model.PCs[character.iList];
-                        <li class="collection-item green-to-green white-text">
-                            <div class="row">
-                                <div class="col s9">
-                                    <h5 class="title">@pc.PC.name (@pc.User.UserName)</h5>
-                                    <span>HP: @pc.PC.hitPoint.HitPointsAVG</span>
-                                </div>
-                                <div class="col s3">
-                                    <a href="javascript:applyActionTo(@character.iList, 1);" class="secondary-content btn-flat blue white-text">Apply</a>
-                                </div>
-                                <div class="col s12"></div>
-                            </div>
-                        </li>
-                    }
-                }
-            </ul>
+            <div id="_characters"></div>
         </div>
     </div>
 
@@ -123,6 +90,44 @@
 
 <script src="~/Scripts/materialize/loadform.js"></script>
 <script src="~/Scripts/materialize/initform.js"></script>
+
+
+<!--updateAlignmentAttitude-->
+<script>
+        $(document).ready(
+            function LoadCharacters() {
+                ReloadCharacters();
+            }
+        );
+</script>
+
+
+<script>
+        function ReloadCharacters() {
+
+            $.ajax({
+               type: "GET",
+                cache: false,
+                url: "@Url.Action("_Characters","Combat")",
+                data: { 'TempID': @Model.TempID },
+                contentType: "application/json; charset=utf-8",
+                success: function (data)
+                {
+                    var _npcSpeeds = $("#_characters");
+                    _npcSpeeds.html(data);
+                },
+                failure: function (errMsg) {
+                    console.log("error size")
+                    alert(errMsg);
+                }
+            });
+        }
+</script>
+
+
+
+
+
 
 
 <script>
@@ -159,29 +164,67 @@
 
 <script>
     function applyActionTo(iCharacter, type) {
-        console.log("Character " + iCharacter);
 
-        if (type == 0) {
-            console.log("Type: npc");
-        }
-        if (type == 1) {
-            console.log("Type: pc")
-        }
-        
         if ($('#harm').is(':checked')) {
-            console.log("harm");
-            console.log($('#harm-input').val());
+
+            var val = $('#harm-input').val();
+            console.log("Harm type " + type + " i " + iCharacter + "dmg -" + val);
+            harm(iCharacter, type, val);
+
         }
         if ($('#heal').is(':checked')) {
-            console.log("heal");
-            console.log($('#heal-input').val());
+
+            var val = $('#heal-input').val();
+            console.log("Heal type " + type + " i " + iCharacter + "dmg +" + val);
+            heal(iCharacter, type, val);
         }
         if ($('#effect').is(':checked')) {
             console.log("effect");
             console.log($('#select-effect').val());
         }
-
-
-
     } 
+</script>
+
+<script>
+    function heal(iCharacter, type, val) {
+
+         $.ajax({
+            type: "POST",
+            cache: false,
+            url: "@Url.Action("Heal", "Combat")",
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ 'Val': val, 'Type': type, 'ICharacter': iCharacter, 'TempID': @Model.TempID }),
+            success: function ()
+            {
+                ReloadCharacters();
+            },
+            failure: function (errMsg) {
+                console.log("error size")
+                alert(errMsg);
+            }
+        });
+    }
+</script>
+
+<script>
+    function harm(iCharacter, type, val) {
+
+         $.ajax({
+            type: "POST",
+            cache: false,
+            url: "@Url.Action("Harm", "Combat")",
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ 'Val': val, 'Type': type, 'ICharacter': iCharacter, 'TempID': @Model.TempID }),
+            success: function ()
+            {
+                ReloadCharacters();
+            },
+            failure: function (errMsg) {
+                console.log("error size")
+                alert(errMsg);
+            }
+        });
+    }
 </script>

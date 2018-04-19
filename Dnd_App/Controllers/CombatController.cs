@@ -61,7 +61,33 @@ namespace Dnd_App.Controllers
             return PartialView(Combat);
         }
 
+        [HttpPost]
+        public void Heal(int Val, Models.Enum.TypeCharacter Type, int ICharacter, long TempID)
+        {
+            var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
+            if (Type == Models.Enum.TypeCharacter.NPC)
+            {
+                Combat.NPCs[ICharacter].NPC.HitPoint.HitPointsAVG += Val;
+            }
+            else
+            {
+                Combat.PCs[ICharacter].PC.hitPoint.HitPointsAVG += Val;
+            }
+        }
 
+        [HttpPost]
+        public void Harm(int Val, Models.Enum.TypeCharacter Type, int ICharacter, long TempID)
+        {
+            var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
+            if (Type == Models.Enum.TypeCharacter.NPC)
+            {
+                Combat.NPCs[ICharacter].NPC.HitPoint.HitPointsAVG -= Val;
+            }
+            else
+            {
+                Combat.PCs[ICharacter].PC.hitPoint.HitPointsAVG -= Val;
+            }
+        }
 
         [HttpGet]
         public void NextTurn(long TempID)
@@ -79,7 +105,12 @@ namespace Dnd_App.Controllers
             return PartialView(Combat);
         }
 
-
+        [HttpGet]
+        public PartialViewResult _Characters(long TempID)
+        {
+            var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
+            return PartialView(Combat);
+        }
 
         #region Callbacks --> Basic Info
 
