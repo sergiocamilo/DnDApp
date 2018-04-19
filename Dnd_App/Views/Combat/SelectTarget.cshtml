@@ -64,7 +64,7 @@
                     <div id="div-effect-input" style="display: none;">
                         <div class="col s6">
                             <div class="input-field col s12">
-                                <select>
+                                <select id="select-effect">
                                     <option value="" disabled selected>Choose effects</option>
                                     <option value="1">Option 1</option>
                                     <option value="2">Option 2</option>
@@ -92,7 +92,7 @@
                                     <p>HP: @npc.NPC.HitPoint.HitPointsAVG</p>
                                 </div>
                                 <div class="col s3">
-                                    <a href="javascript:;" class="secondary-content btn-flat blue white-text">Apply</a>
+                                    <a href="javascript:applyActionTo(@character.iList, 0);" class="secondary-content btn-flat blue white-text">Apply</a>
                                 </div>
                                 <div class="col s12"></div>
                             </div>
@@ -108,7 +108,7 @@
                                     <span>HP: @pc.PC.hitPoint.HitPointsAVG</span>
                                 </div>
                                 <div class="col s3">
-                                    <a href="javascript:;" class="secondary-content btn-flat blue white-text">Apply</a>
+                                    <a href="javascript:applyActionTo(@character.iList, 1);" class="secondary-content btn-flat blue white-text">Apply</a>
                                 </div>
                                 <div class="col s12"></div>
                             </div>
@@ -154,4 +154,34 @@
             }
         });
     });
+</script>
+
+
+<script>
+    function applyActionTo(iCharacter, type) {
+        console.log("Character " + iCharacter);
+
+        if (type == 0) {
+            console.log("Type: npc");
+        }
+        if (type == 1) {
+            console.log("Type: pc")
+        }
+        
+        if ($('#harm').is(':checked')) {
+            console.log("harm");
+            console.log($('#harm-input').val());
+        }
+        if ($('#heal').is(':checked')) {
+            console.log("heal");
+            console.log($('#heal-input').val());
+        }
+        if ($('#effect').is(':checked')) {
+            console.log("effect");
+            console.log($('#select-effect').val());
+        }
+
+
+
+    } 
 </script>
