@@ -65,16 +65,16 @@
                         <div class="col s6">
                             <div class="input-field col s12">
                                 <select id="select-effect">
-                                    <option value="" disabled selected>Choose effects</option>
-                                    <option value="1">Option 1</option>
-                                    <option value="2">Option 2</option>
-                                    <option value="3">Option 3</option>
+                                    @foreach (Dnd_App.Models.Enum.TypeCondition imm in Enum.GetValues(typeof(Dnd_App.Models.Enum.TypeCondition)))
+                                    {
+                                        <option value="@((int)imm)">@imm.ToString()</option>
+                                    }
                                 </select>
                                 <label>Select effect</label>
                             </div>
                             <div class="input-field col s6">
                                 <input value="0" id="duration-input" type="number">
-                                <label class="active" for="duration-input">Duration</label>
+                                <label class="active" for="duration-input">Duration (Turns)</label>
                             </div>
                         </div>
                     </div>
@@ -181,6 +181,10 @@
         if ($('#effect').is(':checked')) {
             console.log("effect");
             console.log($('#select-effect').val());
+            console.log($('#duration-input').val());
+            var val = $('#select-effect').val();
+            var duration = $('#duration-input').val();
+            effect(iCharacter, type, val, duration);
         }
     } 
 </script>
@@ -195,8 +199,11 @@
             dataType: "html",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({ 'Val': val, 'Type': type, 'ICharacter': iCharacter, 'TempID': @Model.TempID }),
-            success: function ()
+            success: function (data)
             {
+                var json = JSON.parse(data);
+                Materialize.toast('<i class="fa fa-check-circle fa-fw"></i> ' + json["msg"] , 3000);
+
                 ReloadCharacters();
             },
             failure: function (errMsg) {
@@ -217,12 +224,37 @@
             dataType: "html",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({ 'Val': val, 'Type': type, 'ICharacter': iCharacter, 'TempID': @Model.TempID }),
-            success: function ()
-            {
+            success: function (data) {
+                var json = JSON.parse(data);
+                Materialize.toast('<i class="fa fa-check-circle fa-fw"></i> ' + json["msg"], 3000);
+
                 ReloadCharacters();
             },
             failure: function (errMsg) {
                 console.log("error size")
+                alert(errMsg);
+            }
+        });
+    }
+</script>
+
+<script>
+    function effect(iCharacter, type, val, duration) {
+
+         $.ajax({
+            type: "POST",
+            cache: false,
+            url: "@Url.Action("AddEffect", "Combat")",
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ 'Val': val, 'Type': type, 'ICharacter': iCharacter, 'Duration': duration, 'TempID': @Model.TempID }),
+            success: function (data) {
+                ReloadCharacters();
+                var json = JSON.parse(data);
+                Materialize.toast('<i class="fa fa-check-circle fa-fw"></i> ' + json["msg"], 3000);
+            },
+            failure: function (errMsg) {
+                console.log("error size");
                 alert(errMsg);
             }
         });

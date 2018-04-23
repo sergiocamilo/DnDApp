@@ -22,25 +22,37 @@
             <ul class="collection">
                 @foreach (var pc in Model.PCs)
                 {
-                    <li class="collection-item avatar green-to-green">
-                        <i class="material-icons circle orange">account_circle</i>
-                        <span class="title">@pc.PC.name (@pc.User.UserName)</span>
-                        <p>
-                            Initiative: @pc.Initiative
-                        </p>
-                        <a href="javascript:removePC(@pc.TempID);" class="secondary-content btn-flat red white-text">Remove</a>
+                    <li class="collection-item green-to-green">
+                        <div class="row">
+                            <div class="col s9">
+                                <h5 class="title">@pc.PC.name (@pc.User.UserName)</h5>
+                                <p>
+                                    Initiative: @pc.Initiative
+                                </p>
+                            </div>
+                            <div class="col s3">
+                                <a href="javascript:removePC(@pc.TempID);" class="secondary-content btn-flat blue white-text" style="margin-bottom:3px">Initiative</a>
+                                <a href="javascript:removePC(@pc.TempID);" class="secondary-content btn-flat red white-text">Remove</a>
+                            </div>
+                        </div>
                     </li>
 
                 }
                 @foreach (var npc in Model.NPCs)
                 {
-                    <li class="collection-item avatar orange-to-orangeblack">
-                        <i class="material-icons circle orange">security</i>
-                        <span class="title">@npc.NPC.Name (NPC)</span>
-                        <p>
-                            Initiative: @npc.Initiative
-                        </p>
-                        <a href="javascript:removeNPC(@npc.TempID);" class="secondary-content btn-flat red white-text">Remove</a>
+                    <li class="collection-item orange-to-orangeblack">
+                        <div class="row">
+                            <div class="col s9">
+                                <h5 class="title">@npc.NPC.Name (NPC)</h5>
+                                <p>
+                                    Initiative: @npc.Initiative
+                                </p>
+                            </div>
+                            <div class="col s3">
+                                <a href="javascript:removePC(@npc.TempID);" class="secondary-content btn-flat blue white-text" style="margin-bottom:3px">Initiative</a>
+                                <a href="javascript:removeNPC(@npc.TempID);" class="secondary-content btn-flat red white-text">Remove</a>
+                            </div>
+                        </div>
                     </li>
 
                 }

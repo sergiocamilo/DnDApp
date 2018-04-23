@@ -324,6 +324,7 @@
     <Compile Include="Models\Characters\TypeHitDie.cs" />
     <Compile Include="Models\Combat\CharacterCombat.cs" />
     <Compile Include="Models\Combat\Combat.cs" />
+    <Compile Include="Models\Combat\Effect.cs" />
     <Compile Include="Models\Combat\NPCCombat.cs" />
     <Compile Include="Models\Combat\PCCombat.cs" />
     <Compile Include="Models\Combat\UserCombat.cs" />

@@ -10,7 +10,7 @@
             <a href="#" class="brand-logo bar-logo left" id="logo">DnDApp</a>
             <ul id="nav-mobile" class="right hide-on-small-only">
                 <li>Actions:</li>
-                <li><a href="javascript:$('#colid1').collapsible('open', 0);" class="waves-effect waves-light btn red">End combat</a></li>
+                <li><a href="javascript:endCombat();" class="waves-effect waves-light btn red">End combat</a></li>
             </ul>
         </div>
     </nav>
@@ -90,26 +90,25 @@
         function NextTurn() {
 
             $.ajax({
-                    type: "GET",
-                    cache: false,
-                    url: "@Url.Action("NextTurn", "Combat")",
-                    data: { 'TempID': @Model.TempID },
-                    contentType: "application/json; charset=utf-8",
-                        success: function (data)
-                        {
-                            console.log(data);
-                            reloadCombatView();
-                            var _action = $("#_CurrentAction");
-                            _action.html('<h5 class="center">No Action selected yet</h5>');
-                        },
-                        failure: function (errMsg) {
-                            console.log("error ?")
-                            alert(errMsg);
-                        }
-                    });
+                type: "POST",
+                cache: false,
+                url: "@Url.Action("NextTurn", "Combat")",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ 'TempID': @Model.TempID }),
+                success: function (data) {
+                    Materialize.toast('<i class="fa fa-check-circle fa-fw"></i> ' + data["msg"], 3000);
+                    reloadCombatView();
+                    var _action = $("#_CurrentAction");
+                    _action.html('<h5 class="center">No Action selected yet</h5>');
+                },
+                failure: function (errMsg) {
+                    console.log("error ?")
+                    alert(errMsg);
+                }
+            });
 
-            
-                    
+
+
         }
 
     </script>

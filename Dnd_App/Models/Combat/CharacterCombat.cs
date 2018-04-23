@@ -12,6 +12,8 @@ namespace Dnd_App.Models.Combat
         public Enum.TypeCharacter Type { get; set; }
         public int iList { get; set; }
 
-        
+        public Boolean Active { get; set; }
+        public int HP { get; set; }
+        public List<Effect> Effects { get; set; }
     }
 }

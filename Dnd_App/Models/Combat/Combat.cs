@@ -73,10 +73,13 @@ namespace Dnd_App.Models.Combat
 
             for (int i = 0; i < PCs.Count; i++)
             {
-                this.Characters.Add(new CharacterCombat(){
+                this.Characters.Add(new CharacterCombat() {
                     iList = i,
                     Initiative = PCs[i].Initiative,
-                    Type = Enum.TypeCharacter.PC
+                    Type = Enum.TypeCharacter.PC,
+                    Effects = new List<Effect>(),
+                    HP = PCs[i].PC.hitPoint.HitPointsAVG,
+                    Active = true
                 });
             }
             for (int i = 0; i < NPCs.Count; i++)
@@ -85,7 +88,10 @@ namespace Dnd_App.Models.Combat
                 {
                     iList = i,
                     Initiative = NPCs[i].Initiative,
-                    Type = Enum.TypeCharacter.NPC
+                    Type = Enum.TypeCharacter.NPC,
+                    Effects = new List<Effect>(),
+                    HP = NPCs[i].NPC.HitPoint.HitPointsAVG,
+                    Active = true
                 });
             }
 

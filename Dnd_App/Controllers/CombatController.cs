@@ -62,39 +62,90 @@ namespace Dnd_App.Controllers
         }
 
         [HttpPost]
-        public void Heal(int Val, Models.Enum.TypeCharacter Type, int ICharacter, long TempID)
+        public ActionResult Heal(int Val, Models.Enum.TypeCharacter Type, int ICharacter, long TempID)
         {
             var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
+            Combat.Characters[ICharacter].HP += Val;
             if (Type == Models.Enum.TypeCharacter.NPC)
             {
-                Combat.NPCs[ICharacter].NPC.HitPoint.HitPointsAVG += Val;
+                if (Combat.Characters[ICharacter].HP > Combat.NPCs[ICharacter].NPC.HitPoint.HitPointsAVG)
+                {
+                    Combat.Characters[ICharacter].HP = Combat.NPCs[ICharacter].NPC.HitPoint.HitPointsAVG;
+                }
             }
             else
             {
-                Combat.PCs[ICharacter].PC.hitPoint.HitPointsAVG += Val;
+                if (Combat.Characters[ICharacter].HP > Combat.PCs[ICharacter].PC.hitPoint.HitPointsAVG)
+                {
+                    Combat.Characters[ICharacter].HP = Combat.PCs[ICharacter].PC.hitPoint.HitPointsAVG;
+                }
             }
+            return Json(new { msg = "Heal "+ Val + ", HP was increased to " + Combat.Characters[ICharacter].HP });
+        }
+
+
+        
+
+        [HttpPost]
+        public ActionResult Harm(int Val, Models.Enum.TypeCharacter Type, int ICharacter, long TempID)
+        {
+            var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
+            Combat.Characters[ICharacter].HP -= Val;
+            if (Type == Models.Enum.TypeCharacter.NPC)
+            {
+                if (Combat.Characters[ICharacter].HP <= 0)
+                {
+                    Combat.Characters[ICharacter].HP = 0;
+                    Combat.Characters[ICharacter].Active = false;
+                }
+            }
+            else
+            {
+                if (Combat.Characters[ICharacter].HP <= 0)
+                {
+                    Combat.Characters[ICharacter].HP = 0;
+                    Combat.Characters[ICharacter].Active = false;
+                }
+            }
+            return Json(new { msg = "Attack " + Val + ", HP was decreased to " + Combat.Characters[ICharacter].HP });
+        }
+
+
+
+        [HttpPost]
+        public ActionResult AddEffect(String Val, Models.Enum.TypeCharacter Type, int ICharacter,int Duration , long TempID)
+        {
+
+            Models.Enum.TypeCondition Name = (Models.Enum.TypeCondition)Convert.ToInt32(Val);
+            var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
+
+            Combat.Characters[ICharacter].Effects.Add(new Models.Combat.Effect()
+            {
+                Name = Name,
+                Turn = Duration
+            });
+
+            return Json(new { msg = "Effect " + Name.ToString() + " was applied"});
         }
 
         [HttpPost]
-        public void Harm(int Val, Models.Enum.TypeCharacter Type, int ICharacter, long TempID)
+        public ActionResult RemoveEffect(int Val, int ICharacter, long TempID)
         {
+
+            Models.Enum.TypeCondition Name = (Models.Enum.TypeCondition)Convert.ToInt32(Val);
             var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
-            if (Type == Models.Enum.TypeCharacter.NPC)
-            {
-                Combat.NPCs[ICharacter].NPC.HitPoint.HitPointsAVG -= Val;
-            }
-            else
-            {
-                Combat.PCs[ICharacter].PC.hitPoint.HitPointsAVG -= Val;
-            }
+            Combat.Characters[ICharacter].Effects.RemoveAt(Val);
+
+            return Json(new { msg = "Effect " + Name.ToString() + " was removed" });
         }
 
-        [HttpGet]
-        public void NextTurn(long TempID)
+
+        [HttpPost]
+        public ActionResult NextTurn(long TempID)
         {
             var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
             Combat.NextTurn();
-            //return Json(new { msg = "Next Turn OK" });
+            return Json(new { msg = "Next Turn" });
         }
 
         [HttpGet]
