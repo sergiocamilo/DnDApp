@@ -65,26 +65,51 @@ namespace Dnd_App.Controllers
         public ActionResult Heal(int Val, Models.Enum.TypeCharacter Type, int ICharacter, long TempID)
         {
             var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
-            Combat.Characters[ICharacter].HP += Val;
             if (Type == Models.Enum.TypeCharacter.NPC)
             {
-                if (Combat.Characters[ICharacter].HP > Combat.NPCs[ICharacter].NPC.HitPoint.HitPointsAVG)
+                if (Combat.Characters[ICharacter].HP >= Combat.NPCs[Combat.Characters[ICharacter].iList].NPC.HitPoint.HitPointsAVG)
                 {
-                    Combat.Characters[ICharacter].HP = Combat.NPCs[ICharacter].NPC.HitPoint.HitPointsAVG;
+                    return Json(new { msg = "Max value for HP" });
+                }
+                else
+                {
+                    Combat.Characters[ICharacter].HP += Val;
+                    if (Combat.Characters[ICharacter].HP > Combat.NPCs[Combat.Characters[ICharacter].iList].NPC.HitPoint.HitPointsAVG)
+                    {
+                        Combat.Characters[ICharacter].HP = Combat.NPCs[Combat.Characters[ICharacter].iList].NPC.HitPoint.HitPointsAVG;
+                    }
                 }
             }
             else
             {
-                if (Combat.Characters[ICharacter].HP > Combat.PCs[ICharacter].PC.hitPoint.HitPointsAVG)
+                if (Combat.Characters[ICharacter].HP >= Combat.PCs[Combat.Characters[ICharacter].iList].PC.hitPoint.HitPointsAVG)
                 {
-                    Combat.Characters[ICharacter].HP = Combat.PCs[ICharacter].PC.hitPoint.HitPointsAVG;
+                    return Json(new { msg = "Max value for HP" });
+                }
+                else
+                {
+                    Combat.Characters[ICharacter].HP += Val;
+                    if (Combat.Characters[ICharacter].HP > Combat.PCs[Combat.Characters[ICharacter].iList].PC.hitPoint.HitPointsAVG)
+                    {
+                        Combat.Characters[ICharacter].HP = Combat.PCs[Combat.Characters[ICharacter].iList].PC.hitPoint.HitPointsAVG;
+                    }
+
                 }
             }
             return Json(new { msg = "Heal "+ Val + ", HP was increased to " + Combat.Characters[ICharacter].HP });
         }
 
+        [HttpPost]
+        public ActionResult TemporaryHP(int Val, Models.Enum.TypeCharacter Type, int ICharacter, long TempID)
+        {
+            var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
+            Combat.Characters[ICharacter].HP += Val;
+            
+            return Json(new { msg = "Temporary hp add " + Val + ", HP was increased to " + Combat.Characters[ICharacter].HP });
+        }
 
-        
+
+
 
         [HttpPost]
         public ActionResult Harm(int Val, Models.Enum.TypeCharacter Type, int ICharacter, long TempID)

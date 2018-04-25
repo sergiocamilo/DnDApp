@@ -33,15 +33,19 @@
                 <div class="col s6">
                     <p>
                         <input name="actionRadio" type="radio" id="harm" checked />
-                        <label class="white-text" for="harm">Do harm</label>
+                        <label class="white-text" for="harm">Damage</label>
                     </p>
                     <p>
                         <input name="actionRadio" type="radio" id="heal" />
-                        <label class="white-text" for="heal">Heal</label>
+                        <label class="white-text" for="heal">Healing</label>
                     </p>
                     <p>
                         <input name="actionRadio" type="radio" id="effect" />
                         <label class="white-text" for="effect">Apply effect</label>
+                    </p>
+                    <p>
+                        <input name="actionRadio" type="radio" id="temphp" />
+                        <label class="white-text" for="temphp">Temporary HP</label>
                     </p>
                 </div>
                 <div class="row">
@@ -78,6 +82,15 @@
                             </div>
                         </div>
                     </div>
+                    <div id="div-temphp-input" style="display: none;">
+                        <div class="col s6">
+                            <div class="input-field col s6">
+                                <input value="0" id="temphp-input" type="number">
+                                <label class="active" for="temphp-input">Temporary HP</label>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -138,6 +151,7 @@
                 $('#div-harm-input').show();
                 $('#div-heal-input').hide();
                 $('#div-effect-input').hide();
+                $('#div-temphp-input').hide();
             }
         });
 
@@ -147,6 +161,7 @@
                 $('#div-harm-input').hide();
                 $('#div-heal-input').show();
                 $('#div-effect-input').hide();
+                $('#div-temphp-input').hide();
             }
         });
 
@@ -156,6 +171,16 @@
                 $('#div-harm-input').hide();
                 $('#div-heal-input').hide();
                 $('#div-effect-input').show();
+                $('#div-temphp-input').hide();
+            }
+        });
+        $('#temphp').click(function () {
+            if ($(this).is(':checked')) {
+                console.log('effect check');
+                $('#div-harm-input').hide();
+                $('#div-heal-input').hide();
+                $('#div-effect-input').hide();
+                $('#div-temphp-input').show();
             }
         });
     });
@@ -175,7 +200,7 @@
         if ($('#heal').is(':checked')) {
 
             var val = $('#heal-input').val();
-            console.log("Heal type " + type + " i " + iCharacter + "dmg +" + val);
+            console.log("Heal type " + type + " i " + iCharacter + "heal +" + val);
             heal(iCharacter, type, val);
         }
         if ($('#effect').is(':checked')) {
@@ -185,6 +210,12 @@
             var val = $('#select-effect').val();
             var duration = $('#duration-input').val();
             effect(iCharacter, type, val, duration);
+        }
+        if ($('#temphp').is(':checked')) {
+
+            var val = $('#temphp-input').val();
+            console.log("Temporary hp type " + type + " i " + iCharacter + "dmg +" + val);
+            temphp(iCharacter, type, val);
         }
     } 
 </script>
@@ -255,6 +286,32 @@
             },
             failure: function (errMsg) {
                 console.log("error size");
+                alert(errMsg);
+            }
+        });
+    }
+</script>
+
+
+<script>
+    function temphp(iCharacter, type, val) {
+
+         $.ajax({
+            type: "POST",
+            cache: false,
+            url: "@Url.Action("TemporaryHP", "Combat")",
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ 'Val': val, 'Type': type, 'ICharacter': iCharacter, 'TempID': @Model.TempID }),
+            success: function (data)
+            {
+                var json = JSON.parse(data);
+                Materialize.toast('<i class="fa fa-check-circle fa-fw"></i> ' + json["msg"] , 3000);
+
+                ReloadCharacters();
+            },
+            failure: function (errMsg) {
+                console.log("error size")
                 alert(errMsg);
             }
         });
