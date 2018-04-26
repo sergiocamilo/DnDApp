@@ -77,6 +77,7 @@ namespace Dnd_App.Controllers
         [HttpGet]
         public ActionResult Login()
         {
+            
             if (Utils.Session.IsLogged())
             {
                 return RedirectToAction("Panel");
@@ -90,7 +91,7 @@ namespace Dnd_App.Controllers
         {
             Models.User user = new Models.User();
             user.UserName = Username;
-
+            
             if (user.LogIn(Username,Password))
             {
                 Utils.Session.LogIn(user);
@@ -98,6 +99,7 @@ namespace Dnd_App.Controllers
             }
             else
             {
+                TempData["loginerror"] = 1;
                 return RedirectToAction("Login");
             }
         }
@@ -138,6 +140,7 @@ namespace Dnd_App.Controllers
                 }
                 else
                 {
+                    TempData["validateerror"] = 1;
                     return RedirectToAction("Validate");
                 }
             }

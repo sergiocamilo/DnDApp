@@ -32,7 +32,7 @@ namespace Dnd_App.Utils
         public static void LogIn(User User)
         {
             var CookieSession = new HttpCookie("session");
-            CookieSession.Expires = DateTime.Now.AddDays(1);
+            CookieSession.Expires = DateTime.Now.AddDays(365);
             
             CookieSession.Value = Convert.ToBase64String(MachineKey
                 .Protect(Encoding.UTF8.GetBytes(User.UserName))) ;

@@ -7,6 +7,16 @@
 <main class="noir">
     <div class="row login-row">
         <div class="col s4 offset-s4 card-panel white darken-4 login-panel">
+            @if (TempData["validateerror"] != null)
+            {
+                <br />
+                TempData["validateerror"] = null;
+                <div class="row red">
+                    <div class="input-field col s12 center">
+                        <p class="white-text">Token is not valid</p>
+                    </div>
+                </div>
+            }
             @using (Html.BeginForm("Validate", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()

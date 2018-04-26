@@ -7,6 +7,18 @@
 <main class="fire">
     <div class="login-row row">
         <div class="col s4 offset-s4 card-panel white darken-4 login-panel">
+            @if (TempData["loginerror"] != null)
+            {
+                <br />
+                TempData["loginerror"] = null;
+                <div class="row red">
+                    <div class="input-field col s12 center">
+                        <p class="white-text">User or password are incorrect</p>
+                        <p class="white-text">Or your user is not active</p>
+                        <p class="white-text">Please go to /Validate</p>
+                    </div>
+                </div>
+            }
             @using (Html.BeginForm("Login", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()
