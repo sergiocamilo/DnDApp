@@ -105,7 +105,15 @@ namespace Dnd_App.Models.Combat
             {
                 IndexCharacter = 0;
             }
-
+            if (Characters[IndexCharacter].Active)
+            {
+                foreach (var character in this.Characters)
+                {
+                    character.Effects.ForEach(ef => ef.Turn--);
+                    character.Effects.RemoveAll(ef => ef.Turn <= 0);
+                }
+            }
+            
             return IndexCharacter;
         }
 

@@ -12,12 +12,13 @@
             {
                 <li class="collection-item orange-to-orangeblack white-text">
                     <div class="row">
-                        <div class="col s9">
+                        <div class="col s8">
                             <h5 class="title">@npc.NPC.Name (NPC)</h5>
                             <p>HP: @character.HP</p>
                         </div>
-                        <div class="col s3">
-                            <a href="javascript:applyActionTo(@i, 0);" class="secondary-content btn-flat blue white-text">Apply</a>
+                        <div class="col s4 center">
+                            <a href="javascript:NPCStatBlock(@character.iList)" class="waves-effect waves-light btn blue">Statblock</a>
+                            <a href="javascript:applyActionTo(@i, 0);" class="waves-effect waves-light btn-flat blue white-text" style="margin-top:3px;">Apply</a>
                         </div>
                         @if (character.Effects.Count > 0)
                         {
@@ -62,12 +63,13 @@
             {
                 <li class="collection-item green-to-green white-text">
                     <div class="row">
-                        <div class="col s9">
+                        <div class="col s8">
                             <h5 class="title">@pc.PC.name (@pc.User.UserName)</h5>
                             <p>HP: @character.HP</p>
                         </div>
-                        <div class="col s3">
-                            <a href="javascript:applyActionTo(@i, 1);" class="secondary-content btn-flat blue white-text">Apply</a>
+                        <div class="col s4 center">
+                            <a href="javascript:PCStatBlock(@character.iList)" class="waves-effect waves-light btn blue">Statblock</a>
+                            <a href="javascript:applyActionTo(@i, 0);" class="waves-effect waves-light btn-flat blue white-text" style="margin-top:3px;">Apply</a>
                         </div>
                         @if (character.Effects.Count > 0)
                         {

@@ -105,7 +105,6 @@
 <script src="~/Scripts/materialize/initform.js"></script>
 
 
-<!--updateAlignmentAttitude-->
 <script>
         $(document).ready(
             function LoadCharacters() {
@@ -194,14 +193,26 @@
 
             var val = $('#harm-input').val();
             console.log("Harm type " + type + " i " + iCharacter + "dmg -" + val);
-            harm(iCharacter, type, val);
+            if ($.isNumeric(val) && val > 0) {
+                harm(iCharacter, type, val);
+            }
+            else {
+                Materialize.toast('<i class="fa fa-check-circle fa-fw"></i> Damage value is not valid', 3000);
+            }
+           
 
         }
         if ($('#heal').is(':checked')) {
 
             var val = $('#heal-input').val();
             console.log("Heal type " + type + " i " + iCharacter + "heal +" + val);
-            heal(iCharacter, type, val);
+            if ($.isNumeric(val) && val > 0) {
+                heal(iCharacter, type, val);
+            }
+            else {
+                Materialize.toast('<i class="fa fa-check-circle fa-fw"></i> Healing value is not valid', 3000);
+            }
+            
         }
         if ($('#effect').is(':checked')) {
             console.log("effect");
@@ -209,13 +220,26 @@
             console.log($('#duration-input').val());
             var val = $('#select-effect').val();
             var duration = $('#duration-input').val();
-            effect(iCharacter, type, val, duration);
+            
+            if ($.isNumeric(duration) && duration > 0) {
+                effect(iCharacter, type, val, duration);
+            }
+            else {
+                Materialize.toast('<i class="fa fa-check-circle fa-fw"></i> Duration value is not valid', 3000);
+            }
+
         }
         if ($('#temphp').is(':checked')) {
 
             var val = $('#temphp-input').val();
             console.log("Temporary hp type " + type + " i " + iCharacter + "dmg +" + val);
-            temphp(iCharacter, type, val);
+            if ($.isNumeric(val) && val > 0) {
+                temphp(iCharacter, type, val);
+            }
+            else {
+                Materialize.toast('<i class="fa fa-check-circle fa-fw"></i> Temporary HP value is not valid', 3000);
+            }
+            
         }
     } 
 </script>
