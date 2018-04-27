@@ -63,6 +63,12 @@ namespace Dnd_App
             );
 
             routes.MapRoute(
+                name: "MyCombats",
+                url: "MyCombats",
+                defaults: new { controller = "Combat", action = "Join"}
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

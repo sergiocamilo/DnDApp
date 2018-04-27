@@ -1,0 +1,47 @@
+﻿@model Dictionary<long,Dnd_App.Models.Combat.Combat>
+
+@{
+    ViewBag.Title = "Combats";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var U = Dnd_App.Utils.Session.CurrentSession();
+}
+
+<main>
+    <nav class="z-depth-0 grey darken-4">
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo bar-logo left" id="logo">DnDApp</a>
+            <ul id="nav-mobile" class="right hide-on-small-only">
+                <li>Actions:</li>
+                <li><a href="@Url.Action("Panel","User")" class="waves-effect waves-light btn red">Back</a></li>
+            </ul>
+        </div>
+    </nav>
+    @if (Model.Count == 0)
+    {
+        <h2 class="center">You are not participating in any combat </h2>
+    }
+
+    <div class="row">
+        @foreach (var c in Model)
+        {
+            <div class="col s4">
+                <div class="card white z-depth-3 red-to-red">
+                    <div class="card-content white-text">
+                        <h3 class="card-title">@c.Value.Name</h3>
+                        <span>DM: @c.Value.DM.User.UserName</span>
+                        @foreach (var p in c.Value.Participants)
+                        {
+                            <span>Player: @p.User.UserName</span>
+                        }
+                    </div>
+                    <div class="card-action red-text center">
+                        <a class="white-text" href="#">Join</a>
+                    </div>
+                </div>
+            </div>
+        }
+        
+    </div>
+
+    
+</main>

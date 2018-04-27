@@ -55,6 +55,31 @@ namespace Dnd_App.Controllers
         }
 
         [HttpGet]
+        public ActionResult Join()
+        {
+            var U = Dnd_App.Utils.Session.CurrentSession();
+            var Combats = Utils.TemporalDB.Instance.CombatInstances;
+            var CombatUser = new Dictionary<long,Models.Combat.Combat>();
+            foreach (var c in Combats)
+            {
+                foreach (var p in c.Value.Participants)
+                {
+                    if (p.User.UserName == U.UserName)
+                    {
+                        CombatUser.Add(c.Key, c.Value);
+                    }
+                }
+            }
+            return View(CombatUser);
+        }
+
+
+
+
+
+
+
+        [HttpGet]
         public PartialViewResult _CurrentCharacter(long TempID)
         {
             var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
