@@ -172,3 +172,8 @@
 .u-hide {
     display:none;
 }
+
+.checkbox-orange[type="checkbox"].filled-in:checked + label:after {
+    border: 2px solid white;
+    background-color: white;
+}

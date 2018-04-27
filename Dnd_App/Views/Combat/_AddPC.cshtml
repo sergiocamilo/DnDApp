@@ -27,15 +27,13 @@
                                 </div>
                                 <hr />
                                 <div class="row">
-                                    <div class="col s4">
+                                    <div class="col s6">
                                         Armor Class: @item.armorClass.Total
                                     </div>
-                                    <div class="col s4">
+                                    <div class="col s6">
                                         Hit Points: @item.hitPoint.HitPointsAVG
                                     </div>
-                                    <div class="col s4">
-                                        Initiative: @Model.CalculateInitiativePC(item)
-                                    </div>
+                                    
                                 </div>
                                 <hr />
                                 <div class="row">
@@ -53,6 +51,7 @@
                                         </div>
                                     }
                                 </div>
+
                                 <hr />
                                 <div class="row center">
                                     <div class="col s6">

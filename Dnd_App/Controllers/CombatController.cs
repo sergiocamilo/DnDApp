@@ -136,6 +136,31 @@ namespace Dnd_App.Controllers
         }
 
 
+        [HttpPost]
+        public ActionResult ChangeInitiative(int TempIDChar, int Type, int Val, int TempID)
+        {
+
+            var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
+            try
+            {
+                if (Type == 0)
+                {
+                    Combat.NPCs.Where(npc => npc.TempID == TempIDChar).First().Initiative = Val;
+                    return Json(new { msg = "Initiative changed to " + Combat.NPCs.Where(npc => npc.TempID == TempIDChar).First().NPC.Name });
+                }
+                else
+                {
+                    Combat.PCs.Where(pc => pc.TempID == TempIDChar).First().Initiative = Val;
+                    return Json(new { msg = "Initiative changed to " + Combat.PCs.Where(pc => pc.TempID == TempIDChar).First().PC.name });
+                }
+            }
+            catch (Exception)
+            {
+                return Json(new { msg = "Error" });
+            }
+        }
+
+
 
         [HttpPost]
         public ActionResult AddEffect(String Val, Models.Enum.TypeCharacter Type, int ICharacter,int Duration , long TempID)

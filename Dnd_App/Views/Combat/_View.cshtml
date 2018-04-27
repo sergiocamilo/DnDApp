@@ -31,8 +31,18 @@
                                 </p>
                             </div>
                             <div class="col s3">
-                                <a href="javascript:removePC(@pc.TempID);" class="secondary-content btn-flat blue white-text" style="margin-bottom:3px">Initiative</a>
                                 <a href="javascript:removePC(@pc.TempID);" class="secondary-content btn-flat red white-text">Remove</a>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row center white-text">
+                            <div class="col s2"></div>
+                            <div class="input-field col s3 center">
+                                <input id="inipc@(pc.TempID)" type="text" value="@pc.Initiative">
+                                <label class="active white-text" for="ini(@pc.TempID)">Initiative</label>
+                            </div>
+                            <div class="input-field col s3">
+                                <a href="javascript:changeinitiative(@pc.TempID, 1);" class="btn-flat yellow darken-3 white-text">Change</a>
                             </div>
                         </div>
                     </li>
@@ -49,8 +59,18 @@
                                 </p>
                             </div>
                             <div class="col s3">
-                                <a href="javascript:removePC(@npc.TempID);" class="secondary-content btn-flat blue white-text" style="margin-bottom:3px">Initiative</a>
                                 <a href="javascript:removeNPC(@npc.TempID);" class="secondary-content btn-flat red white-text">Remove</a>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row center white-text">
+                            <div class="col s2"></div>
+                            <div class="input-field col s3 center">
+                                <input id="ininpc@(npc.TempID)" type="text" value="@npc.Initiative">
+                                <label class="active white-text" for="ini(@npc.TempID)">Initiative</label>
+                            </div>
+                            <div class="input-field col s3">
+                                <a href="javascript:changeinitiative(@npc.TempID, 0);" class="btn-flat teal white-text">Change</a>
                             </div>
                         </div>
                     </li>
@@ -61,3 +81,34 @@
     </div>
 </div>
 
+<script>
+    function changeinitiative(tempidchar, type) {
+        if (type == 0) {
+            var val = $("#ininpc" + tempidchar).val();
+        }
+        else {
+            var val = $("#inipc" + tempidchar).val();
+        }
+
+        console.log("change " + tempidchar + " type " + type + " : " + val);
+        $.ajax({
+            type: "POST",
+            cache: false,
+            url: "@Url.Action("ChangeInitiative")",
+            dataType: "html",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ 'TempIDChar': tempidchar, 'Type': type, 'Val': val ,'TempID': @Model.TempID }),
+            success: function (data)
+            {
+                console.log(data);
+                var json = JSON.parse(data);
+                Materialize.toast(json["msg"],3000);
+                reloadCombatView();
+            },
+            failure: function (errMsg) {
+                console.log("error ?")
+                alert(errMsg);
+            }
+        });
+    }
+</script>
