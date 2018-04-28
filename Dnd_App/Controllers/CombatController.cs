@@ -74,7 +74,22 @@ namespace Dnd_App.Controllers
         }
 
 
-
+        [HttpGet]
+        public ActionResult JoinUser(long TempID)
+        {
+            var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
+            var U = Dnd_App.Utils.Session.CurrentSession();
+            ViewBag.index = 0;
+            for (int i = 0; i < Combat.PCs.Count; i++)
+            {
+                if (Combat.PCs[i].User.UserName == U.UserName)
+                {
+                    ViewBag.index = i;
+                    break;
+                }
+            }
+            return View(Combat);
+        }
 
 
 
