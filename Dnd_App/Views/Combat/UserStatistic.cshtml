@@ -1,0 +1,235 @@
+﻿@model Dnd_App.Models.Combat.Combat
+
+@{
+    var character = Model.Characters.Where(pc => pc.iList == @ViewBag.index && pc.Type == Dnd_App.Models.Enum.TypeCharacter.PC).First();
+}
+
+
+
+<div class="card white z-depth-2 grey darken-4">
+    <div class="row">
+        <div class="col s12">
+            <h4 class="white-text light">My combat statistics</h4>
+            <div class="row">
+                <div class="col s3">
+                    @if (character.HP != 0)
+                    {
+                        <h5 class="white-text light">HP: @character.HP</h5>
+                    }
+                    else
+                    {
+                        <h5 class="white-text light">Dead</h5>
+                    }
+                </div>
+                <div class="col s2">
+                    <h5 class="white-text right">Effects:</h5>
+                </div>
+                @if (character.Effects.Count > 0)
+                {
+                    <div class="col s7">
+                        @for (int j = 0; j < character.Effects.Count; j++)
+                        {
+                            <div class="chip">
+                                @character.Effects[j].Name - @character.Effects[j].Turn
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                                <div class="chip black-text gray darken-4">No effects applied yet</div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card z-depth-2 red-to-red">
+    <div class="row">
+        <div class="col s12">
+            <h4 class="white-text light">Other participants</h4>
+            <div class="row">
+                <ul class="collection">
+                    @{int i = 0;}
+                    @foreach (var cha in Model.Characters)
+                    {
+                        if (cha.Type == Dnd_App.Models.Enum.TypeCharacter.NPC)
+                        {
+                            var npc = Model.NPCs[cha.iList];
+
+                            if (cha.Active)
+                            {
+                                <li class="collection-item orange-to-orangeblack white-text">
+                                    <div class="row">
+                                        <div class="col s8">
+                                            <h5 class="title">@npc.NPC.Name (NPC)</h5>
+                                        </div>
+                                        <div class="col s4">
+                                            @{ var percent = (cha.HP * 100) / npc.NPC.HitPoint.HitPointsAVG;}
+                                            @if (percent > 60)
+                                            {
+                                                <span class="badge green right white-text"> Healthy</span>
+                                            }
+                                            else if (percent > 20)
+                                            {
+                                                <span class="badge yellow right black-text"> Damaged</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge red right white-text"> Critic</span>
+                                            }
+                                        </div>
+                                        @if (cha.Effects.Count > 0)
+                                        {
+                                            <div class="col s12">
+                                                Effects:
+                                                <br />
+                                                @for (int j = 0; j < cha.Effects.Count; j++)
+                                                {
+                                                    <div class="chip" id="1" data-val="@i">
+                                                        @cha.Effects[j].Name - @cha.Effects[j].Turn
+                                                        <i class="close material-icons" onclick="removeEffect(@i, @j)">close</i>
+                                                    </div>
+                                                }
+                                            </div>
+                                        }
+                                    </div>
+                                </li>
+                                                }
+                                                else
+                                                {
+                                                    <li class="collection-item grey white-text">
+                                                        <div class="row">
+                                                            <div class="col s9">
+                                                                <h5 class="title">@npc.NPC.Name (NPC)</h5>
+                                                            </div>
+                                                            <div class="col s3">
+                                                                <span class="badge black right white-text"> Dead</span>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    }
+
+
+                                                }
+                                                else
+                                                {
+                                                    if (cha.iList != ViewBag.index)
+                                                    {
+
+                                                        var pc = Model.PCs[cha.iList];
+
+                                                        if (cha.Active)
+                                                        {
+                                                            <li class="collection-item green-to-green white-text">
+                                                                <div class="row">
+                                                                    <div class="col s8">
+                                                                        <h5 class="title">@pc.PC.name (@pc.User.UserName)</h5>
+                                                                    </div>
+                                                                    <div class="col s4">
+                                                                        @{ var percent = (cha.HP * 100) / pc.PC.hitPoint.HitPointsAVG;}
+                                                                        @if (percent > 60)
+                                                                        {
+                                                                            <span class="badge green right white-text"> Healthy</span>
+                                                                        }
+                                                                        else if (percent > 20)
+                                                                        {
+                                                                            <span class="badge yellow right black-text"> Damaged</span>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <span class="badge red right white-text"> Critic</span>
+                                                                        }
+                                                                    </div>
+                                                                    @if (cha.Effects.Count > 0)
+                                                                    {
+                                                                        <div class="col s12">
+                                                                            Effects
+                                                                            <br />
+                                                                            @for (int j = 0; j < cha.Effects.Count; j++)
+                                                                            {
+                                                                                <div class="chip" id="eff@((int)i)" data-val="@j">
+                                                                                    @cha.Effects[j].Name - @cha.Effects[j].Turn
+                                                                                    <i class="close material-icons" onclick="removeEffect(@i, @j)">close</i>
+                                                                                </div>
+                                                                            }
+                                                                        </div>
+                                                                    }
+                                                                </div>
+
+                                                            </li>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <li class="collection-item grey white-text">
+                                                                                    <div class="row">
+                                                                                        <div class="col s9">
+                                                                                            <h5 class="title">@pc.PC.name (@pc.User.UserName)</h5>
+                                                                                        </div>
+                                                                                        <div class="col s3">
+                                                                                            <span class="badge black right white-text"> Dead</span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </li>
+                                                                                        }
+
+                                                                                    }
+                                                                                    i++;
+                                                                                }
+                                                                            }
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+        $(document).ready(function () {
+            function requestTurn() {
+                $.ajax({
+                type: "POST",
+                cache: false,
+                url: "@Url.Action("RequestTurn", "Combat")",
+                data: JSON.stringify( { 'TempID': @Model.TempID }),
+                contentType: "application/json; charset=utf-8",
+                    success: function (data)
+                    {
+                        changeTurn(@Model.Turn, data["Turn"]);
+                    },
+                    failure: function (errMsg) {
+                        console.log("error ?")
+                        alert(errMsg);
+                    }
+                });
+            }
+
+            var x = setInterval(requestTurn, 5000);
+
+            function changeTurn(previous, current) {
+                if (current == -1) {
+                    clearInterval(x);
+                    $.alert({
+                        title: 'The Combat ended',
+                        content: 'Go to home page',
+                        buttons: {
+                            ok: {
+                                text: "ok!",
+                                btnClass: 'btn',
+                                keys: ['enter'],
+                                action: function () {
+                                    window.location.href = '@Url.Action("Panel", "User")';
+                                }
+                            }
+                        }
+                    });
+                }
+                if (current > previous) {
+                    clearInterval(x);
+                    Materialize.toast('turn ' + current, 3000);
+                    UserStatistic(@ViewBag.index);
+                }
+            }
+            });
+</script> 

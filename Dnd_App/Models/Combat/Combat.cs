@@ -25,6 +25,9 @@ namespace Dnd_App.Models.Combat
 
         public List<CharacterCombat> Characters { set; get; }
         public int IndexCharacter { set; get; }
+        public int Turn { set; get; }
+
+        public Boolean Active { set; get; }
 
 
         public void AddUserCombat(List<String> list)
@@ -70,6 +73,8 @@ namespace Dnd_App.Models.Combat
         {
             this.Characters = new List<CharacterCombat>();
             this.IndexCharacter = 0;
+            this.Turn = 0;
+            this.Active = true;
 
             for (int i = 0; i < PCs.Count; i++)
             {
@@ -101,6 +106,7 @@ namespace Dnd_App.Models.Combat
         public int NextTurn()
         {
             this.IndexCharacter++;
+            this.Turn++;
             if (IndexCharacter >= Characters.Count)
             {
                 IndexCharacter = 0;

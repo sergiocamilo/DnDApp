@@ -6,7 +6,7 @@
     var U = Dnd_App.Utils.Session.CurrentSession();
 }
 
-<main style="display: flex; min-height: 90vh;flex-direction: column;">
+<main style="min-height: 90vh;">
     <nav class="z-depth-0 grey darken-4">
         <div class="nav-wrapper">
             <a href="#" class="brand-logo bar-logo left" id="logo">DnDApp</a>
@@ -25,19 +25,40 @@
         @foreach (var c in Model)
         {
             <div class="col s4">
-                <div class="card white z-depth-3 red-to-red">
-                    <div class="card-content white-text">
-                        <h3 class="card-title">@c.Value.Name</h3>
-                        <span>DM: @c.Value.DM.User.UserName</span>
-                        @foreach (var p in c.Value.Participants)
-                        {
-                            <span>Player: @p.User.UserName</span>
-                        }
+                @if (c.Value.Active)
+                {
+                    <div class="card white z-depth-3 red-to-red">
+                        <div class="card-content white-text">
+                            <h3>@c.Value.Name</h3>
+                            <span>DM: @c.Value.DM.User.UserName</span>
+                            <br />
+                            @foreach (var p in c.Value.Participants)
+                            {
+                                <span>Player: @p.User.UserName</span>
+                                <br />
+                            }
+                        </div>
+                        <div class="card-action red-text center">
+                            <a class="white-text" href="@Url.Action("JoinUser","Combat", new { TempID = c.Key })">Join</a>
+                        </div>
                     </div>
-                    <div class="card-action red-text center">
-                        <a class="white-text" href="#">Join</a>
+                }
+                else
+                {
+                    <div class="card white z-depth-3 grey darken-3">
+                        <div class="card-content white-text">
+                            <h3>@c.Value.Name (Ended)</h3>
+                            <span>DM: @c.Value.DM.User.UserName</span>
+                            <br />
+                            @foreach (var p in c.Value.Participants)
+                            {
+                                <span>Player: @p.User.UserName</span>
+                                <br />
+                            }
+                        </div>
                     </div>
-                </div>
+                }
+
             </div>
         }
         

@@ -91,7 +91,35 @@ namespace Dnd_App.Controllers
             return View(Combat);
         }
 
+        [HttpGet]
+        public ActionResult UserStatistic(long TempIDCombat, int IPC)
+        {
+            var Combat = Utils.TemporalDB.Instance.SelectCombat(TempIDCombat);
+            var U = Dnd_App.Utils.Session.CurrentSession();
+            ViewBag.index = IPC;
+            
+            return PartialView(Combat);
+        }
 
+
+        [HttpPost]
+        public ActionResult RequestTurn(long TempID)
+        {
+            var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
+            if (!Combat.Active)
+            {
+                Combat.Turn = -1;
+            }
+
+            return Json(new { Turn = Combat.Turn });
+        }
+
+        [HttpPost]
+        public void EndCombat(long TempID)
+        {
+            var Combat = Utils.TemporalDB.Instance.SelectCombat(TempID);
+            Combat.Active = false;
+        }
 
 
         [HttpGet]

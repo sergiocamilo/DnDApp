@@ -1,5 +1,7 @@
 ﻿@model Dnd_App.Models.Combat.Combat
 
+<span class="right">Turn: @Model.Turn</span>
+
 <ul class="collection">
     @{int i = 0;}
     @foreach (var character in Model.Characters)
