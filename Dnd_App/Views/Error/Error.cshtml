@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "Error :(";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main style="min-height: 85vh;">
+    <nav class="z-depth-0 grey darken-4">
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo bar-logo left" id="logo">DnDApp</a>
+        </div>
+    </nav>
+    <div class="row">
+        <div class="col push-l3 s6 center">
+            <div class="card grey darken-3 white-text">
+                <h2>Error</h2>
+
+                <p>Please go to</p>
+                @Html.ActionLink("Register", "Register", "User", null,
+                    new { @class = "waves-effect waves-light btn-large yellow darken-2", @style = "width:150px;" })
+                @Html.ActionLink("Log in", "Login", "User", null,
+                    new { @class = "waves-effect waves-light btn-large blue darken-2", @style = "width:150px;" })
+
+            </div>
+        </div>
+    </div>
+</main>
+
