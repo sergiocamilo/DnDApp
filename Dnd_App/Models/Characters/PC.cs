@@ -379,16 +379,6 @@ namespace Dnd_App.Models.Characters
                             this.presetLanguagesUndersatand.Add(Mapper.Map<Language>(s.Language));
                     }
 
-                    foreach (var s in PCEntity.PC_SavingThrow.Where(n => !n.isTemplate))
-                    {
-                        this.savingThrows.Add(Mapper.Map<SavingThrow>(s.SavingThrow));
-                    }
-
-                    foreach (var s in PCEntity.PC_SavingThrow.Where(n => n.isTemplate))
-                    {
-                        this.presetSavingThrows.Add(Mapper.Map<SavingThrow>(s.SavingThrow));
-                    }
-
                     foreach (var s in PCEntity.PC_SpecialTrait.Where(n => !n.isTemplate))
                     {
                         this.specialTraits.Add(Mapper.Map<SpecialTrait>(s.SpecialTrait));

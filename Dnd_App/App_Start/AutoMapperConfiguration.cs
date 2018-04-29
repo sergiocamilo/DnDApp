@@ -180,11 +180,11 @@ namespace Dnd_App
         {
             CreateMap<Dnd_App.Entitites.Language, Dnd_App.Models.Characters.Language>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.id))
-            .ForMember(dest => dest.LanguageName, opt => opt.MapFrom(src => (Dnd_App.Models.Enum.LanguageName)src.typeLanguage));
+            .ForMember(dest => dest.LanguageName, opt => opt.MapFrom(src => (Dnd_App.Models.Enum.LanguageName)src.name));
 
             CreateMap<Dnd_App.Models.Characters.Language, Dnd_App.Entitites.Language>()
             .ForMember(dest => dest.id, opt => opt.MapFrom(src => src.Id))
-            .ForMember(dest => dest.typeLanguage, opt => opt.MapFrom(src => (int)src.LanguageName));
+            .ForMember(dest => dest.name, opt => opt.MapFrom(src => (int)src.LanguageName));
 
         }
 

@@ -244,7 +244,7 @@
                         success: function (data)
                         {
                             var _view = $("#_pcCreate");
-                            _view.replaceWith(data);
+                            _view.html(data);
 
                         },
                         failure: function (errMsg) {
@@ -293,7 +293,242 @@
             }
     </script>
 
+    <!--BASIC INFO -------------------------------------------------------------------------------------------->
+<!--updateName-->
+<script>
+               $(document).ready(
+                    function updateName2() {
+                        $("#name").focusout(function (event) {
 
+                            var name = $("#name").val();
+
+                            if (name == "") {
+                                alert('Name can not be empty');
+                                Materialize.toast('The name was changed to "Name"', 3000);
+                                name = "Name";
+                                $("#name").val("Name");
+                            }
+
+
+                            $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("UpdateName")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ 'newName': name, 'TempID':@Model.TempID }),
+                                success: function (data)
+                                {
+                                    reloadpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error size")
+                                    alert(errMsg);
+                                }
+                            });
+
+                        });
+                    }
+                );
+</script>
+
+<!--changeRace-->
+<script>
+               $(document).ready(
+                   function changeRace() {
+                       $("#race").change(function (event) {
+                           var val = $('#race').val();
+
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_changeRace")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ 'race': val, 'TempID':@Model.TempID }),
+                                success: function (data)
+                                {
+                                    reloadCreate();
+                                    reloadpcView();
+
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error size")
+                                    alert(errMsg);
+                                }
+                            });
+
+
+                       });
+
+                   }
+               );
+</script>
+
+<!--changeBackground-->
+<script>
+               $(document).ready(
+                   function changeBackground() {
+                       $("#background").change(function (event) {
+                           var val = $('#background').val();
+                           console.log(val);
+
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_changeBackgroud")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ 'background': val, 'TempID':@Model.TempID }),
+                                success: function (data)
+                                {
+                                    reloadCreate();
+                                    reloadpcView();
+
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error size")
+                                    alert(errMsg);
+                                }
+                            });
+
+
+                       });
+
+                   }
+               );
+</script>
+
+<!--changeClass-->
+<script>
+               $(document).ready(
+                   function changeClass() {
+                       $("#class").change(function (event) {
+                           var val = $('#class').val();
+                           console.log(val);
+
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_changeClass")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ '_class': val, 'TempID':@Model.TempID }),
+                                success: function (data)
+                                {
+                                    reloadCreate();
+                                    reloadpcView();
+
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error size")
+                                    alert(errMsg);
+                                }
+                            });
+
+
+                       });
+
+                   }
+               );
+</script>
+
+
+<!--updateAlignmentMorality-->
+<script>
+               $(document).ready(
+                   function updateAlignmentMorality() {
+                       $("#alignmentMorality").change(function (event) {
+                           var val = $('#alignmentMorality').val();
+                           console.log(val);
+
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_updateAlignmentMorality")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ 'val': val, 'TempID':@Model.TempID }),
+                                success: function (data)
+                                {
+                                    reloadpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error size")
+                                    alert(errMsg);
+                                }
+                            });
+
+
+                       });
+
+                   }
+               );
+</script>
+
+<!--updateAlignmentAttitude-->
+<script>
+               $(document).ready(
+                   function updateAlignmentMorality() {
+                       $("#alignmentAttitude").change(function (event) {
+                           var val = $('#alignmentAttitude').val();
+                           console.log(val);
+
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_updateAlignmentAttitude")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ 'val': val, 'TempID':@Model.TempID }),
+                                success: function (data)
+                                {
+                                    reloadpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error size")
+                                    alert(errMsg);
+                                }
+                            });
+
+
+                       });
+
+                   }
+               );
+</script>
+
+
+
+<!--updateChallenge-->
+<script>
+               $(document).ready(
+                   function updateChallenge() {
+                       $("#chrating").change(function (event) {
+                           var val = $('#chrating').val();
+                           console.log(val);
+
+
+                           $.ajax({
+                               type: "POST",
+                               cache: false,
+                                url: "@Url.Action("_updateLevel")",
+                                dataType: "html",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ 'val': val , 'TempID':@Model.TempID}),
+                                success: function (data)
+                                {
+                                    reloadpcView();
+                                },
+                                failure: function (errMsg) {
+                                    console.log("error challenge")
+                                    alert(errMsg);
+                                }
+                            });
+                       });
+                   }
+               );
+</script>
 
 }
 
