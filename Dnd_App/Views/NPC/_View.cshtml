@@ -215,20 +215,14 @@
 
     for (int i = 0; i < Model.Senses.Count; i++)
     {
-        TextSenses += Dnd_App.Utils.Helpers.Description(Model.Senses[i].TypeSense) + " ";
         if (@Model.Senses[i].TypeSense != Dnd_App.Models.Enum.TypeSense.passivePerception)
         {
-            TextSenses += Model.Senses[i].range + " ft.";
-        }
-        else
-        {
-            TextSenses += Model.Senses[i].range;
-        }
-        if (i != Model.Senses.Count - 1)
-        {
-            TextSenses += ", ";
+            TextSenses += Dnd_App.Utils.Helpers.Description(Model.Senses[i].TypeSense) + " ";
+            TextSenses += Model.Senses[i].range + " ft.,";
         }
     }
+    TextSenses += " passive Perception ";
+    TextSenses += Model.Senses.Where(s => s.TypeSense == Dnd_App.Models.Enum.TypeSense.passivePerception).First().range;
 
     #endregion
 

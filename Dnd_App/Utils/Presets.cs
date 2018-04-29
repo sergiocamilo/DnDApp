@@ -48,8 +48,8 @@ namespace Dnd_App.Utils
             Empty.AbilitiesScores.Add(new AbilityScore() { Name = "Dexterity", ShortName = "Dex", Value = 18, ModValue = 4 });
             Empty.AbilitiesScores.Add(new AbilityScore() { Name = "Constitution", ShortName = "Con", Value = 18, ModValue = 4 });
             Empty.AbilitiesScores.Add(new AbilityScore() { Name = "Intelligence", ShortName = "Int", Value = 17, ModValue = 3 });
-            Empty.AbilitiesScores.Add(new AbilityScore() { Name = "Wisdom", ShortName = "Wis", Value = 20, ModValue = 5, SavingThrow = true });
-            Empty.AbilitiesScores.Add(new AbilityScore() { Name = "Charisma", ShortName = "Cha", Value = 20, ModValue = 5, SavingThrow = true });
+            Empty.AbilitiesScores.Add(new AbilityScore() { Name = "Wisdom", ShortName = "Wis", Value = 20, ModValue = 5});
+            Empty.AbilitiesScores.Add(new AbilityScore() { Name = "Charisma", ShortName = "Cha", Value = 20, ModValue = 5 });
 
             Empty.SavingThrows = new List<SavingThrow>();
             Empty.Skills = new List<Skill>();
@@ -63,20 +63,22 @@ namespace Dnd_App.Utils
            
 
             Empty.Senses = new List<Sense>();
+            Empty.Senses.Add(new Sense() { TypeSense = TypeSense.passivePerception });
            
             Empty.LanguagesSpeak = new List<Language>();
-            Empty.LanguagesSpeak.Add(new Language() { LanguageName = LanguageName.Dwarvish });
             Empty.LanguagesUndersatand = new List<Language>();
-            Empty.LanguagesUndersatand.Add(new Language() { LanguageName = LanguageName.Giant });
             Empty.Telepathy = 0;
 
-            Empty.Challenge = new Challenge() { Value = "10", XP = 5900, ProficiencyBonus = 4 };
+            Empty.Challenge = new Challenge() { Value = "1", XP = 200, ProficiencyBonus = 2 };
 
             Empty.SpecialTraits = new List<SpecialTrait>();
 
             Empty.Actions = new List<Models.Characters.Action>();
             Empty.LegendaryActions = new List<Models.Characters.Action>();
             Empty.Reactions = new List<Models.Characters.Action>();
+
+
+            Empty.RecalculatePerception();
 
             return Empty;
 

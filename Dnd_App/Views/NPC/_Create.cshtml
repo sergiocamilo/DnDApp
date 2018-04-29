@@ -57,19 +57,19 @@
                 <div class="input-field col s6">
                     @if (@Model.ArmorClass.Shield)
                     {
-                        <p>
-                            <input checked="checked" class="checkbox" data-val=@Model.ArmorClass.Shield
-                                   id="armorClass_shield" name="armorClass_shield" type="checkbox" value=@Model.ArmorClass.Shield>
-                            <label for="armorClass_shield">Shield ?</label>
-                        </p>
+                    <p>
+                        <input checked="checked" class="checkbox" data-val=@Model.ArmorClass.Shield
+                               id="armorClass_shield" name="armorClass_shield" type="checkbox" value=@Model.ArmorClass.Shield>
+                        <label for="armorClass_shield">Shield ?</label>
+                    </p>
                     }
                     else
                     {
-                        <p>
-                            <input class="checkbox" data-val=@Model.ArmorClass.Shield
-                                   id="armorClass_shield" name="armorClass_shield" type="checkbox" value=@Model.ArmorClass.Shield>
-                            <label for="armorClass_shield">Shield ?</label>
-                        </p>
+                    <p>
+                        <input class="checkbox" data-val=@Model.ArmorClass.Shield
+                               id="armorClass_shield" name="armorClass_shield" type="checkbox" value=@Model.ArmorClass.Shield>
+                        <label for="armorClass_shield">Shield ?</label>
+                    </p>
                     }
                 </div>
             </div>
@@ -106,11 +106,11 @@
                         {
                             if (!Model.Speeds.Contains(new Dnd_App.Models.Characters.Speed() { TypeSpeed = speed }, new Dnd_App.Models.Characters.Speed()))
                             {
-                                <option value="@((int)speed)">@speed.ToString()</option>
+                        <option value="@((int)speed)">@speed.ToString()</option>
                             }
                             else
                             {
-                                <option selected value="@((int)speed)">@speed.ToString()</option>
+                        <option selected value="@((int)speed)">@speed.ToString()</option>
                             }
                         }
                     </select>
@@ -147,30 +147,30 @@
         <div class="collapsible-body white">
             <div class="row">
                 @for (int i = 0; i < Model.AbilitiesScores.Count; i++)
-                    {
-                <div class="input-field col s6">
-                    @if (Model.AbilitiesScores[i].SavingThrow)
-                            {
-                        <p>
-                            <input checked="checked" class="checkbox" data-val="true"
-                                   id="ST@(Model.AbilitiesScores[i].ShortName)" name="ST@(Model.AbilitiesScores[i].ShortName)"
-                                   type="checkbox" value="true">
-                            <label for="ST@(Model.AbilitiesScores[i].ShortName)">@Model.AbilitiesScores[i].Name</label>
-                        </p>
-                            }
-                            else
-                            {
-                        <p>
-                            <input class="checkbox" data-val="true"
-                                   id="ST@(Model.AbilitiesScores[i].ShortName)" name="ST@(Model.AbilitiesScores[i].ShortName)"
-                                   type="checkbox" value="true">
-                            <label for="ST@(Model.AbilitiesScores[i].ShortName)">@Model.AbilitiesScores[i].Name</label>
-                        </p>
+                {
+                    <div class="input-field col s6">
+                        @if (Model.AbilitiesScores[i].SavingThrow)
+                        {
+                            <p>
+                                <input checked="checked" class="checkbox" data-val="true"
+                                       id="ST@(Model.AbilitiesScores[i].ShortName)" name="ST@(Model.AbilitiesScores[i].ShortName)"
+                                       type="checkbox" value="true">
+                                <label for="ST@(Model.AbilitiesScores[i].ShortName)">@Model.AbilitiesScores[i].Name</label>
+                            </p>
+                        }
+                        else
+                        {
+                            <p>
+                                <input class="checkbox" data-val="true"
+                                       id="ST@(Model.AbilitiesScores[i].ShortName)" name="ST@(Model.AbilitiesScores[i].ShortName)"
+                                       type="checkbox" value="true">
+                                <label for="ST@(Model.AbilitiesScores[i].ShortName)">@Model.AbilitiesScores[i].Name</label>
+                            </p>
 
-                            }
-                </div>
+                        }
+                    </div>
 
-                    }
+                }
             </div>
         </div>
     </li>
@@ -267,7 +267,15 @@
                     <select multiple="multiple" id="sensesMultiple">
                         @foreach (Dnd_App.Models.Enum.TypeSense sense in Enum.GetValues(typeof(Dnd_App.Models.Enum.TypeSense)))
                         {
-                        <option value="@((int)sense)">@sense.ToString() </option>
+                            if (sense != Dnd_App.Models.Enum.TypeSense.passivePerception)
+                            {
+                                <option value="@((int)sense)">@sense.ToString() </option>
+                            }
+                            @*else
+                            {
+                                <option disabled value="@((int)sense)">@sense.ToString() </option>
+                            }*@
+
                         }
                     </select>
                     <label>Select multiple senses</label>
@@ -997,10 +1005,9 @@
         $(document).ready(
             function loadSkills() {
 
+                var list =  @Html.Raw(@Json.Encode(Model.Skills));
 
-                        var list =  @Html.Raw(@Json.Encode(Model.Skills));
-
-                console.log(list);
+                console.log("List skills:" + list);
 
                 var xlist = [];
 
@@ -1231,6 +1238,48 @@
             );
 </script>
 
+
+<!--loadVulResCond on vulnerabilities-->
+<script>
+        $(document).ready(
+            function loadVRI() {
+
+
+                var listVUL =  @Html.Raw(@Json.Encode(Model.Vulnerabilities));
+                var listRES =  @Html.Raw(@Json.Encode(Model.Resistances));
+                var listIMMDMG =  @Html.Raw(@Json.Encode(Model.ImmunitiesDamage));
+                var listIMMCND =  @Html.Raw(@Json.Encode(Model.ImmunitiesCondition));
+
+
+                for (var i = 0; i < listVUL.length; i++) {
+                    $("select#vulnerabilitiesMultiple > option[value=" + listVUL[i].TypeDamage + "]").prop("selected", true);
+                }
+                $('#vulnerabilitiesMultiple').material_select('destroy');
+                $('#vulnerabilitiesMultiple').material_select();
+
+                for (var i = 0; i < listRES.length; i++) {
+                    $("select#resistancesMultiple > option[value=" + listRES[i].TypeDamage + "]").prop("selected", true);
+                }
+                $('#resistancesMultiple').material_select('destroy');
+                $('#resistancesMultiple').material_select();
+
+                for (var i = 0; i < listIMMDMG.length; i++) {
+                    $("select#immunitiesDmgMultiple > option[value=" + listIMMDMG[i].TypeDamage + "]").prop("selected", true);
+                }
+                $('#immunitiesDmgMultiple').material_select('destroy');
+                $('#immunitiesDmgMultiple').material_select();
+
+                for (var i = 0; i < listIMMCND.length; i++) {
+                    $("select#immunitiesCndMultiple > option[value=" + listIMMCND[i].TypeCondition + "]").prop("selected", true);
+                }
+                $('#immunitiesCndMultiple').material_select('destroy');
+                $('#immunitiesCndMultiple').material_select();
+
+                //addSpeed(xlist);
+        }
+    );
+</script>
+
 <!--Senses      -------------------------------------------------------------------------------------->
 <!--loadSenses on load-->
 <script>
@@ -1246,7 +1295,7 @@
 
                 for (var i = 0; i < list.length; i++) {
                     xlist.push(list[i].TypeSense);
-                    $("select#sensesMultiple > option[value=" + list[i].TypeSense + "]").prop("selected", true);
+                        $("select#sensesMultiple > option[value=" + list[i].TypeSense + "]").prop("selected", true);
                 }
 
                 $('#sensesMultiple').material_select('destroy');
@@ -1347,13 +1396,12 @@
                 var lanSpeak =  @Html.Raw(@Json.Encode(Model.LanguagesSpeak));
                 var lanUnder =  @Html.Raw(@Json.Encode(Model.LanguagesUndersatand));
 
-                console.log(lanSpeak);
-                console.log($("select#languagesSpeakMultiple"));
+                console.log("lan speak load: "+ lanSpeak);
 
 
                 for (var i = 0; i < lanSpeak.length; i++) {
-                    console.log($("select#languagesSpeakMultiple > option[value=" + lanSpeak[i] + "]"));
-                    $("select#languagesSpeakMultiple > option[value=" + lanSpeak[i] + "]").prop("selected", true);
+                    console.log($("select#languagesSpeakMultiple > option[value=" + lanSpeak[i].LanguageName + "]"));
+                    $("select#languagesSpeakMultiple > option[value=" + lanSpeak[i].LanguageName + "]").prop("selected", true);
                 }
                 $('#languagesSpeakMultiple').material_select('destroy');
                 $('#languagesSpeakMultiple').material_select();
@@ -1361,7 +1409,7 @@
                 for (var i = 0; i < lanUnder.length; i++) {
                     console.log(lanUnder[i]);
 
-                    $("select#languagesUnderstandMultiple > option[value=" + lanUnder[i] + "]").prop("selected", true);
+                    $("select#languagesUnderstandMultiple > option[value=" + lanUnder[i].LanguageName  + "]").prop("selected", true);
                 }
                 $('#languagesUnderstandMultiple').material_select('destroy');
                 $('#languagesUnderstandMultiple').material_select();
@@ -1512,6 +1560,18 @@
            );
 </script>
 
+<!--Challenge on load-->
+<script>
+        $(document).ready(
+            function loadChallenge() {
+                var xp =  @Model.Challenge.XP;
+
+                $("select#chrating > option[value=" + xp + "]").prop("selected", true);
+                $('#chrating').material_select('destroy');
+                $('#chrating').material_select();
+        }
+    );
+</script>
 
 
 <!--Special traits      -------------------------------------------------------------------------------------->
@@ -1835,11 +1895,11 @@
                     data: JSON.stringify({ 'type': typeAction, 'TempID': @Model.TempID}),
                     success: function ()
                     {
-                        
+
                         if (typeAction == 1) {
-                            
+
                             Actions();
-                            
+
                         }
                         if (typeAction == 2) {
                             ReActions();
@@ -1847,9 +1907,9 @@
                         if (typeAction == 3) {
                             LActions();
                         }
-                        
+
                         reloadNpcView();
-                        
+
                     },
                     failure: function (errMsg) {
                         console.log("error ?");

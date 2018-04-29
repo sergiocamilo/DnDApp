@@ -230,10 +230,15 @@ namespace Dnd_App.Models.Characters
         public void AddSenses(List<Enum.TypeSense> list)
         {
             var newListSenses = new List<Sense>();
+            if (!this.Senses.Contains(new Sense() { TypeSense = TypeSense.passivePerception } , new Sense()))
+            {
+                this.Senses.Add(new Sense() { TypeSense = TypeSense.passivePerception });
+            }
 
             if (list == null)
                 list = new List<TypeSense>();
 
+            list.Add(TypeSense.passivePerception);
             for (int i = 0; i < list.Count; i++)
             {
                 newListSenses.Add( new Sense() { TypeSense = list[i], range = 0 });
@@ -248,6 +253,7 @@ namespace Dnd_App.Models.Characters
                 newListSenses = newListSenses.Except(this.Senses, new Sense()).ToList();
                 this.Senses.AddRange(newListSenses);
             }
+            
         }
 
 
